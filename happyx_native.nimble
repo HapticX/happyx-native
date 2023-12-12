@@ -11,4 +11,4 @@ srcDir = "src"
 # Deps
 
 requires "nim >= 1.6.14"
-requires "happyx#3.7.0"
+requires "happyx#head"
