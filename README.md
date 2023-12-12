@@ -1,4 +1,4 @@
-<div>
+<div align="center">
 
 # HappyX Native
 
@@ -12,3 +12,8 @@
 ```shell
 nimble install https://github.com/HapticX/happyx-native
 ```
+
+
+## Features
+
+- Support for Chrome/Yandex/Edge browsers;
