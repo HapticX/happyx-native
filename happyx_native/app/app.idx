@@ -1,6 +1,7 @@
 nimTitle	app	happyx_native/app/app.html	module src/happyx_native/app/app		0
 nim	callback	happyx_native/app/app.html#callback.m,untyped	macro callback(body: untyped)		22
-nim	callJs	happyx_native/app/app.html#callJs.m,string,varargs[untyped]	macro callJs(funcName: string; params: varargs[untyped])		54
-nim	onExit	happyx_native/app/app.html#onExit.m,untyped	macro onExit(body: untyped)		60
-nim	nativeApp	happyx_native/app/app.html#nativeApp.t,string,int,int,int,int,int,bool,string,bool,bool	template nativeApp(appDirectory: string = "/assets"; port: int = 5000; x: int = 512;\n          y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;\n          title: string = ""; resizeable: bool = true; establish: bool = true)		68
+nim	callJs	happyx_native/app/app.html#callJs.m,string,varargs[untyped]	macro callJs(funcName: string; params: varargs[untyped])		68
+nim	onExit	happyx_native/app/app.html#onExit.m,untyped	macro onExit(body: untyped)		74
+nim	nativeApp	happyx_native/app/app.html#nativeApp.t,string,int,int,int,int,int,bool,string,bool,bool	template nativeApp(appDirectory: string = "/assets"; port: int = 5000; x: int = 512;\n          y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;\n          title: string = ""; resizeable: bool = true; establish: bool = true)		82
+heading	Example	happyx_native/app/app.html#app-example	  Example		0
 heading	App	happyx_native/app/app.html#app	 App		0

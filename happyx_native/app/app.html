@@ -47,7 +47,8 @@
       </select>
     </div>
     <ul class="simple simple-toc" id="toc-list">
-  <li><a class="reference" id="app_toc" href="#app">App</a></li>
+  <ul class="simple"><li><a class="reference" id="app-example_toc" href="#app-example">Example</a></li>
+</ul><li><a class="reference" id="app_toc" href="#app">App</a></li>
 <li>
   <details open>
     <summary><a class="reference reference-toplevel" href="#17" id="67">Macros</a></summary>
@@ -103,7 +104,17 @@
   <dt><pre><span class="Keyword">macro</span> <a href="#callback.m%2Cuntyped"><span class="Identifier">callback</span></a><span class="Other">(</span><span class="Identifier">body</span><span class="Other">:</span> <span class="Identifier">untyped</span><span class="Other">)</span></pre></dt>
   <dd>
     
-    
+    Creates callbacks for JS side
+<h2><a class="toc-backref" id="app-example" href="#app-example">Example</a></h2><p><pre class="listing">
+<span class="Keyword">import</span> <span class="Identifier">happyx_native</span>
+
+
+<span class="Identifier">callback</span><span class="Punctuation">:</span>
+  <span class="Keyword">proc</span> <span class="Identifier">test</span><span class="Punctuation">(</span><span class="Identifier">x</span><span class="Punctuation">:</span> <span class="Identifier">int</span><span class="Punctuation">)</span> <span class="Operator">=</span>
+    <span class="Identifier">callJs</span><span class="Punctuation">(</span><span class="StringLit">&quot;test&quot;</span><span class="Punctuation">,</span> <span class="Identifier">x</span> <span class="Operator">*</span> <span class="Identifier">x</span><span class="Punctuation">)</span>
+
+<span class="Identifier">nativeApp</span><span class="Punctuation">(</span><span class="StringLit">&quot;/assets&quot;</span><span class="Punctuation">)</span></pre></p>
+
     
   </dd>
 </div>
@@ -145,17 +156,13 @@
                    <span class="Identifier">resizeable</span><span class="Other">:</span> <span class="Identifier">bool</span> <span class="Other">=</span> <span class="Identifier">true</span><span class="Other">;</span> <span class="Identifier">establish</span><span class="Other">:</span> <span class="Identifier">bool</span> <span class="Other">=</span> <span class="Identifier">true</span><span class="Other">)</span> {.<span class="Identifier">dirty</span>.}</pre></dt>
   <dd>
     
-    <pre>Compiles main happyx file, opens browser in `appMode` and
-starts serving at localhost with `port
-
-Your project should have this structure:
-
-```
-assets/
-├─ index.html
-├─ main.nim
-app.nim
-```</pre>
+    <p>Compiles main happyx file, opens browser in <tt class="docutils literal"><span class="pre"><span class="Identifier">appMode</span></span></tt> and starts serving at localhost with <tt class="docutils literal"><span class="pre"><span class="Identifier">port</span></span></tt></p>
+<p>Your project should have this structure:</p>
+<p><pre class="listing">
+<span class="Identifier">assets</span><span class="Operator">/</span>
+<span class="Identifier">├─</span> <span class="Identifier">index</span><span class="Operator">.</span><span class="Identifier">html</span>
+<span class="Identifier">├─</span> <span class="Identifier">main</span><span class="Operator">.</span><span class="Identifier">nim</span>
+<span class="Identifier">app</span><span class="Operator">.</span><span class="Identifier">nim</span></pre></p>
 
     
   </dd>
@@ -172,7 +179,7 @@ app.nim
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2023-12-12 06:26:58 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2023-12-12 06:33:44 UTC</small>
       </div>
     </div>
   </div>
