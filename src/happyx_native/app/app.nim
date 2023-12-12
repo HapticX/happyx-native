@@ -70,6 +70,17 @@ template nativeApp*(appDirectory: string = "/assets", port: int = 5000,
                     appMode: bool = true, title: string = "",
                     resizeable: bool = true, establish: bool = true
 ) {.dirty.} =
+  ## Compiles main happyx file, opens browser in `appMode` and
+  ## starts serving at localhost with `port
+  ## 
+  ## Your project should have this structure:
+  ## 
+  ## ```
+  ## assets/
+  ## ├─ index.html
+  ## ├─ main.nim
+  ## app.nim
+  ## ```
   # Compile main
   discard execCmdEx(
     "nim js -d:danger --opt:size " & getCurrentDir() / appDirectory & "/main.nim"
