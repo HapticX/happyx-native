@@ -1,0 +1,2 @@
+nimTitle	yandex	happyx_native/core/finder/yandex.html	module src/happyx_native/core/finder/yandex		0
+nim	openYandex	happyx_native/core/finder/yandex.html#openYandex,int,openArray[string]	proc openYandex(port: int; chromeFlags: openArray[string])		44

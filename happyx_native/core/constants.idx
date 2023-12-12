@@ -1,0 +1,5 @@
+nimTitle	constants	happyx_native/core/constants.html	module src/happyx_native/core/constants		0
+nim	OS	happyx_native/core/constants.html#OS	const OS		4
+nim	ChromePaths	happyx_native/core/constants.html#ChromePaths	const ChromePaths		13
+nim	YandexPaths	happyx_native/core/constants.html#YandexPaths	const YandexPaths		34
+nim	EdgePaths	happyx_native/core/constants.html#EdgePaths	const EdgePaths		45

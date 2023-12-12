@@ -1,0 +1,7 @@
+nimTitle	exceptions	happyx_native/core/exceptions.html	module src/happyx_native/core/exceptions		0
+nim	BrowserNotFound	happyx_native/core/exceptions.html#BrowserNotFound	object BrowserNotFound		8
+nim	ChromeNotFound	happyx_native/core/exceptions.html#ChromeNotFound	object ChromeNotFound		9
+nim	YandexNotFound	happyx_native/core/exceptions.html#YandexNotFound	object YandexNotFound		10
+nim	EdgeNotFound	happyx_native/core/exceptions.html#EdgeNotFound	object EdgeNotFound		11
+nim	MozillaNotFound	happyx_native/core/exceptions.html#MozillaNotFound	object MozillaNotFound		12
+heading	Exceptions	happyx_native/core/exceptions.html#exceptions	 Exceptions		0

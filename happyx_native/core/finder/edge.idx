@@ -1,0 +1,2 @@
+nimTitle	edge	happyx_native/core/finder/edge.html	module src/happyx_native/core/finder/edge		0
+nim	openEdge	happyx_native/core/finder/edge.html#openEdge,int,openArray[string]	proc openEdge(port: int; chromeFlags: openArray[string])		43

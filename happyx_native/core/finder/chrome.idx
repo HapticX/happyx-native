@@ -1,0 +1,2 @@
+nimTitle	chrome	happyx_native/core/finder/chrome.html	module src/happyx_native/core/finder/chrome		0
+nim	openChrome	happyx_native/core/finder/chrome.html#openChrome,int,openArray[string]	proc openChrome(port: int; chromeFlags: openArray[string])		60
