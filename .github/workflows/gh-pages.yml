@@ -1,0 +1,65 @@
+name: Github Pages 🌐
+
+on:
+  push:
+    branches:
+      - 'master'
+    paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
+      - '*.md'
+      - '*.nimble'
+      - '*.yml'
+      - '.gitignore'
+      - 'LICENSE'
+  pull_request:
+    paths-ignore:
+      - '.github/ISSUE_TEMPLATE/*'
+      - '*.md'
+      - '*.nimble'
+      - '*.yml'
+      - '.gitignore'
+      - 'LICENSE'
+
+permissions:
+  contents: write
+
+jobs:
+  before:
+    runs-on: windows-latest
+    if: "! contains(github.event.head_commit.message, '[skip ci]')"
+    steps:
+      - run: echo "not contains '[skip ci]'"
+
+  docs:
+    runs-on: windows-latest
+    needs: before
+    env:
+      nim_version: '1.6.14'
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Cache nimble
+        id: cache-nimble
+        uses: actions/cache@v1
+        with:
+          path: ~/.nimble
+          key: ${{ runner.os }}-nimble-${{ hashFiles('*.nimble') }}
+      
+      - uses: jiro4989/setup-nim-action@v1
+        with:
+          nim-version: ${{ env.nim_version }}
+
+      - name: Install Dependencies 🔃
+        run: |
+          nimble refresh
+          nimble install -y -d
+
+      - name: Generate API documents 📃
+        run: nim doc --index:on -d:docgen --project --out:docs --hints:off src/happyx_native.nim
+
+      - name: Deploy documents 💨
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+        if: github.ref == 'refs/heads/master'

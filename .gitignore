@@ -2,3 +2,6 @@
 *.exe
 *.js
 *.log
+
+# Documentation
+htmldocs/

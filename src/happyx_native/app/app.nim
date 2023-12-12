@@ -71,7 +71,9 @@ template nativeApp*(appDirectory: string = "/assets", port: int = 5000,
                     resizeable: bool = true, establish: bool = true
 ) {.dirty.} =
   # Compile main
-  discard execCmdEx("nim js " & getCurrentDir() / appDirectory & "/main.nim")
+  discard execCmdEx(
+    "nim js -d:danger --opt:size " & getCurrentDir() / appDirectory & "/main.nim"
+  )
 
   # Application
   when appMode:
