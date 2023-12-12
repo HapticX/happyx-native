@@ -20,6 +20,20 @@ export
 
 
 macro callback*(body: untyped) =
+  ## Creates callbacks for JS side
+  ## 
+  ## ## Example
+  ## 
+  ## ```nim
+  ## import happyx_native
+  ## 
+  ## 
+  ## callback:
+  ##   proc test(x: int) =
+  ##     callJs("test", x * x)
+  ## 
+  ## nativeApp("/assets")
+  ## ```
   var caseProcStmt = newNimNode(nnkCaseStmt).add(ident"name")
   for statement in body:
     if statement.kind notin {nnkProcDef}:
@@ -71,7 +85,7 @@ template nativeApp*(appDirectory: string = "/assets", port: int = 5000,
                     resizeable: bool = true, establish: bool = true
 ) {.dirty.} =
   ## Compiles main happyx file, opens browser in `appMode` and
-  ## starts serving at localhost with `port
+  ## starts serving at localhost with `port`
   ## 
   ## Your project should have this structure:
   ## 
