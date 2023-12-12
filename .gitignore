@@ -1,0 +1,4 @@
+# builds
+*.exe
+*.js
+*.log
