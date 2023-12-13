@@ -1,7 +1,12 @@
 # builds
 *.exe
+*.apk
 *.js
 *.log
 
 # Documentation
 htmldocs/
+
+# cmds
+build_android.cmd
+build_android*
