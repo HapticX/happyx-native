@@ -7,6 +7,15 @@
 # Documentation
 htmldocs/
 
-# cmds
+# build android cmd tests
 build_android.cmd
 build_android*
+
+# Android
+.gradle/
+.idea/
+build/
+
+
+# Testing CLI
+test_*/
