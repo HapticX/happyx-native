@@ -19,14 +19,16 @@ nimble install https://github.com/HapticX/happyx-native
 ## Features
 
 - Support for Chrome/Yandex/Edge browsers;
+- Support for Android;
 
 
 ## Browsers
 
-If you want choose other browser instead of default chrome - use these flags:
+If you want choose other browser instead of default - use these flags:
 
-| browser | flag            |
-| :-----: | :-------------: |
-| Chrome  | uses by default |
-| Edge    | `-d:edge`       |
-| Yandex  | `-d:yandex`     |
+| browser         | flag            |
+| :-----:         | :-------------: |
+| Default browser | uses by default |
+| Chrome          | `-d:chrome`     |
+| Edge            | `-d:edge`       |
+| Yandex          | `-d:yandex`     |

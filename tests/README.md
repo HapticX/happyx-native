@@ -1,17 +1,19 @@
 # Tests
 
-Just compile what you want ✌
+Just compile what you want ✌  (**it requires installed happyx native**)
 ```shell
-nim c -r TEST
+cd TEST
+hpx-native build
 ```
 
 
 ## Browsers
 
-If you want choose other browser instead of default chrome - use these flags:
+If you want choose other browser instead of default - use these flags:
 
-| browser | flag            |
-| :-----: | :-------------: |
-| Chrome  | uses by default |
-| Edge    | `-d:edge`       |
-| Yandex  | `-d:yandex`     |
+| browser         | flag            |
+| :-----:         | :-------------: |
+| Default browser | uses by default |
+| Chrome          | `-d:chrome`     |
+| Edge            | `-d:edge`       |
+| Yandex          | `-d:yandex`     |

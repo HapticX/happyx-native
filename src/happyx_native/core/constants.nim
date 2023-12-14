@@ -1,6 +1,7 @@
 import os
 
 const
+  HpxNativeVersion* = "0.1.0"
   OS* =
     when defined(windows) or hostOS == "windows":
       "win"

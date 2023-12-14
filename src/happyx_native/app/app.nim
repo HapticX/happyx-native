@@ -6,9 +6,17 @@ import
   std/[
     macros, os, sequtils, strformat,
     osproc, json, threadpool, browsers,
-    uri, tables, terminal
+    uri, tables, terminal, parsecfg
   ],
   happyx
+
+when defined(export2android):
+  import
+    mimetypes,
+    ../cli/utils,
+    ../android/core
+  export
+    macros, mimetypes
 
 export
   happyx,
@@ -17,6 +25,9 @@ export
   sequtils,
   terminal,
   browsers
+
+
+var websocketClient*: WebSocket
 
 
 macro callback*(body: untyped) =
@@ -49,7 +60,14 @@ macro callback*(body: untyped) =
             newCall("[]", ident"args", newLit(i)),
             paramType
           ))
-        call
+        var isAsync = false
+        for i in statement[4]:
+          if i == ident"async":
+            isAsync = true
+        if isAsync:
+          newCall("await", call)
+        else:
+          call
     ))
   result = newStmtList(
     body,
@@ -63,12 +81,19 @@ macro callback*(body: untyped) =
       caseProcStmt
     )
   )
+  result[^1].addPragma(ident"async")
+
+
+macro callJsAsync*(funcName: string, params: varargs[untyped]) =
+  quote do:
+    {.gcsafe.}:
+      await websocketClient.send($(%*{"funcName":`funcName`,"params":[`params`]}))
 
 
 macro callJs*(funcName: string, params: varargs[untyped]) =
   quote do:
     {.gcsafe.}:
-      websocketClient.send($(%*{"funcName":`funcName`,"params":[`params`]}))
+      waitFor websocketClient.send($(%*{"funcName":`funcName`,"params":[`params`]}))
 
 
 macro onExit*(body: untyped) =
@@ -79,10 +104,57 @@ macro onExit*(body: untyped) =
   )
 
 
-template nativeApp*(appDirectory: string = "/assets", port: int = 5000,
-                    x: int = 512, y: int = 128, w: int = 720, h: int = 320,
-                    appMode: bool = true, title: string = "",
-                    resizeable: bool = true, establish: bool = true
+proc cfgAndroidPackageId*(): string {.compileTime.} =
+  var cfg = readNativeConfigCompileTime()
+  cfg.androidPackage
+
+
+proc cfgAndroidSdk*(): string {.compileTime.} =
+  var cfg = readNativeConfigCompileTime()
+  cfg.androidSdk
+
+
+proc cfgName*(): string {.compileTime.}=
+  var cfg = readNativeConfigCompileTime()
+  cfg.name
+
+
+proc cfgAppDirectory*(): string {.compileTime.}=
+  var cfg = readNativeConfigCompileTime()
+  cfg.appDirectory
+
+
+macro getIndexHtml*(directory: static[string]): untyped =
+  result = newLit(
+    staticRead(getProjectPath() / directory / "index.html")
+  )
+
+macro fetchFiles*(directory: static[string]): untyped =
+  var files: seq[string] = @[]
+  for file in directory.walkDirRec:
+    files.add(file)
+  result = newStmtList(
+    newVarStmt(
+      ident"_files",
+      newCall(
+        newNimNode(nnkBracketExpr).add(ident"newTable", ident"string", ident"string")
+      )
+    )
+  )
+  for file in files:
+    result.add(newCall(
+      "[]=",
+      ident"_files",
+      newLit(file.replace(directory, "")),
+      newLit(staticRead(file))
+    ))
+  result.add(ident"_files")
+
+
+template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5000,
+                        x: int = 512, y: int = 128, w: int = 720, h: int = 320,
+                        appMode: bool = true, title: string = "",
+                        resizeable: bool = true, establish: bool = true
 ) {.dirty.} =
   ## Compiles main happyx file, opens browser in `appMode` and
   ## starts serving at localhost with `port`
@@ -95,72 +167,88 @@ template nativeApp*(appDirectory: string = "/assets", port: int = 5000,
   ## ├─ main.nim
   ## app.nim
   ## ```
-  # Compile main
-  discard execCmdEx(
-    "nim js -d:danger --opt:size " & getCurrentDir() / appDirectory & "/main.nim"
-  )
 
   # Application
-  when appMode:
-    var arguments: seq[string] = @[]
-    arguments.add "--enable-gpu"
-    arguments.add "--window-size=\"" & $w & "," & $h & "\""
-    arguments.add "--window-position=\"" & $x & "," & $y & "\""
-    if title.len > 0:
-      arguments.add "--window-name=\"" & title & "\""
-    when defined(yandex):
-      spawn openYandex(port, arguments)
-    elif defined(edge):
-      spawn openEdge(port, arguments)
-    else:
-      spawn openChrome(port, arguments)
+  when defined(export2android):
+    static:
+      # Compile main
+      echo staticExec(
+        "nim js -d:danger --opt:size " & getScriptDir() / appDirectory / "main.nim"
+      )
   else:
-    spawn openDefaultBrowser("http://127.0.0.1:" & $port & "/#/")
+    # Compile main
+    echo execCmdEx(
+      "nim js -d:danger --opt:size " & getCurrentDir() / appDirectory / "main.nim"
+    )
+    when appMode:
+      var arguments: seq[string] = @[]
+      arguments.add "--enable-gpu"
+      arguments.add "--window-size=\"" & $w & "," & $h & "\""
+      arguments.add "--window-position=\"" & $x & "," & $y & "\""
+      if title.len > 0:
+        arguments.add "--window-name=\"" & title & "\""
+      when defined(yandex):
+        spawn openYandex(port, arguments)
+      elif defined(edge):
+        spawn openEdge(port, arguments)
+      elif defined(chrome):
+        spawn openChrome(port, arguments)
+      else:
+        spawn openDefaultBrowserApp(port, arguments)
+    else:
+      spawn openDefaultBrowser("http://127.0.0.1:" & $port & "/#/")
   
   # Server
   serve "127.0.0.1", port:
     setup:
-      var websocketClient: WebSocket
       proc handleWebSocketErr() {.async.} =
-        websocketClient = nil
-        styledEcho fgRed, "Connection was closed"
-        when establish:
-          for i in 0..3:
-            styledEcho fgYellow, fmt"Trying to establish connection ... {i}/3"
-            await sleepAsync(500)
-            if i < 3:
-              eraseLine()
-              cursorUp()
-          if websocketClient.isNil:
-            styledEcho fgRed, "failed to establish connection"
+        {.gcsafe.}:
+          websocketClient = nil
+          styledEcho fgRed, "Connection was closed"
+          when establish:
+            for i in 0..3:
+              styledEcho fgYellow, fmt"Trying to establish connection ... {i}/3"
+              await sleepAsync(500)
+              if i < 3:
+                eraseLine()
+                cursorUp()
+            if websocketClient.isNil:
+              styledEcho fgRed, "failed to establish connection"
+              when declared(nativeAppExitHandler):
+                nativeAppExitHandler()
+              styledEcho fgRed, "exit ..."
+              quit QuitSuccess
+          else:
             when declared(nativeAppExitHandler):
               nativeAppExitHandler()
             styledEcho fgRed, "exit ..."
             quit QuitSuccess
-        else:
-          when declared(nativeAppExitHandler):
-            nativeAppExitHandler()
-          styledEcho fgRed, "exit ..."
-          quit QuitSuccess
 
     get "/":
       outHeaders["Cache-Control"] = "no-store"
-      let f = openAsync(getCurrentDir() / appDirectory / "index.html")
-      var data = await f.readAll()
-      f.close()
+      when defined(export2android):
+        var data = getIndexHtml(appDirectory)
+      else:
+        let f = openAsync(getCurrentDir() / appDirectory / "index.html")
+        var data = await f.readAll()
+        f.close()
       data = data.replace(
-        "<body>",
-        """<body><script>
-        window.moveTo(""" & $x & """,""" & $y & """);
-        window.resizeTo(""" & $w & """, """ & $h & """);
-        var ws = new WebSocket("ws://127.0.0.1:""" & $port & """/ws");""" & (
-          when not resizeable:
-            """
-            window.addEventListener('resize', () => {
-              window.resizeTo(""" & $w & """, """ & $h & """);
-            });"""
+        "</head>", (
+          when defined(export2android):
+            """<script>var ws = new WebSocket("ws://127.0.0.1:""" & $port & """/ws");"""
           else:
-            ""
+            """<script>
+            window.moveTo(""" & $x & """,""" & $y & """);
+            window.resizeTo(""" & $w & """, """ & $h & """);
+            var ws = new WebSocket("ws://127.0.0.1:""" & $port & """/ws");""" & (
+              when not resizeable:
+                """
+                window.addEventListener('resize', () => {
+                  window.resizeTo(""" & $w & """, """ & $h & """);
+                });"""
+              else:
+                ""
+            )
         ) & """
         var connected = false;
         ws.onmessage = (data) => {
@@ -191,12 +279,13 @@ template nativeApp*(appDirectory: string = "/assets", port: int = 5000,
             }
           }
         }
-        </script>"""
+        </script></head>"""
       )
       req.answerHtml(data)
     
     wsConnect:
-      websocketClient = wsClient
+      {.gcsafe.}:
+        websocketClient = wsClient
     
     wsClosed:
       await handleWebSocketErr()
@@ -213,7 +302,7 @@ template nativeApp*(appDirectory: string = "/assets", port: int = 5000,
         procName = data["procedure"].getStr
         params = data["params"].getElems
       try:
-        callNim(procName, params)
+        await callNim(procName, params)
       except:
         echo "Error from Javascript call to Nim."
         echo "Function: " & procName
@@ -222,6 +311,41 @@ template nativeApp*(appDirectory: string = "/assets", port: int = 5000,
         echo fmt"Message: " & getCurrentExceptionMsg()
     
     get "/{f:path}":
-      let filepath = getCurrentDir() / appDirectory / f
-      if fileExists(filepath):
-        await req.answerFile(filepath, forceResponse = true)
+      when defined(export2android):
+        var
+          files = fetchFiles(getProjectPath() / appDirectory)
+          splitted = f.split('.')
+          extension = if splitted.len > 1: splitted[^1] else: ""
+          contentType = newMimetypes().getMimetype(extension)
+          headers = @[
+            ("Content-Type", fmt"{contentType}; charset=utf-8"),
+          ]
+        if files.hasKey(f):
+          req.answer(files[f], headers = newHttpHeaders(headers))
+        elif files.hasKey($DirSep & f):
+          req.answer(files[$DirSep & f], headers = newHttpHeaders(headers))
+      else:
+        # Export to other platforms
+        let filepath = getCurrentDir() / appDirectory / f
+        if fileExists(filepath):
+          await req.answerFile(filepath, forceResponse = true)
+
+
+template nativeApp*(appDirectory: string = "/assets", port: int = 5123,
+                        x: int = 512, y: int = 128, w: int = 720, h: int = 320,
+                        appMode: bool = true, title: string = "",
+                        resizeable: bool = true, establish: bool = true
+) {.dirty.} =
+  when defined(export2android):
+    proc startAndroidApp*() =
+      nativeAppImpl(appDirectory, port, x, y, w, h, appMode, title, resizeable, establish)
+
+    proc startAndroidApp*(servePort: int) =
+      nativeAppImpl(appDirectory, servePort, x, y, w, h, appMode, title, resizeable, establish)
+
+    nativeMethodsFor cfgAndroidPackageId(), "Native":
+      proc start() =
+        initJNI(env)
+        startAndroidApp()
+  else:
+    nativeAppImpl(appDirectory, port, x, y, w, h, appMode, title, resizeable, establish)
