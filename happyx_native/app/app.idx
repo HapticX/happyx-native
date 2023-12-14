@@ -7,6 +7,6 @@ nim	onExit	happyx_native/app/app.html#onExit.m,untyped	macro onExit(body: untype
 nim	getIndexHtml	happyx_native/app/app.html#getIndexHtml.m,static[string]	macro getIndexHtml(directory: static[string]): untyped		131
 nim	fetchFiles	happyx_native/app/app.html#fetchFiles.m,static[string]	macro fetchFiles(directory: static[string]): untyped		136
 nim	nativeAppImpl	happyx_native/app/app.html#nativeAppImpl.t,string,int,int,int,int,int,bool,string,bool,bool	template nativeAppImpl(appDirectory: string = "/assets"; port: int = 5123; x: int = 512;\n              y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;\n              title: string = ""; resizeable: bool = true;\n              establish: bool = true)		158
-nim	nativeApp	happyx_native/app/app.html#nativeApp.t,string,int,int,int,int,int,bool,string,bool,bool	template nativeApp(appDirectory: string = "/assets"; port: int = 5123; x: int = 512;\n          y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;\n          title: string = ""; resizeable: bool = true; establish: bool = true)		357
+nim	nativeApp	happyx_native/app/app.html#nativeApp.t,string,int,int,int,int,int,bool,string,bool,bool	template nativeApp(appDirectory: string = "/assets"; port: int = 5123; x: int = 512;\n          y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;\n          title: string = ""; resizeable: bool = true; establish: bool = true)		356
 heading	Example	happyx_native/app/app.html#app-example	  Example		0
 heading	App	happyx_native/app/app.html#app	 App		0
