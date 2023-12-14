@@ -51,6 +51,15 @@
 </ul><li><a class="reference" id="app_toc" href="#app">App</a></li>
 <li>
   <details open>
+    <summary><a class="reference reference-toplevel" href="#8" id="58">Vars</a></summary>
+    <ul class="simple simple-toc-section">
+      <li><a class="reference" href="#websocketClient" title="websocketClient: WebSocket">websocketClient</a></li>
+
+    </ul>
+  </details>
+</li>
+<li>
+  <details open>
     <summary><a class="reference reference-toplevel" href="#17" id="67">Macros</a></summary>
     <ul class="simple simple-toc-section">
       <ul class="simple nested-toc-section">callback
@@ -59,6 +68,18 @@
 </ul>
 <ul class="simple nested-toc-section">callJs
   <li><a class="reference" href="#callJs.m%2Cstring%2Cvarargs%5Buntyped%5D" title="callJs(funcName: string; params: varargs[untyped])">callJs(funcName: string; params: varargs[untyped])</a></li>
+
+</ul>
+<ul class="simple nested-toc-section">callJsAsync
+  <li><a class="reference" href="#callJsAsync.m%2Cstring%2Cvarargs%5Buntyped%5D" title="callJsAsync(funcName: string; params: varargs[untyped])">callJsAsync(funcName: string; params: varargs[untyped])</a></li>
+
+</ul>
+<ul class="simple nested-toc-section">fetchFiles
+  <li><a class="reference" href="#fetchFiles.m%2Cstatic%5Bstring%5D" title="fetchFiles(directory: static[string]): untyped">fetchFiles(directory: static[string]): untyped</a></li>
+
+</ul>
+<ul class="simple nested-toc-section">getIndexHtml
+  <li><a class="reference" href="#getIndexHtml.m%2Cstatic%5Bstring%5D" title="getIndexHtml(directory: static[string]): untyped">getIndexHtml(directory: static[string]): untyped</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">onExit
@@ -74,11 +95,21 @@
     <summary><a class="reference reference-toplevel" href="#18" id="68">Templates</a></summary>
     <ul class="simple simple-toc-section">
       <ul class="simple nested-toc-section">nativeApp
-  <li><a class="reference" href="#nativeApp.t%2Cstring%2Cint%2Cint%2Cint%2Cint%2Cint%2Cbool%2Cstring%2Cbool%2Cbool" title="nativeApp(appDirectory: string = &quot;/assets&quot;; port: int = 5000; x: int = 512;
+  <li><a class="reference" href="#nativeApp.t%2Cstring%2Cint%2Cint%2Cint%2Cint%2Cint%2Cbool%2Cstring%2Cbool%2Cbool" title="nativeApp(appDirectory: string = &quot;/assets&quot;; port: int = 5123; x: int = 512;
           y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;
-          title: string = &quot;&quot;; resizeable: bool = true; establish: bool = true)">nativeApp(appDirectory: string = &quot;/assets&quot;; port: int = 5000; x: int = 512;
+          title: string = &quot;&quot;; resizeable: bool = true; establish: bool = true)">nativeApp(appDirectory: string = &quot;/assets&quot;; port: int = 5123; x: int = 512;
           y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;
           title: string = &quot;&quot;; resizeable: bool = true; establish: bool = true)</a></li>
+
+</ul>
+<ul class="simple nested-toc-section">nativeAppImpl
+  <li><a class="reference" href="#nativeAppImpl.t%2Cstring%2Cint%2Cint%2Cint%2Cint%2Cint%2Cbool%2Cstring%2Cbool%2Cbool" title="nativeAppImpl(appDirectory: string = &quot;/assets&quot;; port: int = 5000; x: int = 512;
+              y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;
+              title: string = &quot;&quot;; resizeable: bool = true;
+              establish: bool = true)">nativeAppImpl(appDirectory: string = &quot;/assets&quot;; port: int = 5000; x: int = 512;
+              y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;
+              title: string = &quot;&quot;; resizeable: bool = true;
+              establish: bool = true)</a></li>
 
 </ul>
 
@@ -96,7 +127,21 @@
     <p class="module-desc">
 <h1><a class="toc-backref" id="app" href="#app">App</a></h1><p>Provides main app loop </p>
 </p>
-    <div class="section" id="17">
+    <div class="section" id="8">
+  <h1><a class="toc-backref" href="#8">Vars</a></h1>
+  <dl class="item">
+    <div id="websocketClient">
+  <dt><pre><a href="app.html#websocketClient"><span class="Identifier">websocketClient</span></a><span class="Other">:</span> <span class="Identifier">WebSocket</span></pre></dt>
+  <dd>
+    
+    
+    
+  </dd>
+</div>
+
+  </dl>
+</div>
+<div class="section" id="17">
   <h1><a class="toc-backref" href="#17">Macros</a></h1>
   <dl class="item">
     <div id="callback-macros-all">
@@ -131,6 +176,39 @@
 </div>
 
 </div>
+<div id="callJsAsync-macros-all">
+  <div id="callJsAsync.m,string,varargs[untyped]">
+  <dt><pre><span class="Keyword">macro</span> <a href="#callJsAsync.m%2Cstring%2Cvarargs%5Buntyped%5D"><span class="Identifier">callJsAsync</span></a><span class="Other">(</span><span class="Identifier">funcName</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">params</span><span class="Other">:</span> <span class="Identifier">varargs</span><span class="Other">[</span><span class="Identifier">untyped</span><span class="Other">]</span><span class="Other">)</span></pre></dt>
+  <dd>
+    
+    
+    
+  </dd>
+</div>
+
+</div>
+<div id="fetchFiles-macros-all">
+  <div id="fetchFiles.m,static[string]">
+  <dt><pre><span class="Keyword">macro</span> <a href="#fetchFiles.m%2Cstatic%5Bstring%5D"><span class="Identifier">fetchFiles</span></a><span class="Other">(</span><span class="Identifier">directory</span><span class="Other">:</span> <span class="Identifier">static</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">untyped</span></pre></dt>
+  <dd>
+    
+    
+    
+  </dd>
+</div>
+
+</div>
+<div id="getIndexHtml-macros-all">
+  <div id="getIndexHtml.m,static[string]">
+  <dt><pre><span class="Keyword">macro</span> <a href="#getIndexHtml.m%2Cstatic%5Bstring%5D"><span class="Identifier">getIndexHtml</span></a><span class="Other">(</span><span class="Identifier">directory</span><span class="Other">:</span> <span class="Identifier">static</span><span class="Other">[</span><span class="Identifier">string</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">untyped</span></pre></dt>
+  <dd>
+    
+    
+    
+  </dd>
+</div>
+
+</div>
 <div id="onExit-macros-all">
   <div id="onExit.m,untyped">
   <dt><pre><span class="Keyword">macro</span> <a href="#onExit.m%2Cuntyped"><span class="Identifier">onExit</span></a><span class="Other">(</span><span class="Identifier">body</span><span class="Other">:</span> <span class="Identifier">untyped</span><span class="Other">)</span></pre></dt>
@@ -150,10 +228,24 @@
   <dl class="item">
     <div id="nativeApp-templates-all">
   <div id="nativeApp.t,string,int,int,int,int,int,bool,string,bool,bool">
-  <dt><pre><span class="Keyword">template</span> <a href="#nativeApp.t%2Cstring%2Cint%2Cint%2Cint%2Cint%2Cint%2Cbool%2Cstring%2Cbool%2Cbool"><span class="Identifier">nativeApp</span></a><span class="Other">(</span><span class="Identifier">appDirectory</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;/assets&quot;</span><span class="Other">;</span> <span class="Identifier">port</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">5000</span><span class="Other">;</span>
+  <dt><pre><span class="Keyword">template</span> <a href="#nativeApp.t%2Cstring%2Cint%2Cint%2Cint%2Cint%2Cint%2Cbool%2Cstring%2Cbool%2Cbool"><span class="Identifier">nativeApp</span></a><span class="Other">(</span><span class="Identifier">appDirectory</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;/assets&quot;</span><span class="Other">;</span> <span class="Identifier">port</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">5123</span><span class="Other">;</span>
                    <span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">512</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">128</span><span class="Other">;</span> <span class="Identifier">w</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">720</span><span class="Other">;</span> <span class="Identifier">h</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">320</span><span class="Other">;</span>
                    <span class="Identifier">appMode</span><span class="Other">:</span> <span class="Identifier">bool</span> <span class="Other">=</span> <span class="Identifier">true</span><span class="Other">;</span> <span class="Identifier">title</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span>
                    <span class="Identifier">resizeable</span><span class="Other">:</span> <span class="Identifier">bool</span> <span class="Other">=</span> <span class="Identifier">true</span><span class="Other">;</span> <span class="Identifier">establish</span><span class="Other">:</span> <span class="Identifier">bool</span> <span class="Other">=</span> <span class="Identifier">true</span><span class="Other">)</span> {.<span class="Identifier">dirty</span>.}</pre></dt>
+  <dd>
+    
+    
+    
+  </dd>
+</div>
+
+</div>
+<div id="nativeAppImpl-templates-all">
+  <div id="nativeAppImpl.t,string,int,int,int,int,int,bool,string,bool,bool">
+  <dt><pre><span class="Keyword">template</span> <a href="#nativeAppImpl.t%2Cstring%2Cint%2Cint%2Cint%2Cint%2Cint%2Cbool%2Cstring%2Cbool%2Cbool"><span class="Identifier">nativeAppImpl</span></a><span class="Other">(</span><span class="Identifier">appDirectory</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;/assets&quot;</span><span class="Other">;</span> <span class="Identifier">port</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">5000</span><span class="Other">;</span>
+                       <span class="Identifier">x</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">512</span><span class="Other">;</span> <span class="Identifier">y</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">128</span><span class="Other">;</span> <span class="Identifier">w</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">720</span><span class="Other">;</span> <span class="Identifier">h</span><span class="Other">:</span> <span class="Identifier">int</span> <span class="Other">=</span> <span class="DecNumber">320</span><span class="Other">;</span>
+                       <span class="Identifier">appMode</span><span class="Other">:</span> <span class="Identifier">bool</span> <span class="Other">=</span> <span class="Identifier">true</span><span class="Other">;</span> <span class="Identifier">title</span><span class="Other">:</span> <span class="Identifier">string</span> <span class="Other">=</span> <span class="StringLit">&quot;&quot;</span><span class="Other">;</span>
+                       <span class="Identifier">resizeable</span><span class="Other">:</span> <span class="Identifier">bool</span> <span class="Other">=</span> <span class="Identifier">true</span><span class="Other">;</span> <span class="Identifier">establish</span><span class="Other">:</span> <span class="Identifier">bool</span> <span class="Other">=</span> <span class="Identifier">true</span><span class="Other">)</span> {.<span class="Identifier">dirty</span>.}</pre></dt>
   <dd>
     
     <p>Compiles main happyx file, opens browser in <tt class="docutils literal"><span class="pre"><span class="Identifier">appMode</span></span></tt> and starts serving at localhost with <tt class="docutils literal"><span class="pre"><span class="Identifier">port</span></span></tt></p>
@@ -179,7 +271,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2023-12-13 11:55:02 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2023-12-14 06:56:57 UTC</small>
       </div>
     </div>
   </div>

@@ -21,7 +21,7 @@
   <div class="document" id="documentId">
     <div class="container">
       <h1 class="title">Index</h1>
-      Modules: <a href="happyx_native.html">happyx_native</a>, <a href="happyx_native/app/app.html">happyx_native/app/app</a>, <a href="happyx_native/core/constants.html">happyx_native/core/constants</a>, <a href="happyx_native/core/exceptions.html">happyx_native/core/exceptions</a>, <a href="happyx_native/core/finder/chrome.html">happyx_native/core/finder/chrome</a>, <a href="happyx_native/core/finder/edge.html">happyx_native/core/finder/edge</a>, <a href="happyx_native/core/finder/yandex.html">happyx_native/core/finder/yandex</a>.<br/><p /><h2>API symbols</h2>
+      Modules: <a href="happyx_native.html">happyx_native</a>, <a href="happyx_native/app/app.html">happyx_native/app/app</a>, <a href="happyx_native/core/constants.html">happyx_native/core/constants</a>, <a href="happyx_native/core/exceptions.html">happyx_native/core/exceptions</a>, <a href="happyx_native/core/finder/chrome.html">happyx_native/core/finder/chrome</a>, <a href="happyx_native/core/finder/default.html">happyx_native/core/finder/default</a>, <a href="happyx_native/core/finder/edge.html">happyx_native/core/finder/edge</a>, <a href="happyx_native/core/finder/yandex.html">happyx_native/core/finder/yandex</a>.<br/><p /><h2>API symbols</h2>
 <dl><dt><a name="BrowserNotFound" href="#BrowserNotFound"><span>BrowserNotFound:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="exceptions: object BrowserNotFound" href="happyx_native/core/exceptions.html#BrowserNotFound">exceptions: object BrowserNotFound</a></li>
@@ -33,6 +33,10 @@
 <dt><a name="callJs" href="#callJs"><span>callJs:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="app: macro callJs(funcName: string; params: varargs[untyped])" href="happyx_native/app/app.html#callJs.m%2Cstring%2Cvarargs%5Buntyped%5D">app: macro callJs(funcName: string; params: varargs[untyped])</a></li>
+          </ul></dd>
+<dt><a name="callJsAsync" href="#callJsAsync"><span>callJsAsync:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="app: macro callJsAsync(funcName: string; params: varargs[untyped])" href="happyx_native/app/app.html#callJsAsync.m%2Cstring%2Cvarargs%5Buntyped%5D">app: macro callJsAsync(funcName: string; params: varargs[untyped])</a></li>
           </ul></dd>
 <dt><a name="ChromeNotFound" href="#ChromeNotFound"><span>ChromeNotFound:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -50,17 +54,39 @@
 <li><a class="reference external"
           data-doc-search-tag="constants: const EdgePaths" href="happyx_native/core/constants.html#EdgePaths">constants: const EdgePaths</a></li>
           </ul></dd>
+<dt><a name="fetchFiles" href="#fetchFiles"><span>fetchFiles:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="app: macro fetchFiles(directory: static[string]): untyped" href="happyx_native/app/app.html#fetchFiles.m%2Cstatic%5Bstring%5D">app: macro fetchFiles(directory: static[string]): untyped</a></li>
+          </ul></dd>
+<dt><a name="getIndexHtml" href="#getIndexHtml"><span>getIndexHtml:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="app: macro getIndexHtml(directory: static[string]): untyped" href="happyx_native/app/app.html#getIndexHtml.m%2Cstatic%5Bstring%5D">app: macro getIndexHtml(directory: static[string]): untyped</a></li>
+          </ul></dd>
+<dt><a name="HpxNativeVersion" href="#HpxNativeVersion"><span>HpxNativeVersion:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="constants: const HpxNativeVersion" href="happyx_native/core/constants.html#HpxNativeVersion">constants: const HpxNativeVersion</a></li>
+          </ul></dd>
 <dt><a name="MozillaNotFound" href="#MozillaNotFound"><span>MozillaNotFound:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="exceptions: object MozillaNotFound" href="happyx_native/core/exceptions.html#MozillaNotFound">exceptions: object MozillaNotFound</a></li>
           </ul></dd>
 <dt><a name="nativeApp" href="#nativeApp"><span>nativeApp:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="app: template nativeApp(appDirectory: string = &quot;/assets&quot;; port: int = 5000; x: int = 512;
+          data-doc-search-tag="app: template nativeApp(appDirectory: string = &quot;/assets&quot;; port: int = 5123; x: int = 512;
           y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;
-          title: string = &quot;&quot;; resizeable: bool = true; establish: bool = true)" href="happyx_native/app/app.html#nativeApp.t%2Cstring%2Cint%2Cint%2Cint%2Cint%2Cint%2Cbool%2Cstring%2Cbool%2Cbool">app: template nativeApp(appDirectory: string = &quot;/assets&quot;; port: int = 5000; x: int = 512;
+          title: string = &quot;&quot;; resizeable: bool = true; establish: bool = true)" href="happyx_native/app/app.html#nativeApp.t%2Cstring%2Cint%2Cint%2Cint%2Cint%2Cint%2Cbool%2Cstring%2Cbool%2Cbool">app: template nativeApp(appDirectory: string = &quot;/assets&quot;; port: int = 5123; x: int = 512;
           y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;
           title: string = &quot;&quot;; resizeable: bool = true; establish: bool = true)</a></li>
+          </ul></dd>
+<dt><a name="nativeAppImpl" href="#nativeAppImpl"><span>nativeAppImpl:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="app: template nativeAppImpl(appDirectory: string = &quot;/assets&quot;; port: int = 5000; x: int = 512;
+              y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;
+              title: string = &quot;&quot;; resizeable: bool = true;
+              establish: bool = true)" href="happyx_native/app/app.html#nativeAppImpl.t%2Cstring%2Cint%2Cint%2Cint%2Cint%2Cint%2Cbool%2Cstring%2Cbool%2Cbool">app: template nativeAppImpl(appDirectory: string = &quot;/assets&quot;; port: int = 5000; x: int = 512;
+              y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;
+              title: string = &quot;&quot;; resizeable: bool = true;
+              establish: bool = true)</a></li>
           </ul></dd>
 <dt><a name="onExit" href="#onExit"><span>onExit:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -69,6 +95,10 @@
 <dt><a name="openChrome" href="#openChrome"><span>openChrome:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="chrome: proc openChrome(port: int; chromeFlags: openArray[string])" href="happyx_native/core/finder/chrome.html#openChrome%2Cint%2CopenArray%5Bstring%5D">chrome: proc openChrome(port: int; chromeFlags: openArray[string])</a></li>
+          </ul></dd>
+<dt><a name="openDefaultBrowserApp" href="#openDefaultBrowserApp"><span>openDefaultBrowserApp:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="default: proc openDefaultBrowserApp(port: int; chromeFlags: openArray[string])" href="happyx_native/core/finder/default.html#openDefaultBrowserApp%2Cint%2CopenArray%5Bstring%5D">default: proc openDefaultBrowserApp(port: int; chromeFlags: openArray[string])</a></li>
           </ul></dd>
 <dt><a name="openEdge" href="#openEdge"><span>openEdge:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -82,6 +112,10 @@
 <li><a class="reference external"
           data-doc-search-tag="constants: const OS" href="happyx_native/core/constants.html#OS">constants: const OS</a></li>
           </ul></dd>
+<dt><a name="websocketClient" href="#websocketClient"><span>websocketClient:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="app: var websocketClient" href="happyx_native/app/app.html#websocketClient">app: var websocketClient</a></li>
+          </ul></dd>
 <dt><a name="YandexNotFound" href="#YandexNotFound"><span>YandexNotFound:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="exceptions: object YandexNotFound" href="happyx_native/core/exceptions.html#YandexNotFound">exceptions: object YandexNotFound</a></li>
@@ -94,7 +128,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2023-12-13 11:55:02 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2023-12-14 06:56:57 UTC</small>
       </div>
     </div>
   </div>

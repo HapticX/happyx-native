@@ -1,7 +1,12 @@
 nimTitle	app	happyx_native/app/app.html	module src/happyx_native/app/app		0
-nim	callback	happyx_native/app/app.html#callback.m,untyped	macro callback(body: untyped)		22
-nim	callJs	happyx_native/app/app.html#callJs.m,string,varargs[untyped]	macro callJs(funcName: string; params: varargs[untyped])		68
-nim	onExit	happyx_native/app/app.html#onExit.m,untyped	macro onExit(body: untyped)		74
-nim	nativeApp	happyx_native/app/app.html#nativeApp.t,string,int,int,int,int,int,bool,string,bool,bool	template nativeApp(appDirectory: string = "/assets"; port: int = 5000; x: int = 512;\n          y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;\n          title: string = ""; resizeable: bool = true; establish: bool = true)		82
+nim	websocketClient	happyx_native/app/app.html#websocketClient	var websocketClient		30
+nim	callback	happyx_native/app/app.html#callback.m,untyped	macro callback(body: untyped)		33
+nim	callJsAsync	happyx_native/app/app.html#callJsAsync.m,string,varargs[untyped]	macro callJsAsync(funcName: string; params: varargs[untyped])		87
+nim	callJs	happyx_native/app/app.html#callJs.m,string,varargs[untyped]	macro callJs(funcName: string; params: varargs[untyped])		93
+nim	onExit	happyx_native/app/app.html#onExit.m,untyped	macro onExit(body: untyped)		99
+nim	getIndexHtml	happyx_native/app/app.html#getIndexHtml.m,static[string]	macro getIndexHtml(directory: static[string]): untyped		127
+nim	fetchFiles	happyx_native/app/app.html#fetchFiles.m,static[string]	macro fetchFiles(directory: static[string]): untyped		132
+nim	nativeAppImpl	happyx_native/app/app.html#nativeAppImpl.t,string,int,int,int,int,int,bool,string,bool,bool	template nativeAppImpl(appDirectory: string = "/assets"; port: int = 5000; x: int = 512;\n              y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;\n              title: string = ""; resizeable: bool = true;\n              establish: bool = true)		154
+nim	nativeApp	happyx_native/app/app.html#nativeApp.t,string,int,int,int,int,int,bool,string,bool,bool	template nativeApp(appDirectory: string = "/assets"; port: int = 5123; x: int = 512;\n          y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;\n          title: string = ""; resizeable: bool = true; establish: bool = true)		334
 heading	Example	happyx_native/app/app.html#app-example	  Example		0
 heading	App	happyx_native/app/app.html#app	 App		0
