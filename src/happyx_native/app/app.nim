@@ -18,6 +18,10 @@ when defined(export2android):
   export
     macros, mimetypes
 
+when defined(buildAssets):
+  import mimetypes
+  export macros, mimetypes
+
 export
   happyx,
   osproc,
@@ -151,7 +155,7 @@ macro fetchFiles*(directory: static[string]): untyped =
   result.add(ident"_files")
 
 
-template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5000,
+template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
                         x: int = 512, y: int = 128, w: int = 720, h: int = 320,
                         appMode: bool = true, title: string = "",
                         resizeable: bool = true, establish: bool = true
@@ -172,14 +176,24 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5000,
   when defined(export2android):
     static:
       # Compile main
-      echo staticExec(
+      var data = staticExec(
         "nim js -d:danger --opt:size " & getScriptDir() / appDirectory / "main.nim"
       )
+      echo data
   else:
-    # Compile main
-    echo execCmdEx(
-      "nim js -d:danger --opt:size " & getCurrentDir() / appDirectory / "main.nim"
-    )
+    when defined(buildAssets):
+      static:
+        # Compile main
+        var data = staticExec(
+          "nim js -d:danger --opt:size " & getScriptDir() / appDirectory / "main.nim"
+        )
+    else:
+      # Compile main
+      var data = execCmdEx(
+        "nim js -d:danger --opt:size " & getCurrentDir() / appDirectory / "main.nim"
+      )
+      echo data.output
+      assert data.exitCode == 0
     when appMode:
       var arguments: seq[string] = @[]
       arguments.add "--enable-gpu"
@@ -191,10 +205,8 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5000,
         spawn openYandex(port, arguments)
       elif defined(edge):
         spawn openEdge(port, arguments)
-      elif defined(chrome):
-        spawn openChrome(port, arguments)
       else:
-        spawn openDefaultBrowserApp(port, arguments)
+        spawn openChrome(port, arguments)
     else:
       spawn openDefaultBrowser("http://127.0.0.1:" & $port & "/#/")
   
@@ -226,7 +238,7 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5000,
 
     get "/":
       outHeaders["Cache-Control"] = "no-store"
-      when defined(export2android):
+      when defined(export2android) or defined(buildAssets):
         var data = getIndexHtml(appDirectory)
       else:
         let f = openAsync(getCurrentDir() / appDirectory / "index.html")
@@ -288,13 +300,22 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5000,
         websocketClient = wsClient
     
     wsClosed:
-      await handleWebSocketErr()
+      when not defined(guiApp):
+        await handleWebSocketErr()
+      else:
+        quit(QuitSuccess)
     
     wsMismatchProtocol:
-      await handleWebSocketErr()
+      when not defined(guiApp):
+        await handleWebSocketErr()
+      else:
+        quit(QuitSuccess)
     
     wsError:
-      await handleWebSocketErr()
+      when not defined(guiApp):
+        await handleWebSocketErr()
+      else:
+        quit(QuitSuccess)
     
     ws "/ws":
       let
@@ -304,14 +325,16 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5000,
       try:
         await callNim(procName, params)
       except:
-        echo "Error from Javascript call to Nim."
-        echo "Function: " & procName
-        echo "Parameters: " & $params
-        echo fmt"ERROR [{getCurrentException().name}]"
-        echo fmt"Message: " & getCurrentExceptionMsg()
+        when not defined(guiApp):
+          echo "Error from Javascript call to Nim."
+          echo "Function: " & procName
+          echo "Parameters: " & $params
+          echo fmt"ERROR [{getCurrentException().name}]"
+          echo fmt"Message: " & getCurrentExceptionMsg()
+        discard
     
     get "/{f:path}":
-      when defined(export2android):
+      when defined(export2android) or defined(buildAssets):
         var
           files = fetchFiles(getProjectPath() / appDirectory)
           splitted = f.split('.')
@@ -332,9 +355,9 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5000,
 
 
 template nativeApp*(appDirectory: string = "/assets", port: int = 5123,
-                        x: int = 512, y: int = 128, w: int = 720, h: int = 320,
-                        appMode: bool = true, title: string = "",
-                        resizeable: bool = true, establish: bool = true
+                    x: int = 512, y: int = 128, w: int = 720, h: int = 320,
+                    appMode: bool = true, title: string = "",
+                    resizeable: bool = true, establish: bool = true
 ) {.dirty.} =
   when defined(export2android):
     proc startAndroidApp*() =

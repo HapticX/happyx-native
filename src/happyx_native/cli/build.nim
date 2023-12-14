@@ -6,19 +6,58 @@ import
   strformat,
   xmlparser,
   xmltree,
+  tables,
   ../core/constants,
   ./utils
 
 
+when defined(windows):
+  import
+    options,
+    rcedit
+
+
 proc buildCommandAux*(target: string = OS, release: bool = false, opt: string = "size",
                       no_x86_64: bool = false, no_x86: bool = false, no_armeabi_v7a: bool = false,
-                      no_arm64_v8a: bool = false): int =
+                      no_arm64_v8a: bool = false, no_gradle: bool = false, no_build_assets: bool = false,
+                      chrome: bool = true, yandex: bool = false, edge: bool = false,
+                      app: string = "gui"): int =
+  if int(chrome) + int(yandex) + int(edge) > 1:
+    styledEcho fgRed, "You should choose only one browser!"
+    return QuitFailure
   let
     mode =
       if release:
         "-d:release"
       else:
         "-d:debug"
+    app =
+      if target == "android":
+        ""
+      elif app == "gui":
+        "--app:gui -d:guiApp"
+      elif app == "console":
+        "--app:console"
+      elif app == "":
+        ""
+      else:
+        styledEcho fgRed, "unknown value for app: ", opt
+        return QuitFailure
+        ""
+    browser =
+      if chrome:
+        "-d:chrome"
+      elif yandex:
+        "-d:yandex"
+      elif edge:
+        "-d:edge"
+      else:
+        ""
+    assets =
+      if no_build_assets:
+        ""
+      else:
+        "-d:buildAssets"
     opt =
       case opt
       of "size":
@@ -28,25 +67,33 @@ proc buildCommandAux*(target: string = OS, release: bool = false, opt: string = 
       of "none", "":
         "--opt:none"
       else:
-        styledEcho fgRed, "unknown opt: ", opt
+        styledEcho fgRed, "unknown value for opt: ", opt
         return QuitFailure
         ""
     cfg = readNativeConfig()
   if not cfg.exists:
     styledEcho fgRed, "Current directory is not HappyX Native project!"
     quit QuitFailure
-  # Copy assets
   if not dirExists("build"):
     createDir("build")
-  if not dirExists("build" / cfg.appDirectory):
-    copyDir(getCurrentDir() / cfg.appDirectory, "build")
+  if no_build_assets:
+    # Copy assets
+    if not dirExists("build" / cfg.appDirectory):
+      createDir("build" / cfg.appDirectory)
+      copyDir(getCurrentDir() / cfg.appDirectory, "build" / cfg.appDirectory)
   case target
   of "win", "windows":
-    discard execCmd(fmt"nim c {mode} {opt} -d:mingw --os:windows --outDir:build app.nim")
+    discard execCmd(fmt"nim c {mode} {opt} {browser} {assets} {app} -d:mingw --os:windows --outDir:build app.nim")
+    when defined(windows):
+      rcedit(
+        none(string),
+        "build" / "app.exe",
+        {"icon": "assets" / "favicon.ico", "version": cfg.version}.toTable()
+      )
   of "linux", "unix":
-    discard execCmd(fmt"nim c {mode} {opt} --os:linux --outDir:build app.nim")
+    discard execCmd(fmt"nim c {mode} {opt} {browser} {assets} {app} --os:linux --outDir:build app.nim")
   of "mac", "macos", "macosx":
-    discard execCmd(fmt"nim c {mode} {opt} --os:macosx --outDir:build app.nim")
+    discard execCmd(fmt"nim c {mode} {opt} {browser} {assets} {app} --os:macosx --outDir:build app.nim")
   of "android":
     if not dirExists("android"):
       copyDir(getAndroidFolder(), getCurrentDir() / cfg.appDirectory)
@@ -59,6 +106,22 @@ proc buildCommandAux*(target: string = OS, release: bool = false, opt: string = 
     discard tryRemoveFile("android" / "app" / "src" / "main" / "res" / "drawable" / "ic_launcher.png")
     withOpen("android" / "app" / "src" / "main" / "res" / "drawable" / "ic_launcher.png", fmWrite):
       fileVar.write(img)
+    
+    var buildGradle: string
+    withOpen("android" / "app" / "build.gradle", fmRead):
+      buildGradle = fileVar.readAll()
+    # Version name
+    buildGradle = buildGradle.replace(
+      "versionName \"1.0\"",
+      fmt"""versionName "{cfg.version}" """
+    )
+    # package
+    buildGradle = buildGradle.replace(
+      "\"com.hapticx.tmpl\"",
+      "\"" & cfg.androidPackage & "\""
+    )
+    withOpen("android" / "app" / "build.gradle", fmWrite):
+      fileVar.write(buildGradle)
     
     var strings = loadXml("android" / "app" / "src" / "main" / "res" / "values" / "strings.xml")
 
@@ -95,20 +158,21 @@ proc buildCommandAux*(target: string = OS, release: bool = false, opt: string = 
         fmt"""-o:android/app/src/main/jniLibs/{arch}/libhpx-native.so app.nim"""
       )
     styledEcho fgGreen, "Success build native libraries"
-    styledEcho fgYellow, "Setup gradle ..."
-    discard execCmdEx("gradle", workingDir = getCurrentDir() / "android")
-    styledEcho fgYellow, "Building gradle ..."
-    discard execCmdEx("gradle build", workingDir = getCurrentDir() / "android")
-    styledEcho fgGreen, "Success"
-    if not dirExists("build" / "android"):
-      createDir("build" / "android")
-    if not dirExists("build" / "android" / "debug"):
-      createDir("build" / "android" / "debug")
-    if fileExists("build" / "android" / "debug" / "app-debug.apk"):
-      removeFile("build" / "android" / "debug" / "app-debug.apk")
-      removeFile("build" / "android" / "debug" / "output-metadata.json")
-    moveFile(getCurrentDir() / "android" / "app" / "build" / "outputs" / "apk" / "debug" / "app-debug.apk", "build" / "android" / "debug" / "app-debug.apk")
-    moveFile(getCurrentDir() / "android" / "app" / "build" / "outputs" / "apk" / "debug" / "output-metadata.json", "build" / "android" / "debug" / "output-metadata.json")
+    if not no_gradle:
+      styledEcho fgYellow, "Setup gradle ..."
+      discard execCmdEx("gradle", workingDir = getCurrentDir() / "android")
+      styledEcho fgYellow, "Building gradle ..."
+      discard execCmdEx("gradle build", workingDir = getCurrentDir() / "android")
+      styledEcho fgGreen, "Success"
+      if not dirExists("build" / "android"):
+        createDir("build" / "android")
+      if not dirExists("build" / "android" / "debug"):
+        createDir("build" / "android" / "debug")
+      if fileExists("build" / "android" / "debug" / "app-debug.apk"):
+        removeFile("build" / "android" / "debug" / "app-debug.apk")
+        removeFile("build" / "android" / "debug" / "output-metadata.json")
+      moveFile(getCurrentDir() / "android" / "app" / "build" / "outputs" / "apk" / "debug" / "app-debug.apk", "build" / "android" / "debug" / "app-debug.apk")
+      moveFile(getCurrentDir() / "android" / "app" / "build" / "outputs" / "apk" / "debug" / "output-metadata.json", "build" / "android" / "debug" / "output-metadata.json")
   else:
     styledEcho fgRed, "unsupported target platform for building"
     return QuitFailure

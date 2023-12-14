@@ -14,11 +14,12 @@ const CONFIG_FILE* = "happyx.native.cfg"
 
 type
   NativeConfig* = object
+    exists*: bool
     name*: string
     androidSdk*: string
     androidPackage*: string
     appDirectory*: string
-    exists*: bool
+    version*: string
 
 
 template withOpen*(filename: string, mode: FileMode, body: untyped) =
@@ -38,6 +39,7 @@ proc readNativeConfig*(): NativeConfig =
     result.androidSdk = cfg.getSectionValue("Main", "androidSdk", "")
     result.androidPackage = cfg.getSectionValue("Main", "androidPackage", "com.hapticx.tmpl")
     result.appDirectory = cfg.getSectionValue("Main", "appDirectory", "/assets")
+    result.version = cfg.getSectionValue("Main", "version", "1.0.0")
     result.exists = true
 
 
@@ -49,6 +51,7 @@ proc readNativeConfigCompileTime*(): NativeConfig {.compileTime.} =
     result.androidSdk = cfg.getSectionValue("Main", "androidSdk", "")
     result.androidPackage = cfg.getSectionValue("Main", "androidPackage", "com.hapticx.tmpl")
     result.appDirectory = cfg.getSectionValue("Main", "appDirectory", "/assets")
+    result.version = cfg.getSectionValue("Main", "version", "1.0.0")
     result.exists = true
 
 
@@ -100,12 +103,12 @@ proc getFavicon*(ext: string = ".ico"): string =
   for kind, dir in packages2.walkDir:
     let package = dir.splitPath[1]
     if package.startsWith("happyx_native"):
-      favicon = dir / "happyx_native" / cfg.appDirectory / fmt"favicon{ext}"
+      favicon = dir / "happyx_native" / "assets" / fmt"favicon{ext}"
   if not favicon.fileExists:
     for kind, dir in packages.walkDir:
       let package = dir.splitPath[1]
       if package.startsWith("happyx_native"):
-        favicon = dir / "happyx_native" / cfg.appDirectory / fmt"favicon{ext}"
+        favicon = dir / "happyx_native" / "assets" / fmt"favicon{ext}"
   if favicon.fileExists:
     var f = open(favicon, fmRead)
     result = f.readAll()

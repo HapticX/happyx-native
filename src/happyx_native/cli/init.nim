@@ -30,9 +30,11 @@ proc initCommandAux*(name: string): int =
     fileVar.write(gitignore)
   var favicon = getFavicon()
   if favicon != "":
-    copyFileToDir(favicon, name / appDirectory)
+    withOpen(name / appDirectory / "favicon.ico", fmWrite):
+      fileVar.write(favicon)
   favicon = getFavicon(".png")
   if favicon != "":
-    copyFileToDir(favicon, name / appDirectory)
+    withOpen(name / appDirectory / "favicon.png", fmWrite):
+      fileVar.write(favicon)
   styledEcho fgGreen, "Project created!"
   QuitSuccess

@@ -23,8 +23,13 @@ proc mainCommand(version = false): int =
 
 proc buildCommand(target: string = OS, release: bool = false, opt: string = "size",
                   no_x86_64: bool = false, no_x86: bool = false, no_armeabi_v7a: bool = false,
-                  no_arm64_v8a: bool = false): int =
-  buildCommandAux(target, release, opt, no_x86_64, no_x86, no_armeabi_v7a, no_arm64_v8a)
+                  no_arm64_v8a: bool = false, no_gradle: bool = false, no_build_assets: bool = false,
+                  chrome: bool = true, yandex: bool = false, edge: bool = false,
+                  app: string = "gui"): int =
+  buildCommandAux(
+    target, release, opt, no_x86_64, no_x86, no_armeabi_v7a, no_arm64_v8a,
+    no_gradle, no_build_assets, chrome, yandex, edge, app
+  )
 
 proc initCommand(name: string): int =
   initCommandAux(name)
@@ -50,7 +55,6 @@ when isMainModule:
         ""
   case subcmd
   of "init":
-    echo pars[1..^1]
     quit(dispatchinit(cmdline = pars[1..^1]))
   of "build":
     quit(dispatchbuild(cmdline = pars[1..^1]))

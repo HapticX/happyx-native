@@ -32,15 +32,12 @@ when not defined(docgen):
   elif defined(edge):
     import happyx_native/core/finder/edge
     export edge
-  elif defined(chrome):
+  else:
     import happyx_native/core/finder/chrome
     export chrome
-  else:
-    import happyx_native/core/finder/[default, chrome]
-    export default, chrome
 else:
-  import happyx_native/core/finder/[chrome, yandex, edge, default]
-  export chrome, yandex, edge, default
+  import happyx_native/core/finder/[chrome, yandex, edge]
+  export chrome, yandex, edge
 
 when defined(export2android):
   import happyx_native/android/core

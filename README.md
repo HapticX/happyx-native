@@ -12,6 +12,11 @@
 ## Install
 
 ```shell
+nimble install happyx-native
+```
+
+or via GitHub:
+```shell
 nimble install https://github.com/HapticX/happyx-native
 ```
 
@@ -22,13 +27,87 @@ nimble install https://github.com/HapticX/happyx-native
 - Support for Android;
 
 
+## Project Initialization
+
+To init project you should use this command:
+```shell
+hpx-native init --name ProjectName
+```
+
+This command will automatically initialize your project.
+
+It also fetches `ANDROID_SDK_ROOT` from environment (need for android compilation).
+
+## Building
+
+To build your project you should move into project folder
+```shell
+cd ProjectName
+```
+
+and just build it!
+```shell
+hpx-native build
+```
+This automatically builds your project for your OS as target platform.
+
+### Cross-Compilation
+
+To compile for other OS use
+```shell
+hpx-native build --target linux
+```
+
+Possible values:
+| OS      | value   | aliases    |
+| :--     | :--:    | :--:       |
+| Windows | windows | win        |
+| Linux   | linux   | unix       |
+| MacOS   | macosx  | mac, macos |
+| Android | android | -          |
+
+### Android compilation
+
+You should have:
+- Android Studio with SDK and NDK;
+- Gradle >= 7.5;
+- Nim >= 2.0.0;
+
+By default `hpx-native build --target android` supports all android architectures.
+If you want to disable some architectures then use:
+```shell
+hpx-native build --target android --no-x86_64
+```
+
+Possible architectures
+| Architecture | Disable Argument   |
+| :--          | :--:               |
+| x86          | `--no-x86`         |
+| x86_64       | `--no-x86_64`      |
+| armeabi-v7a  | `--no-armeabi-v7a` |
+| arm64-v8a    | `--no-arm64-v8a`   |
+
+If you doesn't want to use gradle building then use
+```shel
+hpx-native build --target android --no-gradle
+```
+This command will build only `.so` libraries.
+
+
+### Building Assets
+
+HappyX Native supports "building" assets - all resources from app directory (by default `/assets`) and all subdirectories are "sewn" into executable file.
+
+This way you can distribute your application over the network with only one executable file.
+
+> This option can be disabled via `--no-build-assets`
+
 ## Browsers
 
 If you want choose other browser instead of default - use these flags:
 
 | browser         | flag            |
 | :-----:         | :-------------: |
-| Default browser | uses by default |
-| Chrome          | `-d:chrome`     |
+| Chrome          | uses by default |
 | Edge            | `-d:edge`       |
 | Yandex          | `-d:yandex`     |
