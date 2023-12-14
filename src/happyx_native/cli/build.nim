@@ -96,7 +96,7 @@ proc buildCommandAux*(target: string = OS, release: bool = false, opt: string = 
     discard execCmd(fmt"nim c {mode} {opt} {browser} {assets} {app} --os:macosx --outDir:build app.nim")
   of "android":
     if not dirExists("android"):
-      copyDir(getAndroidFolder(), getCurrentDir() / cfg.appDirectory)
+      copyDir(getAndroidFolder(), getCurrentDir() / "android")
       createDir("android" / "app" / "src" / "main" / "res" / "drawable")
     
     # Setup app data
@@ -111,15 +111,9 @@ proc buildCommandAux*(target: string = OS, release: bool = false, opt: string = 
     withOpen("android" / "app" / "build.gradle", fmRead):
       buildGradle = fileVar.readAll()
     # Version name
-    buildGradle = buildGradle.replace(
-      "versionName \"1.0\"",
-      fmt"""versionName "{cfg.version}" """
-    )
+    buildGradle = buildGradle.replace("versionName \"1.0\"", fmt"""versionName "{cfg.version}" """)
     # package
-    buildGradle = buildGradle.replace(
-      "\"com.hapticx.tmpl\"",
-      "\"" & cfg.androidPackage & "\""
-    )
+    buildGradle = buildGradle.replace("com.hapticx.tmpl", cfg.androidPackage)
     withOpen("android" / "app" / "build.gradle", fmWrite):
       fileVar.write(buildGradle)
     
@@ -130,6 +124,26 @@ proc buildCommandAux*(target: string = OS, release: bool = false, opt: string = 
         str[0].text = cfg.name
     withOpen("android" / "app" / "src" / "main" / "res" / "values" / "strings.xml", fmWrite):
       fileVar.write($strings)
+    # Java files
+    var
+      mainActivity: string
+      native: string
+    
+    withOpen("android" / "app" / "src" / "main" / "java" / "com" / "hapticx" / "tmpl" / "MainActivity.java", fmRead):
+      mainActivity = fileVar.readAll()
+    mainActivity = mainActivity.replace("com.hapticx.tmpl", cfg.androidPackage)
+    withOpen("android" / "app" / "src" / "main" / "java" / "com" / "hapticx" / "tmpl" / "Native.java", fmRead):
+      native = fileVar.readAll()
+    native = native.replace("com.hapticx.tmpl", cfg.androidPackage)
+    
+    # Build assets
+    mainActivity = mainActivity.replace("http://localhost:5123/", fmt"http://localhost:{cfg.port}/")
+    
+    # Replace package
+    withOpen("android" / "app" / "src" / "main" / "java" / cfg.androidPackage.replace(".", $DirSep) / "MainActivity.java", fmWrite):
+      fileVar.write(mainActivity)
+    withOpen("android" / "app" / "src" / "main" / "java" / cfg.androidPackage.replace(".", $DirSep) / "Native.java", fmWrite):
+      fileVar.write(native)
 
     # compile .so libraries
     var
@@ -152,7 +166,7 @@ proc buildCommandAux*(target: string = OS, release: bool = false, opt: string = 
     for data in archs:
       let (arch, cpu, linker) = data
       discard execCmd(
-        fmt"""nim c {mode} {opt} -d:export2android -d:noSignalHandler --app:lib """ &
+        fmt"""nim c {mode} {opt} {assets} -d:export2android -d:noSignalHandler --app:lib """ &
         fmt"""--os:android --cpu:{cpu} --hint[CC]:on -d:httpxSendServerDate=false -d:httpx """ &
         fmt"""--clang.path:"{clangPath}" --clang.exe:"{linker}" --clang.linkerexe:"{linker}" """ &
         fmt"""-o:android/app/src/main/jniLibs/{arch}/libhpx-native.so app.nim"""

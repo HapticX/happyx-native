@@ -15,6 +15,7 @@ const CONFIG_FILE* = "happyx.native.cfg"
 type
   NativeConfig* = object
     exists*: bool
+    port*: int
     name*: string
     androidSdk*: string
     androidPackage*: string
@@ -40,6 +41,7 @@ proc readNativeConfig*(): NativeConfig =
     result.androidPackage = cfg.getSectionValue("Main", "androidPackage", "com.hapticx.tmpl")
     result.appDirectory = cfg.getSectionValue("Main", "appDirectory", "/assets")
     result.version = cfg.getSectionValue("Main", "version", "1.0.0")
+    result.port = parseInt(cfg.getSectionValue("Main", "port", "5123"))
     result.exists = true
 
 
@@ -52,6 +54,7 @@ proc readNativeConfigCompileTime*(): NativeConfig {.compileTime.} =
     result.androidPackage = cfg.getSectionValue("Main", "androidPackage", "com.hapticx.tmpl")
     result.appDirectory = cfg.getSectionValue("Main", "appDirectory", "/assets")
     result.version = cfg.getSectionValue("Main", "version", "1.0.0")
+    result.port = parseInt(cfg.getSectionValue("Main", "port", "5123"))
     result.exists = true
 
 

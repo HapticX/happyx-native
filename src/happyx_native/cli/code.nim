@@ -9,6 +9,7 @@ androidSdk = r"{ANDROID_SDK_ROOT}"
 androidPackage = r"com.hapticx.tmpl"
 appDirectory = r"/assets"
 version = 1.0.0
+port = 5123  # uses in android build
 """
   nativeMain* = """# Main native file
 import happyx_native

@@ -176,15 +176,14 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
   when defined(export2android):
     static:
       # Compile main
-      var data = staticExec(
+      echo staticExec(
         "nim js -d:danger --opt:size " & getScriptDir() / appDirectory / "main.nim"
       )
-      echo data
   else:
     when defined(buildAssets):
       static:
         # Compile main
-        var data = staticExec(
+        echo staticExec(
           "nim js -d:danger --opt:size " & getScriptDir() / appDirectory / "main.nim"
         )
     else:
