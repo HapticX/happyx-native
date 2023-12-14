@@ -103,25 +103,25 @@ macro onExit*(body: untyped) =
     body
   )
 
-
-proc cfgAndroidPackageId*(): string {.compileTime.} =
-  var cfg = readNativeConfigCompileTime()
-  cfg.androidPackage
-
-
-proc cfgAndroidSdk*(): string {.compileTime.} =
-  var cfg = readNativeConfigCompileTime()
-  cfg.androidSdk
+when defined(export2android):
+  proc cfgAndroidPackageId*(): string {.compileTime.} =
+    var cfg = readNativeConfigCompileTime()
+    cfg.androidPackage
 
 
-proc cfgName*(): string {.compileTime.}=
-  var cfg = readNativeConfigCompileTime()
-  cfg.name
+  proc cfgAndroidSdk*(): string {.compileTime.} =
+    var cfg = readNativeConfigCompileTime()
+    cfg.androidSdk
 
 
-proc cfgAppDirectory*(): string {.compileTime.}=
-  var cfg = readNativeConfigCompileTime()
-  cfg.appDirectory
+  proc cfgName*(): string {.compileTime.}=
+    var cfg = readNativeConfigCompileTime()
+    cfg.name
+
+
+  proc cfgAppDirectory*(): string {.compileTime.}=
+    var cfg = readNativeConfigCompileTime()
+    cfg.appDirectory
 
 
 macro getIndexHtml*(directory: static[string]): untyped =
