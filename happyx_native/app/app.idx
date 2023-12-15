@@ -1,12 +1,12 @@
 nimTitle	app	happyx_native/app/app.html	module src/happyx_native/app/app		0
-nim	websocketClient	happyx_native/app/app.html#websocketClient	var websocketClient		34
-nim	callback	happyx_native/app/app.html#callback.m,untyped	macro callback(body: untyped)		37
-nim	callJsAsync	happyx_native/app/app.html#callJsAsync.m,string,varargs[untyped]	macro callJsAsync(funcName: string; params: varargs[untyped])		91
-nim	callJs	happyx_native/app/app.html#callJs.m,string,varargs[untyped]	macro callJs(funcName: string; params: varargs[untyped])		97
-nim	onExit	happyx_native/app/app.html#onExit.m,untyped	macro onExit(body: untyped)		103
-nim	getIndexHtml	happyx_native/app/app.html#getIndexHtml.m,static[string]	macro getIndexHtml(directory: static[string]): untyped		131
-nim	fetchFiles	happyx_native/app/app.html#fetchFiles.m,static[string]	macro fetchFiles(directory: static[string]): untyped		136
-nim	nativeAppImpl	happyx_native/app/app.html#nativeAppImpl.t,string,int,int,int,int,int,bool,string,bool,bool	template nativeAppImpl(appDirectory: string = "/assets"; port: int = 5123; x: int = 512;\n              y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;\n              title: string = ""; resizeable: bool = true;\n              establish: bool = true)		158
-nim	nativeApp	happyx_native/app/app.html#nativeApp.t,string,int,int,int,int,int,bool,string,bool,bool	template nativeApp(appDirectory: string = "/assets"; port: int = 5123; x: int = 512;\n          y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;\n          title: string = ""; resizeable: bool = true; establish: bool = true)		356
+nim	websocketClient	happyx_native/app/app.html#websocketClient	var websocketClient		38
+nim	callback	happyx_native/app/app.html#callback.m,untyped	macro callback(body: untyped)		44
+nim	callJsAsync	happyx_native/app/app.html#callJsAsync.m,string,varargs[untyped]	macro callJsAsync(funcName: string; params: varargs[untyped])		122
+nim	callJs	happyx_native/app/app.html#callJs.m,string,varargs[untyped]	macro callJs(funcName: string; params: varargs[untyped])		128
+nim	onExit	happyx_native/app/app.html#onExit.m,untyped	macro onExit(body: untyped)		134
+nim	getIndexHtml	happyx_native/app/app.html#getIndexHtml.m,static[string]	macro getIndexHtml(directory: static[string]): untyped		167
+nim	fetchFiles	happyx_native/app/app.html#fetchFiles.m,static[string]	macro fetchFiles(directory: static[string]): untyped		172
+nim	nativeAppImpl	happyx_native/app/app.html#nativeAppImpl.t,string,int,int,int,int,int,bool,string,bool,bool	template nativeAppImpl(appDirectory: string = "/assets"; port: int = 5123; x: int = 512;\n              y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;\n              title: string = ""; resizeable: bool = true;\n              establish: bool = true)		194
+nim	nativeApp	happyx_native/app/app.html#nativeApp.t,string,int,int,int,int,int,bool,string,bool,bool	template nativeApp(appDirectory: string = "/assets"; port: int = 5123; x: int = 512;\n          y: int = 128; w: int = 720; h: int = 320; appMode: bool = true;\n          title: string = ""; resizeable: bool = true; establish: bool = true)		401
 heading	Example	happyx_native/app/app.html#app-example	  Example		0
 heading	App	happyx_native/app/app.html#app	 App		0
