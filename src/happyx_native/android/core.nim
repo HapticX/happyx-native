@@ -8,6 +8,7 @@ import
 
 
 export
+  jnim,
   jni_wrapper,
   jni_api,
   lang,
@@ -59,3 +60,10 @@ macro nativeMethodsFor*(package: static[string], className: static[string], body
     newNimNode(nnkInfix).add(ident"~", parseExpr(package), ident(className)),
     body
   )
+
+
+proc JNI_OnLoad*(vm: JavaVMPtr, reserved: pointer): jint {.cdecl, dynlib, exportc.} =
+  if theEnv.isNil:
+    initJNI(vm)
+    checkInit()
+  return JNI_VERSION_1_6

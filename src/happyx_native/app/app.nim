@@ -6,7 +6,8 @@ import
   std/[
     macros, os, sequtils, strformat,
     osproc, json, threadpool, browsers,
-    uri, tables, terminal, parsecfg
+    uri, tables, terminal, parsecfg,
+    jsonutils
   ],
   happyx
 
@@ -14,7 +15,8 @@ when defined(export2android):
   import
     mimetypes,
     ../cli/utils,
-    ../android/core
+    ../android/core,
+    ../android/utils
   export
     macros, mimetypes
 
@@ -25,6 +27,8 @@ when defined(buildAssets):
 export
   happyx,
   osproc,
+  json,
+  jsonutils,
   threadpool,
   sequtils,
   terminal,
@@ -32,6 +36,9 @@ export
 
 
 var websocketClient*: WebSocket
+
+when defined(export2android):
+  var appContext*: Context
 
 
 macro callback*(body: untyped) =
@@ -49,20 +56,39 @@ macro callback*(body: untyped) =
   ## 
   ## nativeApp("/assets")
   ## ```
-  var caseProcStmt = newNimNode(nnkCaseStmt).add(ident"name")
+  var
+    caseProcStmt = newNimNode(nnkCaseStmt).add(ident"name")
+    statements = newStmtList()
   for statement in body:
     if statement.kind notin {nnkProcDef}:
       continue
+    var params: seq[NimNode] = @[]
+    for param in statement.params:
+      params.add(param)
+    dumpTree:
+      {.gcsafe.}:
+        echo 1
+    var prc = newProc(
+      statement.name,
+      params,
+      newNimNode(nnkPragmaBlock).add(
+        newNimNode(nnkPragma).add(ident"gcsafe"),
+        statement.body
+      ),
+      nnkTemplateDef,
+      statement[4]
+    )
+    statements.add(prc)
     caseProcStmt.add(newNimNode(nnkOfBranch).add(
       newLit($statement.name),
       block:
         var call = newCall(statement.name)
         for i in 1..statement.params.len-1:
-          let paramType = statement.params[i]
+          let param = statement.params[i]
           call.add(newCall(
             "jsonTo",
-            newCall("[]", ident"args", newLit(i)),
-            paramType
+            newCall("[]", ident"args", newLit(i-1)),
+            param[1]
           ))
         var isAsync = false
         for i in statement[4]:
@@ -74,7 +100,7 @@ macro callback*(body: untyped) =
           call
     ))
   result = newStmtList(
-    body,
+    statements,
     newProc(
       ident"callNim",
       [
@@ -82,10 +108,15 @@ macro callback*(body: untyped) =
         newIdentDefs(ident"name", ident"string"),
         newIdentDefs(ident"args", newNimNode(nnkBracketExpr).add(ident"seq", ident"JsonNode")),
       ],
-      caseProcStmt
+      newStmtList(
+        newCall(newDotExpr(ident"Log", ident"d"), newLit"NATIVE", ident"name"),
+        newCall(newDotExpr(ident"Log", ident"d"), newLit"NATIVE", newCall("$", ident"args")),
+        caseProcStmt
+      ),
+      nnkTemplateDef
     )
   )
-  result[^1].addPragma(ident"async")
+  echo result.toStrLit
 
 
 macro callJsAsync*(funcName: string, params: varargs[untyped]) =
@@ -121,6 +152,11 @@ when defined(export2android):
   proc cfgName*(): string {.compileTime.}=
     var cfg = readNativeConfigCompileTime()
     cfg.name
+
+
+  proc cfgPort*(): int {.compileTime.}=
+    var cfg = readNativeConfigCompileTime()
+    cfg.port
 
 
   proc cfgAppDirectory*(): string {.compileTime.}=
@@ -210,31 +246,32 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
       spawn openDefaultBrowser("http://127.0.0.1:" & $port & "/#/")
   
   # Server
-  serve "127.0.0.1", port:
-    setup:
-      proc handleWebSocketErr() {.async.} =
-        {.gcsafe.}:
-          websocketClient = nil
-          styledEcho fgRed, "Connection was closed"
-          when establish:
-            for i in 0..3:
-              styledEcho fgYellow, fmt"Trying to establish connection ... {i}/3"
-              await sleepAsync(500)
-              if i < 3:
-                eraseLine()
-                cursorUp()
-            if websocketClient.isNil:
-              styledEcho fgRed, "failed to establish connection"
-              when declared(nativeAppExitHandler):
-                nativeAppExitHandler()
-              styledEcho fgRed, "exit ..."
-              quit QuitSuccess
-          else:
-            when declared(nativeAppExitHandler):
-              nativeAppExitHandler()
-            styledEcho fgRed, "exit ..."
-            quit QuitSuccess
-
+  var server = newServer("127.0.0.1", port)
+  
+  proc handleWebSocketErr() {.async.} =
+    {.gcsafe.}:
+      websocketClient = nil
+      styledEcho fgRed, "Connection was closed"
+      when establish:
+        for i in 0..3:
+          styledEcho fgYellow, fmt"Trying to establish connection ... {i}/3"
+          await sleepAsync(500)
+          if i < 3:
+            eraseLine()
+            cursorUp()
+        if websocketClient.isNil:
+          styledEcho fgRed, "failed to establish connection"
+          when declared(nativeAppExitHandler):
+            nativeAppExitHandler()
+          styledEcho fgRed, "exit ..."
+          quit QuitSuccess
+      else:
+        when declared(nativeAppExitHandler):
+          nativeAppExitHandler()
+        styledEcho fgRed, "exit ..."
+        quit QuitSuccess
+  
+  server.routes:
     get "/":
       outHeaders["Cache-Control"] = "no-store"
       when defined(export2android) or defined(buildAssets):
@@ -273,6 +310,8 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
             window[func].apply(null, arr);
           },
           callNim: function (func, ...args) {
+            console.log(typeof(func), func);
+            console.log(typeof([...args]), [...args]);
             if (!connected) {
               function check(func, ...args) {
                 if (ws.readyState === 1) {
@@ -283,6 +322,10 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
               }
               var myInterval = setInterval(check, 15, func, ...args);
             } else {
+              console.log(JSON.stringify({
+                "procedure": func,
+                "params": [...args]
+              }));
               ws.send(JSON.stringify({
                 "procedure": func,
                 "params": [...args]
@@ -322,7 +365,8 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
         procName = data["procedure"].getStr
         params = data["params"].getElems
       try:
-        await callNim(procName, params)
+        {.gcsafe.}:
+          callNim(procName, params)
       except:
         when not defined(guiApp):
           echo "Error from Javascript call to Nim."
@@ -351,6 +395,7 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
         let filepath = getCurrentDir() / appDirectory / f
         if fileExists(filepath):
           await req.answerFile(filepath, forceResponse = true)
+  server.start()
 
 
 template nativeApp*(appDirectory: string = "/assets", port: int = 5123,
@@ -359,15 +404,9 @@ template nativeApp*(appDirectory: string = "/assets", port: int = 5123,
                     resizeable: bool = true, establish: bool = true
 ) {.dirty.} =
   when defined(export2android):
-    proc startAndroidApp*() =
-      nativeAppImpl(appDirectory, port, x, y, w, h, appMode, title, resizeable, establish)
-
-    proc startAndroidApp*(servePort: int) =
-      nativeAppImpl(appDirectory, servePort, x, y, w, h, appMode, title, resizeable, establish)
-
     nativeMethodsFor cfgAndroidPackageId(), "Native":
-      proc start() =
-        initJNI(env)
-        startAndroidApp()
+      proc start(ctx: jobject) =
+        appContext = cast[Context](newJVMObject(ctx))
+        nativeAppImpl(appDirectory, cfgPort(), x, y, w, h, appMode, title, resizeable, establish)
   else:
     nativeAppImpl(appDirectory, port, x, y, w, h, appMode, title, resizeable, establish)

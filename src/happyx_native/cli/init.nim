@@ -18,14 +18,14 @@ proc initCommandAux*(name: string): int =
   let ANDROID_SDK_ROOT = getEnv("ANDROID_SDK_ROOT")
   withOpen(name / "happyx.native.cfg", fmWrite):
     fileVar.write(fmt(configFile))
+  withOpen(name / "README.md", fmWrite):
+    fileVar.write(fmt(readmeTemplate))
   withOpen(name / "app.nim", fmWrite):
     fileVar.write(fmt(nativeMain))
   withOpen(name / appDirectory / "main.nim", fmWrite):
     fileVar.write(fmt(happyxMain))
   withOpen(name / appDirectory / "index.html", fmWrite):
     fileVar.write(fmt(indexHtml))
-  withOpen(name / appDirectory / "README.md", fmWrite):
-    fileVar.write(fmt(readmeTemplate))
   withOpen(name / appDirectory / ".gitignore", fmWrite):
     fileVar.write(gitignore)
   var favicon = getFavicon()

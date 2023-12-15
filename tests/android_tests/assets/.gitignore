@@ -1,0 +1,15 @@
+# Build
+build/
+*.apk
+*.exe
+
+# Android
+.gradle/
+.idea/
+
+# Logs
+*.log
+*.lg
+
+# Db
+*.db

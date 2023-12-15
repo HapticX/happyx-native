@@ -40,8 +40,8 @@ else:
   export chrome, yandex, edge
 
 when defined(export2android):
-  import happyx_native/android/core
-  export core
+  import happyx_native/android/[core, utils]
+  export core, utils
 
 export
   constants,
