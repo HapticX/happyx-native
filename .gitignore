@@ -3,6 +3,8 @@
 *.apk
 *.js
 *.log
+*.so
+*.dll
 
 # Documentation
 htmldocs/
