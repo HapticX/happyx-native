@@ -108,6 +108,7 @@ If you want choose other browser instead of default - use these flags:
 
 | browser         | flag            |
 | :-----:         | :-------------: |
-| Chrome          | uses by default |
+| Default browser | uses by default |
+| Chrome          | `-d:chrome`     |
 | Edge            | `-d:edge`       |
 | Yandex          | `-d:yandex`     |
