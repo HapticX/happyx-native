@@ -20,6 +20,112 @@ const
   WARN*: jint = 5
 
 
+jclass java.lang.CharSequence* of Object:
+  proc charAt*(idx: jint): jchar
+  proc length*: jint
+
+
+jClass java.lang.StackTraceElement* of Object:
+  proc new*(declaringClass: string, methodName: string, fileName: string, lineNumber: int)
+  proc equals*(obj: Object): jboolean
+  proc getClassName*: string
+  proc getFileName*: string
+  proc getLineNumber*: jint
+  proc getMethodName*: string
+  proc hashCode*: jint
+  proc isNativeMethod*: jboolean
+  proc toString*: string
+
+
+jClass java.io.Writer* of Object:
+  proc new*
+  proc new*(lock: Object)
+  proc append*(c: jchar): Writer
+  proc close*
+  proc flush*
+  proc nullWriter*: Writer {.static.}
+  proc write*(s: string)
+  proc write*(c: jint)
+  proc write*(s: string, off: jint, len: jint)
+
+
+jClass java.lang.Throwable* of Object:
+  proc new*
+  proc new*(message: string)
+  proc new*(message: string, cause: Throwable)
+  proc new*(cause: Throwable)
+  proc addSuspend*(exception: Throwable)
+  proc fillInStackTrace*: Throwable
+  proc getCause*: Throwable
+  proc getLocalizedMessage*: string
+  proc getMessage*: string
+  proc getStackTrace*: seq[StackTraceElement]
+  proc getSuppressed*: seq[Throwable]
+  proc initCause*(cause: Throwable): Throwable
+  proc printStackTrace*
+  proc setStackTrace*(stackTrace: seq[StackTraceElement])
+  proc toString*: string
+
+
+jClass java.io.FileDescriptor* of Object:
+  proc new*
+  proc sync*
+  proc valid*: jboolean
+
+
+jclassDef java.lang.Thread* of Object
+
+
+jClass java.lang.ThreadGroup* of Object:
+  proc new*(name: string)
+  proc new*(parent: ThreadGroup, name: string)
+  proc activeCount*: jint
+  proc activeGroupCount*: jint
+  proc allowThreadSuspension*(b: jboolean): jboolean
+  proc checkAccess*
+  proc destroy*
+  proc enumerate*(list: seq[ThreadGroup]): jint
+  proc enumerate*(list: seq[ThreadGroup], recurse: jboolean): jint
+  proc enumerate*(list: seq[Thread]): jint
+  proc enumerate*(list: seq[Thread], recurse: jboolean): jint
+  proc getMaxPriority*: jint
+  proc getName*: string
+  proc getParent*: ThreadGroup
+  proc interrupt*
+  proc isDaemon*: jboolean
+  proc isDestroyed*: jboolean
+  proc list*
+  proc parentOf*(g: ThreadGroup): jboolean
+  proc resume*
+  proc setDaemon*(daemon: jboolean)
+  proc setMaxPriority*(pri: jint)
+  proc stop*
+  proc suspend*
+  proc toString*: string
+  proc uncaughtException*(t: Thread, e: Throwable)
+
+
+jClassImpl java.lang.Thread* of Object:
+  proc new*
+  proc new*(target: Runnable)
+  proc new*(group: ThreadGroup, target: Runnable)
+  proc new*(name: string)
+  proc new*(group: ThreadGroup, name: string)
+  proc new*(target: Runnable, name: string)
+  proc new*(group: ThreadGroup, target: Runnable, name: string)
+  proc activeCount*: jint {.static.}
+  proc checkAccess*
+  proc countStackFrames*: jint
+  proc currentThread*: Thread {.static.}
+  proc destroy*
+  proc dumpStack* {.static.}
+  proc enumerate*(tarray: seq[Thread]): jint {.static.}
+  proc getId*: jlong
+  proc getName*: string
+  proc getPriority*: string
+  proc getStackTrace*: seq[StackTraceElement]
+
+
 jClass android.content.SharedPreferences$Editor* of Object:
   proc new*
   proc apply*
@@ -129,6 +235,60 @@ jClass android.content.Context* of Object:
   proc new*
   proc getSharedPreferences*(name: string, mode: jint): SharedPreferences
   proc getString*(resId: jint): string
+
+
+jClass android.os.MessageQueue$IdleHandler* of Object:
+  proc queueIdle*: jboolean
+
+
+jClass android.os.MessageQueue$OnFileDescriptorEventListener* of Object:
+  proc onFileDescriptorEvents*(fd: FileDescriptor, events: jint): jint
+
+
+jClass android.os.MessageQueue* of Object:
+  proc addIdleHandler*(handler: IdleHandler)
+  proc addOnFileDescriptorEventListener*(
+    fd: FileDescriptor, events: jint,
+    listener: OnFileDescriptorEventListener
+  )
+  proc isIdle*: jboolean
+  proc removeHandler*(handler: IdleHandler)
+  proc removeOnFileDescriptorEventListener*(fd: FileDescriptor)
+
+
+jClass android.os.Looper* of Object:
+  proc new*
+  proc getMainLooper*: Looper {.static.}
+  proc getQueue*: MessageQueue
+  proc getThread*: Thread
+  proc isCurrentThread*: jboolean
+  proc loop* {.static.}
+  proc myLooper*: Looper {.static.}
+  proc myQueue*: MessageQueue {.static.}
+  proc prepare* {.static.}
+  proc prepareMainLooper* {.static.}
+  proc quit*
+  proc quitSafely*
+  proc toString*: string
+
+
+jClass android.os.Handler* of Object:
+  proc new*
+
+
+jClass android.os.Message* of Object:
+  proc new*
+  proc copyFrom*(o: Message)
+  proc describeContents*: jint
+  proc getCallback*: Runnable
+  proc getTarget*: Handler
+  proc getWhen*: jlong
+  proc isAsynchronous*: jboolean
+  proc obtain*(h: Handler): Message {.static.}
+  proc obtain*(h: Handler, what: jint): Message {.static.}
+  proc obtain*(h: Handler, callback: Runnable): Message {.static.}
+  proc obtain*(orig: Message): Message {.static.}
+  proc obtain*: Message {.static.}
 
 
 type Log* = object

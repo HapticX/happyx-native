@@ -109,8 +109,6 @@ macro callback*(body: untyped) =
         newIdentDefs(ident"args", newNimNode(nnkBracketExpr).add(ident"seq", ident"JsonNode")),
       ],
       newStmtList(
-        newCall(newDotExpr(ident"Log", ident"d"), newLit"NATIVE", ident"name"),
-        newCall(newDotExpr(ident"Log", ident"d"), newLit"NATIVE", newCall("$", ident"args")),
         caseProcStmt
       ),
       nnkTemplateDef
@@ -246,32 +244,30 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
       spawn openDefaultBrowser("http://127.0.0.1:" & $port & "/#/")
   
   # Server
-  var server = newServer("127.0.0.1", port)
-  
-  proc handleWebSocketErr() {.async.} =
-    {.gcsafe.}:
-      websocketClient = nil
-      styledEcho fgRed, "Connection was closed"
-      when establish:
-        for i in 0..3:
-          styledEcho fgYellow, fmt"Trying to establish connection ... {i}/3"
-          await sleepAsync(500)
-          if i < 3:
-            eraseLine()
-            cursorUp()
-        if websocketClient.isNil:
-          styledEcho fgRed, "failed to establish connection"
-          when declared(nativeAppExitHandler):
-            nativeAppExitHandler()
-          styledEcho fgRed, "exit ..."
-          quit QuitSuccess
-      else:
-        when declared(nativeAppExitHandler):
-          nativeAppExitHandler()
-        styledEcho fgRed, "exit ..."
-        quit QuitSuccess
-  
-  server.routes:
+  serve "127.0.0.1", port:
+    setup:
+      proc handleWebSocketErr() {.async.} =
+        {.gcsafe.}:
+          websocketClient = nil
+          styledEcho fgRed, "Connection was closed"
+          when establish:
+            for i in 0..3:
+              styledEcho fgYellow, fmt"Trying to establish connection ... {i}/3"
+              await sleepAsync(500)
+              if i < 3:
+                eraseLine()
+                cursorUp()
+            if websocketClient.isNil:
+              styledEcho fgRed, "failed to establish connection"
+              when declared(nativeAppExitHandler):
+                nativeAppExitHandler()
+              styledEcho fgRed, "exit ..."
+              quit QuitSuccess
+          else:
+            when declared(nativeAppExitHandler):
+              nativeAppExitHandler()
+            styledEcho fgRed, "exit ..."
+            quit QuitSuccess
     get "/":
       outHeaders["Cache-Control"] = "no-store"
       when defined(export2android) or defined(buildAssets):
@@ -365,8 +361,11 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
         procName = data["procedure"].getStr
         params = data["params"].getElems
       try:
-        {.gcsafe.}:
-          callNim(procName, params)
+        when declared(callNim):
+          {.gcsafe.}:
+            callNim(procName, params)
+        else:
+          discard
       except:
         when not defined(guiApp):
           echo "Error from Javascript call to Nim."
@@ -395,7 +394,6 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
         let filepath = getCurrentDir() / appDirectory / f
         if fileExists(filepath):
           await req.answerFile(filepath, forceResponse = true)
-  server.start()
 
 
 template nativeApp*(appDirectory: string = "/assets", port: int = 5123,

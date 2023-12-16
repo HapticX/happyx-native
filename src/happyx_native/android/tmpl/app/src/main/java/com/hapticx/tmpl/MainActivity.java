@@ -20,7 +20,6 @@ public class MainActivity extends Activity {
 
         w = findViewById(R.id.webView);
 
-        System.out.println("INITIALIZE");
         if (!paused) {
             new Thread(() -> Native.start(this)).start();
         }
@@ -52,7 +51,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        System.out.println("DESTROY");
         System.exit(0);
     }
 
