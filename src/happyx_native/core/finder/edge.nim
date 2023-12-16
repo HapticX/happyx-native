@@ -16,11 +16,18 @@ when OS == "mac":
     except:
       raise newException(EdgeNotFound, "could not find Edge in Applications directory")
 elif OS == "win":
+  import std/registry
+
   proc findWindows: string =
     for path in EdgePaths:
       if path.absolutePath.fileExists:
         return path
-    raise newException(EdgeNotFound, "could not find Edge")
+    result = getUnicodeValue(
+      path = r"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\msedge.exe",
+      key = "", handle = HKEY_LOCAL_MACHINE
+    )
+    if result.len == 0:
+      raise newException(ChromeNotFound, "could not find Chrome")
 elif OS == "unix":
   proc findLinux: string =
     for name in EdgePaths:

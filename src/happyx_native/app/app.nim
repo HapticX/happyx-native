@@ -238,8 +238,10 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
         spawn openYandex(port, arguments)
       elif defined(edge):
         spawn openEdge(port, arguments)
-      else:
+      elif defined(chrome):
         spawn openChrome(port, arguments)
+      else:
+        spawn openDefault(port, arguments)
     else:
       spawn openDefaultBrowser("http://127.0.0.1:" & $port & "/#/")
   
