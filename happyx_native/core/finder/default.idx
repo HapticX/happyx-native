@@ -1,0 +1,2 @@
+nimTitle	default	happyx_native/core/finder/default.html	module src/happyx_native/core/finder/default		0
+nim	openDefault	happyx_native/core/finder/default.html#openDefault,int,openArray[string]	proc openDefault(port: int; chromeFlags: openArray[string])		77
