@@ -31,8 +31,8 @@ proc buildCommand(target: string = OS, release: bool = false, opt: string = "siz
     no_gradle, no_build_assets, chrome, yandex, edge, app
   )
 
-proc initCommand(name: string): int =
-  initCommandAux(name)
+proc initCommand(name: string, kind: string = "SPA"): int =
+  initCommandAux(name, kind)
 
 
 

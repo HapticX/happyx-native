@@ -5,6 +5,7 @@ const
   configFile* = """# HappyX Native config file
 [Main]
 name = r"{name}"
+kind = r"{kind}"
 androidSdk = r"{ANDROID_SDK_ROOT}"
 androidPackage = r"com.hapticx.tmpl"
 appDirectory = r"/assets"
@@ -86,6 +87,79 @@ appRoutes "app":
       }}
     " " "
 """.replace("\" \" \"", "\"\"\"")
+  happyxRouterHPX* = """{{
+  "/": "main.hpx"
+}}"""
+  happyxHPXNative* = """import jsffi
+export jsffi
+
+var hpxNative* {.importc, nodecl.}: JsObject
+"""
+  happyxMainHPX* = """<template>
+  <div class="container">
+    <h1>{name}</h1>
+    <div class="content">
+      x is {{self.x}}
+      <button h-onclick="self.helloWorld()">
+        increase
+      </button>
+    </div>
+  </div>
+</template>
+
+
+<script>
+import assets/native  # working with happyx native
+
+props:
+  x: int = 0
+
+proc helloWorld() =
+  hpxNative.callNim("helloWorld")
+  self.x->inc()
+</script>
+
+
+<!-- Component scoped style -->
+<style>
+body {{
+  padding: 0;
+  margin: 0;
+}}
+.container {{
+  color: #efefef;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #0A0A0A;
+  justify-content: center;
+  align-items: center;
+}}
+.content {{
+  gap: .2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}}
+button {{
+  padding: .4rem 1.2rem;
+  font-weight: bold;
+  transition: all;
+  border: none;
+  border-radius: 8px;
+  transition-duration: .3s;
+  background-color: #ecf;
+}}
+button:hover {{
+  background-color: #cbe;
+}}
+button:active {{
+  background-color: #bad;
+}}
+</style>
+"""
   indexHtml* = """<!DOCTYPE html>
 <html>
   <head>

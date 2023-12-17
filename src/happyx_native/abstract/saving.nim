@@ -49,6 +49,7 @@ template saveAndLoad[T](saveFunc, loadFunc, parseFunc: untyped, tdesc: typedesc[
 
 
 saveAndLoad(save, loadJson, parseJson, JsonNode)
+saveAndLoad(save, loadString, `$`, string)
 saveAndLoad(save, loadInt, parseInt, int)
 saveAndLoad(save, loadFloat, parseFloat, float)
 saveAndLoad(save, loadBool, parseBool, bool)

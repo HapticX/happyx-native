@@ -7,9 +7,13 @@ import
   ./code
 
 
-proc initCommandAux*(name: string): int =
+proc initCommandAux*(name: string, kind: string = "SPA"): int =
   if dirExists(name):
     styledEcho fgRed, name, " folder already exists"
+    return QuitFailure
+  if kind notin ["SPA", "HPX"]:
+    styledEcho fgRed, "not possible kind: ", kind, "!"
+    styledEcho fgRed, "possible kinds: SPA, HPX"
     return QuitFailure
   styledEcho fgYellow, "Create project ..."
   var appDirectory = "/assets"
@@ -22,10 +26,19 @@ proc initCommandAux*(name: string): int =
     fileVar.write(fmt(readmeTemplate))
   withOpen(name / "app.nim", fmWrite):
     fileVar.write(fmt(nativeMain))
-  withOpen(name / appDirectory / "main.nim", fmWrite):
-    fileVar.write(fmt(happyxMain))
   withOpen(name / appDirectory / "index.html", fmWrite):
     fileVar.write(fmt(indexHtml))
+  case kind
+  of "SPA":
+    withOpen(name / appDirectory / "main.nim", fmWrite):
+      fileVar.write(fmt(happyxMain))
+  else:
+    withOpen(name / appDirectory / "main.hpx", fmWrite):
+      fileVar.write(fmt(happyxMainHPX))
+    withOpen(name / appDirectory / "native.nim", fmWrite):
+      fileVar.write(happyxHPXNative)
+    withOpen(name / appDirectory / "router.json", fmWrite):
+      fileVar.write(fmt(happyxRouterHPX))
   withOpen(name / appDirectory / ".gitignore", fmWrite):
     fileVar.write(gitignore)
   var favicon = getFavicon()

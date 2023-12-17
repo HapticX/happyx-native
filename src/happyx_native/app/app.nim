@@ -9,12 +9,12 @@ import
     uri, tables, terminal, parsecfg,
     jsonutils
   ],
-  happyx
+  happyx,
+  ../cli/utils
 
 when defined(export2android):
   import
     mimetypes,
-    ../cli/utils,
     ../android/core,
     ../android/utils
   export
@@ -32,7 +32,8 @@ export
   threadpool,
   sequtils,
   terminal,
-  browsers
+  browsers,
+  utils
 
 
 var websocketClient*: WebSocket
@@ -137,30 +138,19 @@ macro onExit*(body: untyped) =
     body
   )
 
-when defined(export2android):
-  proc cfgAndroidPackageId*(): string {.compileTime.} =
-    var cfg = readNativeConfigCompileTime()
-    cfg.androidPackage
 
-
-  proc cfgAndroidSdk*(): string {.compileTime.} =
-    var cfg = readNativeConfigCompileTime()
-    cfg.androidSdk
-
-
-  proc cfgName*(): string {.compileTime.}=
-    var cfg = readNativeConfigCompileTime()
-    cfg.name
-
-
-  proc cfgPort*(): int {.compileTime.}=
-    var cfg = readNativeConfigCompileTime()
-    cfg.port
-
-
-  proc cfgAppDirectory*(): string {.compileTime.}=
-    var cfg = readNativeConfigCompileTime()
-    cfg.appDirectory
+proc cfgKind*(): string {.compileTime.} =
+  readNativeConfigCompileTime().kind
+proc cfgAndroidPackageId*(): string {.compileTime.} =
+  readNativeConfigCompileTime().androidPackage
+proc cfgAndroidSdk*(): string {.compileTime.} =
+  readNativeConfigCompileTime().androidSdk
+proc cfgName*(): string {.compileTime.} =
+  readNativeConfigCompileTime().name
+proc cfgPort*(): int {.compileTime.} =
+  readNativeConfigCompileTime().port
+proc cfgAppDirectory*(): string {.compileTime.} =
+  readNativeConfigCompileTime().appDirectory
 
 
 macro getIndexHtml*(directory: static[string]): untyped =
@@ -211,23 +201,32 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
   when defined(export2android):
     static:
       # Compile main
-      echo staticExec(
-        "nim js -d:danger --opt:size " & getScriptDir() / appDirectory / "main.nim"
-      )
-  else:
-    when defined(buildAssets):
-      static:
-        # Compile main
+      if cfgKind() == "HPX":
+        compileHpx(getScriptDir() / appDirectory)
+      else:
         echo staticExec(
           "nim js -d:danger --opt:size " & getScriptDir() / appDirectory / "main.nim"
         )
+  else:
+    when defined(buildAssets):
+      static:
+        if cfgKind() == "HPX":
+          compileHpx(getScriptDir() / appDirectory)
+        # Compile main
+        else:
+          echo staticExec(
+            "nim js -d:danger --opt:size " & getScriptDir() / appDirectory / "main.nim"
+          )
     else:
       # Compile main
-      var data = execCmdEx(
-        "nim js -d:danger --opt:size " & getCurrentDir() / appDirectory / "main.nim"
-      )
-      echo data.output
-      assert data.exitCode == 0
+      if cfgKind() == "HPX":
+        compileHpx(getCurrentDir() / appDirectory)
+      else:
+        var data = execCmdEx(
+          "nim js -d:danger --opt:size " & getCurrentDir() / appDirectory / "main.nim"
+        )
+        echo data.output
+        assert data.exitCode == 0
     when appMode:
       var arguments: seq[string] = @[]
       arguments.add "--enable-gpu"
