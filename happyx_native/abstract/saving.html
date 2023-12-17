@@ -55,20 +55,20 @@
     <summary><a class="reference reference-toplevel" href="#12" id="62">Procs</a></summary>
     <ul class="simple simple-toc-section">
       <ul class="simple nested-toc-section">loadBool
-  <li><a class="reference" href="#loadBool%2Cstring" title="loadBool(filename`gensym3: string): bool">loadBool(filename`gensym3: string): bool</a></li>
+  <li><a class="reference" href="#loadBool%2Cstring" title="loadBool(filename`gensym4: string): bool">loadBool(filename`gensym4: string): bool</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">loadFloat
-  <li><a class="reference" href="#loadFloat%2Cstring" title="loadFloat(filename`gensym2: string): float">loadFloat(filename`gensym2: string): float</a></li>
+  <li><a class="reference" href="#loadFloat%2Cstring" title="loadFloat(filename`gensym3: string): float">loadFloat(filename`gensym3: string): float</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">loadHexInt
-  <li><a class="reference" href="#loadHexInt%2Cstring" title="loadHexInt(filename`gensym4: string): int">loadHexInt(filename`gensym4: string): int</a></li>
-<li><a class="reference" href="#loadHexInt%2Cstring_2" title="loadHexInt(filename`gensym5: string): int">loadHexInt(filename`gensym5: string): int</a></li>
+  <li><a class="reference" href="#loadHexInt%2Cstring" title="loadHexInt(filename`gensym5: string): int">loadHexInt(filename`gensym5: string): int</a></li>
+<li><a class="reference" href="#loadHexInt%2Cstring_2" title="loadHexInt(filename`gensym6: string): int">loadHexInt(filename`gensym6: string): int</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">loadInt
-  <li><a class="reference" href="#loadInt%2Cstring" title="loadInt(filename`gensym1: string): int">loadInt(filename`gensym1: string): int</a></li>
+  <li><a class="reference" href="#loadInt%2Cstring" title="loadInt(filename`gensym2: string): int">loadInt(filename`gensym2: string): int</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">loadJson
@@ -76,14 +76,19 @@
 
 </ul>
 <ul class="simple nested-toc-section">loadOctInt
-  <li><a class="reference" href="#loadOctInt%2Cstring" title="loadOctInt(filename`gensym6: string): int">loadOctInt(filename`gensym6: string): int</a></li>
+  <li><a class="reference" href="#loadOctInt%2Cstring" title="loadOctInt(filename`gensym7: string): int">loadOctInt(filename`gensym7: string): int</a></li>
+
+</ul>
+<ul class="simple nested-toc-section">loadString
+  <li><a class="reference" href="#loadString%2Cstring" title="loadString(filename`gensym1: string): string">loadString(filename`gensym1: string): string</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">save
   <li><a class="reference" href="#save%2Cstring%2CJsonNode" title="save(filename`gensym0: string; data`gensym0: JsonNode)">save(filename`gensym0: string; data`gensym0: JsonNode)</a></li>
-<li><a class="reference" href="#save%2Cstring%2Cint" title="save(filename`gensym1: string; data`gensym1: int)">save(filename`gensym1: string; data`gensym1: int)</a></li>
-<li><a class="reference" href="#save%2Cstring%2Cfloat" title="save(filename`gensym2: string; data`gensym2: float)">save(filename`gensym2: string; data`gensym2: float)</a></li>
-<li><a class="reference" href="#save%2Cstring%2Cbool" title="save(filename`gensym3: string; data`gensym3: bool)">save(filename`gensym3: string; data`gensym3: bool)</a></li>
+<li><a class="reference" href="#save%2Cstring%2Cstring" title="save(filename`gensym1: string; data`gensym1: string)">save(filename`gensym1: string; data`gensym1: string)</a></li>
+<li><a class="reference" href="#save%2Cstring%2Cint" title="save(filename`gensym2: string; data`gensym2: int)">save(filename`gensym2: string; data`gensym2: int)</a></li>
+<li><a class="reference" href="#save%2Cstring%2Cfloat" title="save(filename`gensym3: string; data`gensym3: float)">save(filename`gensym3: string; data`gensym3: float)</a></li>
+<li><a class="reference" href="#save%2Cstring%2Cbool" title="save(filename`gensym4: string; data`gensym4: bool)">save(filename`gensym4: string; data`gensym4: bool)</a></li>
 
 </ul>
 
@@ -110,7 +115,7 @@
   <dl class="item">
     <div id="loadBool-procs-all">
   <div id="loadBool,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#loadBool%2Cstring"><span class="Identifier">loadBool</span></a><span class="Other">(</span><span class="Identifier">filename`gensym3</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#loadBool%2Cstring"><span class="Identifier">loadBool</span></a><span class="Other">(</span><span class="Identifier">filename`gensym4</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
@@ -124,7 +129,7 @@
 </div>
 <div id="loadFloat-procs-all">
   <div id="loadFloat,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#loadFloat%2Cstring"><span class="Identifier">loadFloat</span></a><span class="Other">(</span><span class="Identifier">filename`gensym2</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#loadFloat%2Cstring"><span class="Identifier">loadFloat</span></a><span class="Other">(</span><span class="Identifier">filename`gensym3</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
@@ -138,7 +143,7 @@
 </div>
 <div id="loadHexInt-procs-all">
   <div id="loadHexInt,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#loadHexInt%2Cstring"><span class="Identifier">loadHexInt</span></a><span class="Other">(</span><span class="Identifier">filename`gensym4</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#loadHexInt%2Cstring"><span class="Identifier">loadHexInt</span></a><span class="Other">(</span><span class="Identifier">filename`gensym5</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
@@ -149,7 +154,7 @@
   </dd>
 </div>
 <div id="loadHexInt,string_2">
-  <dt><pre><span class="Keyword">proc</span> <a href="#loadHexInt%2Cstring_2"><span class="Identifier">loadHexInt</span></a><span class="Other">(</span><span class="Identifier">filename`gensym5</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#loadHexInt%2Cstring_2"><span class="Identifier">loadHexInt</span></a><span class="Other">(</span><span class="Identifier">filename`gensym6</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
@@ -163,7 +168,7 @@
 </div>
 <div id="loadInt-procs-all">
   <div id="loadInt,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#loadInt%2Cstring"><span class="Identifier">loadInt</span></a><span class="Other">(</span><span class="Identifier">filename`gensym1</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#loadInt%2Cstring"><span class="Identifier">loadInt</span></a><span class="Other">(</span><span class="Identifier">filename`gensym2</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
@@ -191,8 +196,21 @@
 </div>
 <div id="loadOctInt-procs-all">
   <div id="loadOctInt,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#loadOctInt%2Cstring"><span class="Identifier">loadOctInt</span></a><span class="Other">(</span><span class="Identifier">filename`gensym6</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#loadOctInt%2Cstring"><span class="Identifier">loadOctInt</span></a><span class="Other">(</span><span class="Identifier">filename`gensym7</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    
+    
+  </dd>
+</div>
+
+</div>
+<div id="loadString-procs-all">
+  <div id="loadString,string">
+  <dt><pre><span class="Keyword">proc</span> <a href="#loadString%2Cstring"><span class="Identifier">loadString</span></a><span class="Other">(</span><span class="Identifier">filename`gensym1</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
@@ -215,8 +233,19 @@
     
   </dd>
 </div>
+<div id="save,string,string">
+  <dt><pre><span class="Keyword">proc</span> <a href="#save%2Cstring%2Cstring"><span class="Identifier">save</span></a><span class="Other">(</span><span class="Identifier">filename`gensym1</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">data`gensym1</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.
+    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span>
+                                       <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">,</span>
+                                       <span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    
+    
+  </dd>
+</div>
 <div id="save,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#save%2Cstring%2Cint"><span class="Identifier">save</span></a><span class="Other">(</span><span class="Identifier">filename`gensym1</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">data`gensym1</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#save%2Cstring%2Cint"><span class="Identifier">save</span></a><span class="Other">(</span><span class="Identifier">filename`gensym2</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">data`gensym2</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span>
                                        <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">,</span>
                                        <span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
@@ -227,7 +256,7 @@
   </dd>
 </div>
 <div id="save,string,float">
-  <dt><pre><span class="Keyword">proc</span> <a href="#save%2Cstring%2Cfloat"><span class="Identifier">save</span></a><span class="Other">(</span><span class="Identifier">filename`gensym2</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">data`gensym2</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#save%2Cstring%2Cfloat"><span class="Identifier">save</span></a><span class="Other">(</span><span class="Identifier">filename`gensym3</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">data`gensym3</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span>
                                        <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">,</span>
                                        <span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
@@ -238,7 +267,7 @@
   </dd>
 </div>
 <div id="save,string,bool">
-  <dt><pre><span class="Keyword">proc</span> <a href="#save%2Cstring%2Cbool"><span class="Identifier">save</span></a><span class="Other">(</span><span class="Identifier">filename`gensym3</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">data`gensym3</span><span class="Other">:</span> <span class="Identifier">bool</span><span class="Other">)</span> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#save%2Cstring%2Cbool"><span class="Identifier">save</span></a><span class="Other">(</span><span class="Identifier">filename`gensym4</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">data`gensym4</span><span class="Other">:</span> <span class="Identifier">bool</span><span class="Other">)</span> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span>
                                        <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">,</span>
                                        <span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
@@ -260,7 +289,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2023-12-17 03:58:32 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2023-12-17 14:54:14 UTC</small>
       </div>
     </div>
   </div>

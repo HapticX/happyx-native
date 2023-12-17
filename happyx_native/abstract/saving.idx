@@ -1,14 +1,16 @@
 nimTitle	saving	happyx_native/abstract/saving.html	module src/happyx_native/abstract/saving		0
 nim	save	happyx_native/abstract/saving.html#save,string,JsonNode	proc save(filename`gensym0: string; data`gensym0: JsonNode)		21
 nim	loadJson	happyx_native/abstract/saving.html#loadJson,string	proc loadJson(filename`gensym0: string): JsonNode		34
-nim	save	happyx_native/abstract/saving.html#save,string,int	proc save(filename`gensym1: string; data`gensym1: int)		21
-nim	loadInt	happyx_native/abstract/saving.html#loadInt,string	proc loadInt(filename`gensym1: string): int		34
-nim	save	happyx_native/abstract/saving.html#save,string,float	proc save(filename`gensym2: string; data`gensym2: float)		21
-nim	loadFloat	happyx_native/abstract/saving.html#loadFloat,string	proc loadFloat(filename`gensym2: string): float		34
-nim	save	happyx_native/abstract/saving.html#save,string,bool	proc save(filename`gensym3: string; data`gensym3: bool)		21
-nim	loadBool	happyx_native/abstract/saving.html#loadBool,string	proc loadBool(filename`gensym3: string): bool		34
-nim	loadHexInt	happyx_native/abstract/saving.html#loadHexInt,string	proc loadHexInt(filename`gensym4: string): int		34
-nim	loadHexInt	happyx_native/abstract/saving.html#loadHexInt,string_2	proc loadHexInt(filename`gensym5: string): int		34
-nim	loadOctInt	happyx_native/abstract/saving.html#loadOctInt,string	proc loadOctInt(filename`gensym6: string): int		34
+nim	save	happyx_native/abstract/saving.html#save,string,string	proc save(filename`gensym1: string; data`gensym1: string)		21
+nim	loadString	happyx_native/abstract/saving.html#loadString,string	proc loadString(filename`gensym1: string): string		34
+nim	save	happyx_native/abstract/saving.html#save,string,int	proc save(filename`gensym2: string; data`gensym2: int)		21
+nim	loadInt	happyx_native/abstract/saving.html#loadInt,string	proc loadInt(filename`gensym2: string): int		34
+nim	save	happyx_native/abstract/saving.html#save,string,float	proc save(filename`gensym3: string; data`gensym3: float)		21
+nim	loadFloat	happyx_native/abstract/saving.html#loadFloat,string	proc loadFloat(filename`gensym3: string): float		34
+nim	save	happyx_native/abstract/saving.html#save,string,bool	proc save(filename`gensym4: string; data`gensym4: bool)		21
+nim	loadBool	happyx_native/abstract/saving.html#loadBool,string	proc loadBool(filename`gensym4: string): bool		34
+nim	loadHexInt	happyx_native/abstract/saving.html#loadHexInt,string	proc loadHexInt(filename`gensym5: string): int		34
+nim	loadHexInt	happyx_native/abstract/saving.html#loadHexInt,string_2	proc loadHexInt(filename`gensym6: string): int		34
+nim	loadOctInt	happyx_native/abstract/saving.html#loadOctInt,string	proc loadOctInt(filename`gensym7: string): int		34
 nimgrp	save	happyx_native/abstract/saving.html#save-procs-all	proc		21
 nimgrp	loadhexint	happyx_native/abstract/saving.html#loadHexInt-procs-all	proc		34

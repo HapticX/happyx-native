@@ -1,0 +1,10 @@
+nimTitle	utils	happyx_native/cli/utils.html	module src/happyx_native/cli/utils		0
+nim	CONFIG_FILE	happyx_native/cli/utils.html#CONFIG_FILE	const CONFIG_FILE		16
+nim	NativeConfig	happyx_native/cli/utils.html#NativeConfig	object NativeConfig		20
+nim	withOpen	happyx_native/cli/utils.html#withOpen.t,string,FileMode,untyped	template withOpen(filename: string; mode: FileMode; body: untyped)		38
+nim	readNativeConfig	happyx_native/cli/utils.html#readNativeConfig	proc readNativeConfig(): NativeConfig		47
+nim	readNativeConfigCompileTime	happyx_native/cli/utils.html#readNativeConfigCompileTime	proc readNativeConfigCompileTime(): NativeConfig		62
+nim	findClangBin	happyx_native/cli/utils.html#findClangBin,string	proc findClangBin(androidSdk: string): string		76
+nim	getAndroidFolder	happyx_native/cli/utils.html#getAndroidFolder	proc getAndroidFolder(): string		100
+nim	getFavicon	happyx_native/cli/utils.html#getFavicon,string	proc getFavicon(ext: string = ".ico"): string		115
+nim	compileHpx	happyx_native/cli/utils.html#compileHpx,string	proc compileHpx(appDirectory: string)		136
