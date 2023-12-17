@@ -1,4 +1,7 @@
 import
+  macros,
+  strformat,
+  tables,
   ../cli/utils,
   ./core
 
@@ -8,6 +11,13 @@ proc android_log_print(prio: cint, tag: cstring, fmt: cstring) {.
   importc: "__android_log_print",
   varargs
 .}
+
+# type CodeBlockArgument* = pointer
+
+var
+  uniqueCodeBlocks*: seq[uint64] = @[]
+  # argumentsCodeBlocks* = newTable[int, seq[CodeBlockArgument]]()
+
 
 
 const
@@ -291,14 +301,146 @@ jClass android.os.Message* of Object:
   proc obtain*: Message {.static.}
 
 
+jClass android.app.Dialog* of Object:
+  proc new*(ctx: Context)
+  proc new*(ctx: Context, themeResId: jint)
+  proc cancel*
+  proc closeOptionsMenu*
+  proc create*
+  proc dismiss*
+  proc getContext*: Context
+  proc getVolumeControlStream*: jint
+  proc hide*
+  proc invalidateOptionsMenu*
+  proc isShowing*: jboolean
+  proc onAttachedToWindow*
+  proc onBackPressed*
+  proc onContentChanged*
+  proc onDetachedFromWindow*
+  proc onSearchRequested*: jboolean
+  proc onWindowFocusChanged*(hasFocus: jboolean)
+  proc openOptionsMenu*
+  proc requestWindowFeature*(featureId: jint): jboolean
+  proc setCancelable*(flag: jboolean)
+  proc setCanceledOnTouchOutside*(cancel: jboolean)
+  proc setContentView*(layoutResId: jint)
+  proc setTitle*(title: CharSequence)
+  proc setTitle*(titleId: jint)
+  proc setVolumeControlStream*(streamType: jint)
+  proc show*
+
+
+jClass android.app.AlertDialog* of Dialog:
+  proc setIcon*(icon: Drawable)
+  proc setIcon*(resId: jint)
+  proc setIconAttribute*(attrId: jint)
+  proc setInverseBackgroundForced*(forceInverseBackground: jboolean)
+  proc setTitle*(title: CharSequence)
+
+
+jClass android.app.AlertDialog$Builder as AlertDialogBuilder* of Dialog:
+  proc new*(context: Context)
+  proc new*(context: Context, themeResId: jint)
+  proc create*: AlertDialog
+  proc getContext*: Context
+  proc setCancelable*(cancelable: jboolean): AlertDialogBuilder
+  proc setTitle*(title: CharSequence): AlertDialogBuilder
+  proc setMessage*(message: CharSequence): AlertDialogBuilder
+  proc show*: AlertDialog
+
+
+var
+  runOnUiThreadEvents {.compileTime.}: seq[NimNode] = @[]
+  argumentNames {.compileTime.} = newTable[int, seq[NimNode]]()
+
+
+proc fetchAllIdents(node: var NimNode, list: var seq[NimNode], reserved: var seq[NimNode], root: NimNode = nil) =
+  for i in 0..<node.len:
+    var child = node[i]
+    if child.kind in AtomicNodes:
+      if child.kind == nnkIdent and ($child)[0] in ({'a'..'z'} + {'A'..'Z'}):
+        if root.kind notin [nnkVarSection, nnkLetSection, nnkProcDef, nnkConstSection] and child notin list:
+          if child notin reserved:
+            list.add(child)
+        else:
+          reserved.add(child)
+      if child.kind == nnkSym and $child in ["params"]:
+        if root.kind notin [nnkVarSection, nnkLetSection, nnkProcDef, nnkConstSection]:
+          if child notin reserved:
+            if child notin list:
+              list.add(child.copy())
+            node[i] = ident($child & "___")
+        else:
+          reserved.add(child)
+    else:
+      fetchAllIdents(child, list, reserved, node)
+
+
+macro runOnUiThread*(body: untyped) =
+  var
+    statements = body
+    # list: seq[NimNode] = @[]
+    # reserved: seq[NimNode] = @[]
+    index = runOnUiThreadEvents.len
+    # codeBlocksTable = newCall(
+    #   "[]=",
+    #   ident"argumentsCodeBlocks",
+    #   newLit(index),
+    #   newCall("@", newNimNode(nnkBracket))
+    # )
+  # argumentNames[index] = newSeq[NimNode]()
+  # fetchAllIdents(statements, list, reserved)
+  runOnUiThreadEvents.add(statements)
+  result = newStmtList()
+  # for i in list:
+  #   codeBlocksTable[^1][^1].add(newNimNode(nnkCast).add(ident"pointer", newCall("addr", i)))
+  #   argumentNames[index].add(ident($i & "___"))
+  result.add(
+    # codeBlocksTable,
+    newCall("inc", newCall("[]", ident"uniqueCodeBlocks", newLit(runOnUiThreadEvents.len - 1)))
+  )
+
+
+macro runOnUiThreadAll*() =
+  result = newStmtList()
+  for i in runOnUiThreadEvents.low..runOnUiThreadEvents.high:
+    # var variables = newNimNode(nnkVarSection)
+    # for j in 0..<argumentNames[i].len:
+    #   variables.add(newIdentDefs(
+    #     argumentNames[i][j],
+    #     newEmptyNode(),
+    #     newNimNode(nnkBracketExpr).add(ident"argumentsCodeBlocks", newLit(j))
+    #   ))
+    result.add(newNimNode(nnkWhileStmt).add(
+      newCall(">", newNimNode(nnkBracketExpr).add(ident"uniqueCodeBlocks", newLit(i)), newLit(0)),
+      newStmtList(
+        # variables,
+        runOnUiThreadEvents[i],
+        newCall("dec", newNimNode(nnkBracketExpr).add(ident"uniqueCodeBlocks", newLit(i)))
+      )
+    ))
+
+
+macro declareRunOnUiAll*() =
+  result = newStmtList()
+
+  for i in runOnUiThreadEvents.low..runOnUiThreadEvents.high:
+    result.add(newCall("add", ident"uniqueCodeBlocks", newLit(0)))
+
+
 type Log* = object
 
 
-proc d*(log: typedesc[Log], tag: cstring, msg: cstring) =
-  android_log_print(DEBUG, tag, msg)
+template logFunc(funcName: untyped, level: untyped) =
+  proc `funcName`*(log: typedesc[Log], tag: cstring, msg: cstring) =
+    android_log_print(`level`, tag, msg)
+  proc `funcName`*(log: typedesc[Log], msg: cstring) =
+    android_log_print(`level`, "HAPPYX-NATIVE", msg)
+  proc `funcName`*(log: typedesc[Log], tag: string, msg: string) =
+    android_log_print(`level`, cstring tag, cstring msg)
+  proc `funcName`*(log: typedesc[Log], msg: string) =
+    android_log_print(`level`, "HAPPYX-NATIVE", cstring msg)
 
-proc i*(log: typedesc[Log], tag: cstring, msg: cstring) =
-  android_log_print(INFO, tag, msg)
-
-proc e*(log: typedesc[Log], tag: cstring, msg: cstring) =
-  android_log_print(ERROR, tag, msg)
+logFunc(i, INFO)
+logFunc(d, DEBUG)
+logFunc(e, ERROR)

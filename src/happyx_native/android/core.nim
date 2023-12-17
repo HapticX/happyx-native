@@ -46,7 +46,7 @@ macro nativeMethods*(class: untyped, body: untyped) =
     for i in 1..s.params.len-1:
       p.params.add(s.params[i])
     # dynlib pragmas
-    p.addPragma(ident"cdecl")
+    # p.addPragma(ident"cdecl")
     p.addPragma(ident"exportc")
     p.addPragma(ident"dynlib")
     for pragma in s[4]:

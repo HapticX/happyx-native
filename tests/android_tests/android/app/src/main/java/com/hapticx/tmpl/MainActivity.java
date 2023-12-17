@@ -22,6 +22,9 @@ public class MainActivity extends Activity {
 
         if (!paused) {
             new Thread(() -> Native.start(this)).start();
+
+            Native n = new Native(this);
+            n.uiLoop();
         }
         setupWebView();
     }

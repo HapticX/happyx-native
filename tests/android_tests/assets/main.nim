@@ -28,6 +28,11 @@ appRoutes "app":
             x->inc()
             # Call HappyX Native callback named helloWorld without arguments
             hpxNative.callNim("storeX", x.val)
+      tDiv(class = "content"):
+        tButton:
+          "open alert dialog"
+          @click:
+            hpxNative.callNim("showDialog", "Alert Dialog", "AlertDialog called from Nim!")
     tStyle: """
       body {
         padding: 0;

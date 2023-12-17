@@ -52,13 +52,13 @@ elif OS == "win":
 elif OS == "unix":
   proc findLinux: string =
     for path in ChromePaths:
-      if execCmd("which " & name) == 0:
+      if execCmd("which " & path) == 0:
         return path
     for path in YandexPaths:
-      if execCmd("which " & name) == 0:
+      if execCmd("which " & path) == 0:
         return path
     for path in EdgePaths:
-      if execCmd("which " & name) == 0:
+      if execCmd("which " & path) == 0:
         return path
     raise newException(BrowserNotFound, "could not find Default browser")
 
