@@ -21,7 +21,7 @@
   <div class="document" id="documentId">
     <div class="container">
       <h1 class="title">Index</h1>
-      Modules: <a href="happyx_native.html">happyx_native</a>, <a href="happyx_native/app/app.html">happyx_native/app/app</a>, <a href="happyx_native/core/constants.html">happyx_native/core/constants</a>, <a href="happyx_native/core/exceptions.html">happyx_native/core/exceptions</a>, <a href="happyx_native/core/finder/chrome.html">happyx_native/core/finder/chrome</a>, <a href="happyx_native/core/finder/default.html">happyx_native/core/finder/default</a>, <a href="happyx_native/core/finder/edge.html">happyx_native/core/finder/edge</a>, <a href="happyx_native/core/finder/yandex.html">happyx_native/core/finder/yandex</a>.<br/><p /><h2>API symbols</h2>
+      Modules: <a href="happyx_native.html">happyx_native</a>, <a href="happyx_native/abstract/saving.html">happyx_native/abstract/saving</a>, <a href="happyx_native/app/app.html">happyx_native/app/app</a>, <a href="happyx_native/core/constants.html">happyx_native/core/constants</a>, <a href="happyx_native/core/exceptions.html">happyx_native/core/exceptions</a>, <a href="happyx_native/core/finder/chrome.html">happyx_native/core/finder/chrome</a>, <a href="happyx_native/core/finder/default.html">happyx_native/core/finder/default</a>, <a href="happyx_native/core/finder/edge.html">happyx_native/core/finder/edge</a>, <a href="happyx_native/core/finder/yandex.html">happyx_native/core/finder/yandex</a>.<br/><p /><h2>API symbols</h2>
 <dl><dt><a name="BrowserNotFound" href="#BrowserNotFound"><span>BrowserNotFound:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="exceptions: object BrowserNotFound" href="happyx_native/core/exceptions.html#BrowserNotFound">exceptions: object BrowserNotFound</a></li>
@@ -65,6 +65,32 @@
 <dt><a name="HpxNativeVersion" href="#HpxNativeVersion"><span>HpxNativeVersion:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="constants: const HpxNativeVersion" href="happyx_native/core/constants.html#HpxNativeVersion">constants: const HpxNativeVersion</a></li>
+          </ul></dd>
+<dt><a name="loadBool" href="#loadBool"><span>loadBool:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="saving: proc loadBool(filename`gensym3: string): bool" href="happyx_native/abstract/saving.html#loadBool%2Cstring">saving: proc loadBool(filename`gensym3: string): bool</a></li>
+          </ul></dd>
+<dt><a name="loadFloat" href="#loadFloat"><span>loadFloat:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="saving: proc loadFloat(filename`gensym2: string): float" href="happyx_native/abstract/saving.html#loadFloat%2Cstring">saving: proc loadFloat(filename`gensym2: string): float</a></li>
+          </ul></dd>
+<dt><a name="loadHexInt" href="#loadHexInt"><span>loadHexInt:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="saving: proc loadHexInt(filename`gensym4: string): int" href="happyx_native/abstract/saving.html#loadHexInt%2Cstring">saving: proc loadHexInt(filename`gensym4: string): int</a></li>
+          <li><a class="reference external"
+          data-doc-search-tag="saving: proc loadHexInt(filename`gensym5: string): int" href="happyx_native/abstract/saving.html#loadHexInt%2Cstring_2">saving: proc loadHexInt(filename`gensym5: string): int</a></li>
+          </ul></dd>
+<dt><a name="loadInt" href="#loadInt"><span>loadInt:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="saving: proc loadInt(filename`gensym1: string): int" href="happyx_native/abstract/saving.html#loadInt%2Cstring">saving: proc loadInt(filename`gensym1: string): int</a></li>
+          </ul></dd>
+<dt><a name="loadJson" href="#loadJson"><span>loadJson:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="saving: proc loadJson(filename`gensym0: string): JsonNode" href="happyx_native/abstract/saving.html#loadJson%2Cstring">saving: proc loadJson(filename`gensym0: string): JsonNode</a></li>
+          </ul></dd>
+<dt><a name="loadOctInt" href="#loadOctInt"><span>loadOctInt:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="saving: proc loadOctInt(filename`gensym6: string): int" href="happyx_native/abstract/saving.html#loadOctInt%2Cstring">saving: proc loadOctInt(filename`gensym6: string): int</a></li>
           </ul></dd>
 <dt><a name="MozillaNotFound" href="#MozillaNotFound"><span>MozillaNotFound:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -112,6 +138,16 @@
 <li><a class="reference external"
           data-doc-search-tag="constants: const OS" href="happyx_native/core/constants.html#OS">constants: const OS</a></li>
           </ul></dd>
+<dt><a name="save" href="#save"><span>save:</span></a></dt><dd><ul class="simple">
+<li><a class="reference external"
+          data-doc-search-tag="saving: proc save(filename`gensym3: string; data`gensym3: bool)" href="happyx_native/abstract/saving.html#save%2Cstring%2Cbool">saving: proc save(filename`gensym3: string; data`gensym3: bool)</a></li>
+          <li><a class="reference external"
+          data-doc-search-tag="saving: proc save(filename`gensym2: string; data`gensym2: float)" href="happyx_native/abstract/saving.html#save%2Cstring%2Cfloat">saving: proc save(filename`gensym2: string; data`gensym2: float)</a></li>
+          <li><a class="reference external"
+          data-doc-search-tag="saving: proc save(filename`gensym1: string; data`gensym1: int)" href="happyx_native/abstract/saving.html#save%2Cstring%2Cint">saving: proc save(filename`gensym1: string; data`gensym1: int)</a></li>
+          <li><a class="reference external"
+          data-doc-search-tag="saving: proc save(filename`gensym0: string; data`gensym0: JsonNode)" href="happyx_native/abstract/saving.html#save%2Cstring%2CJsonNode">saving: proc save(filename`gensym0: string; data`gensym0: JsonNode)</a></li>
+          </ul></dd>
 <dt><a name="websocketClient" href="#websocketClient"><span>websocketClient:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="app: var websocketClient" href="happyx_native/app/app.html#websocketClient">app: var websocketClient</a></li>
@@ -128,7 +164,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2023-12-17 03:14:52 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2023-12-17 03:58:32 UTC</small>
       </div>
     </div>
   </div>
