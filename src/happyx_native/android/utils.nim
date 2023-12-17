@@ -136,24 +136,24 @@ jClassImpl java.lang.Thread* of Object:
   proc getStackTrace*: seq[StackTraceElement]
 
 
-jClass android.content.SharedPreferences$Editor* of Object:
+jClass android.content.SharedPreferences$Editor as SharedPreferencesEditor* of Object:
   proc new*
   proc apply*
-  proc clear*: Editor
+  proc clear*: SharedPreferencesEditor
   proc commit*: jboolean
-  proc putBoolean*(key: string, value: jboolean): Editor
-  proc putFloat*(key: string, value: jfloat): Editor
-  proc putInt*(key: string, value: jint): Editor
-  proc putLong*(key: string, value: jlong): Editor
-  proc putString*(key: string, value: string): Editor
-  proc putStringSet*(key: string, value: Set[string]): Editor
-  proc remove*(key: string): Editor
+  proc putBoolean*(key: string, value: jboolean): SharedPreferencesEditor
+  proc putFloat*(key: string, value: jfloat): SharedPreferencesEditor
+  proc putInt*(key: string, value: jint): SharedPreferencesEditor
+  proc putLong*(key: string, value: jlong): SharedPreferencesEditor
+  proc putString*(key: string, value: string): SharedPreferencesEditor
+  proc putStringSet*(key: string, value: Set[string]): SharedPreferencesEditor
+  proc remove*(key: string): SharedPreferencesEditor
 
 
 jClass android.content.SharedPreferences of Object:
   proc new*
   proc contains*(key: string): jboolean
-  proc edit*: Editor
+  proc edit*: SharedPreferencesEditor
   proc getBoolean*(key: string, defValue: jboolean): jboolean
   proc getFloat*(key: string, defValue: jfloat): jfloat
   proc getInt*(key: string, defValue: jint): jint

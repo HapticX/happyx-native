@@ -11,7 +11,8 @@ This files includes into `/assets/index.html`.
 Main file is `app.nim`. It compiles into C/C++.
 
 Here you can see:
-- how store/load variables in Android app.
+- how store/load variables in local machine (on any OS).
+- runOnUiThread on Nim side (**experimental**).
 
 
 ## Build 🔨
