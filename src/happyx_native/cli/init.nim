@@ -24,6 +24,8 @@ proc initCommandAux*(name: string, kind: string = "SPA"): int =
     fileVar.write(fmt(configFile))
   withOpen(name / "README.md", fmWrite):
     fileVar.write(fmt(readmeTemplate))
+  withOpen(name / ".gitignore", fmWrite):
+    fileVar.write(gitignore)
   withOpen(name / "app.nim", fmWrite):
     fileVar.write(fmt(nativeMain))
   withOpen(name / appDirectory / "index.html", fmWrite):
@@ -39,8 +41,6 @@ proc initCommandAux*(name: string, kind: string = "SPA"): int =
       fileVar.write(happyxHPXNative)
     withOpen(name / appDirectory / "router.json", fmWrite):
       fileVar.write(fmt(happyxRouterHPX))
-  withOpen(name / appDirectory / ".gitignore", fmWrite):
-    fileVar.write(gitignore)
   var favicon = getFavicon()
   if favicon != "":
     withOpen(name / appDirectory / "favicon.ico", fmWrite):
