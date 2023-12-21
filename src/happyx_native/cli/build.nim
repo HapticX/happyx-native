@@ -128,27 +128,39 @@ proc buildCommandAux*(target: string = OS, release: bool = false, opt: string = 
     var
       mainActivity: string
       native: string
+      settingsGradle: string
     
-    withOpen("android" / "app" / "src" / "main" / "java" / "com" / "hapticx" / "tmpl" / "MainActivity.java", fmRead):
-      mainActivity = fileVar.readAll()
-    mainActivity = mainActivity.replace("com.hapticx.tmpl", cfg.androidPackage)
-    withOpen("android" / "app" / "src" / "main" / "java" / "com" / "hapticx" / "tmpl" / "Native.java", fmRead):
-      native = fileVar.readAll()
-    native = native.replace("com.hapticx.tmpl", cfg.androidPackage)
+    if ("android" / "app" / "src" / "main" / "java" / "com" / "hapticx" / "tmpl").dirExists():
+      withOpen("android" / "app" / "src" / "main" / "java" / "com" / "hapticx" / "tmpl" / "MainActivity.java", fmRead):
+        mainActivity = fileVar.readAll()
+      mainActivity = mainActivity.replace("com.hapticx.tmpl", cfg.androidPackage)
+      withOpen("android" / "app" / "src" / "main" / "java" / "com" / "hapticx" / "tmpl" / "Native.java", fmRead):
+        native = fileVar.readAll()
+      native = native.replace("com.hapticx.tmpl", cfg.androidPackage)
+      withOpen("android" / "settings.gradle", fmRead):
+        settingsGradle = fileVar.readAll()
+      settingsGradle = settingsGradle.replace("tmpl", cfg.androidPackage.split(".")[^1])
+      
+      removeDir("android" / "app" / "src" / "main" / "java" / "com" / "hapticx" / "tmpl")
+      removeDir("android" / "app" / "src" / "main" / "java" / "com" / "hapticx")
+      removeDir("android" / "app" / "src" / "main" / "java" / "com")
+      removeDir("android" / "app" / "src" / "main" / "java")
     
-    # Build assets
-    mainActivity = mainActivity.replace("http://localhost:5123/", fmt"http://localhost:{cfg.port}/")
-    var directoryTmp = "android" / "app" / "src" / "main" / "java"
-    for i in cfg.androidPackage.split("."):
-      directoryTmp = directoryTmp / i
-      if not dirExists(directoryTmp):
-        createDir(directoryTmp)
+      # Build assets
+      mainActivity = mainActivity.replace("http://localhost:5123/", fmt"http://localhost:{cfg.port}/")
+      var directoryTmp = "android" / "app" / "src" / "main" / "java"
+      for i in cfg.androidPackage.split("."):
+        directoryTmp = directoryTmp / i
+        if not dirExists(directoryTmp):
+          createDir(directoryTmp)
     
     # Replace package
     withOpen("android" / "app" / "src" / "main" / "java" / cfg.androidPackage.replace(".", $DirSep) / "MainActivity.java", fmWrite):
       fileVar.write(mainActivity)
     withOpen("android" / "app" / "src" / "main" / "java" / cfg.androidPackage.replace(".", $DirSep) / "Native.java", fmWrite):
       fileVar.write(native)
+    withOpen("android" / "settings.gradle", fmWrite):
+      fileVar.write(settingsGradle)
 
     # compile .so libraries
     var
