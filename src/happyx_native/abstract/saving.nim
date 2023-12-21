@@ -12,7 +12,7 @@ export
 when defined(export2android):
   import
     ../android/core,
-    ../android/utils
+    ../android/autils
 
 
 template saveAndLoad[T](saveFunc, loadFunc, parseFunc: untyped, tdesc: typedesc[T],
