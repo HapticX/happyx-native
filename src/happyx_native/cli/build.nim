@@ -138,6 +138,11 @@ proc buildCommandAux*(target: string = OS, release: bool = false, opt: string = 
     
     # Build assets
     mainActivity = mainActivity.replace("http://localhost:5123/", fmt"http://localhost:{cfg.port}/")
+    var directoryTmp = "android" / "app" / "src" / "main" / "java"
+    for i in cfg.androidPackage.split("."):
+      directoryTmp = directoryTmp / i
+      if not dirExists(directoryTmp):
+        createDir(directoryTmp)
     
     # Replace package
     withOpen("android" / "app" / "src" / "main" / "java" / cfg.androidPackage.replace(".", $DirSep) / "MainActivity.java", fmWrite):
