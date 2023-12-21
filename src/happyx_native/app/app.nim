@@ -18,7 +18,7 @@ when defined(export2android):
     ../android/core,
     ../android/autils
   export
-    macros, mimetypes
+    macros, mimetypes, autils
 
 when defined(buildAssets):
   import mimetypes
@@ -33,7 +33,6 @@ export
   sequtils,
   terminal,
   browsers,
-  autils,
   utils
 
 
