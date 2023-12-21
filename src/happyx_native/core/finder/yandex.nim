@@ -42,7 +42,7 @@ proc findPath: string =
 
 
 proc openYandex*(port: int, chromeFlags: openarray[string]) =
-  var command = " --new-window --app=http://localhost:" & $port & "/ --disable-http-cache"
+  var command = " --app=http://localhost:" & $port & "/ --disable-http-cache"
   for flag in chromeFlags:
     command = command & " " & flag.strip
   if execCmd(findPath() & command) != 0:

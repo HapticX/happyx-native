@@ -16,7 +16,7 @@ when defined(export2android):
   import
     mimetypes,
     ../android/core,
-    ../android/utils
+    ../android/autils
   export
     macros, mimetypes
 
@@ -33,6 +33,7 @@ export
   sequtils,
   terminal,
   browsers,
+  autils,
   utils
 
 
