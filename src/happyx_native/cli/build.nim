@@ -99,38 +99,37 @@ proc buildCommandAux*(target: string = OS, release: bool = false, opt: string = 
       copyDir(getAndroidFolder(), getCurrentDir() / "android")
       createDir("android" / "app" / "src" / "main" / "res" / "drawable")
     
-    # Setup app data
-    var img: string
-    withOpen(getCurrentDir() / cfg.appDirectory / "favicon.png", fmRead):
-      img = fileVar.readAll()
-    discard tryRemoveFile("android" / "app" / "src" / "main" / "res" / "drawable" / "ic_launcher.png")
-    withOpen("android" / "app" / "src" / "main" / "res" / "drawable" / "ic_launcher.png", fmWrite):
-      fileVar.write(img)
-    
-    var buildGradle: string
-    withOpen("android" / "app" / "build.gradle", fmRead):
-      buildGradle = fileVar.readAll()
-    # Version name
-    buildGradle = buildGradle.replace("versionName \"1.0\"", fmt"""versionName "{cfg.version}" """)
-    # package
-    buildGradle = buildGradle.replace("com.hapticx.tmpl", cfg.androidPackage)
-    withOpen("android" / "app" / "build.gradle", fmWrite):
-      fileVar.write(buildGradle)
-    
-    var strings = loadXml("android" / "app" / "src" / "main" / "res" / "values" / "strings.xml")
+      # Setup app data
+      var img: string
+      withOpen(getCurrentDir() / cfg.appDirectory / "favicon.png", fmRead):
+        img = fileVar.readAll()
+      discard tryRemoveFile("android" / "app" / "src" / "main" / "res" / "drawable" / "ic_launcher.png")
+      withOpen("android" / "app" / "src" / "main" / "res" / "drawable" / "ic_launcher.png", fmWrite):
+        fileVar.write(img)
+      
+      var buildGradle: string
+      withOpen("android" / "app" / "build.gradle", fmRead):
+        buildGradle = fileVar.readAll()
+      # Version name
+      buildGradle = buildGradle.replace("versionName \"1.0\"", fmt"""versionName "{cfg.version}" """)
+      # package
+      buildGradle = buildGradle.replace("com.hapticx.tmpl", cfg.androidPackage)
+      withOpen("android" / "app" / "build.gradle", fmWrite):
+        fileVar.write(buildGradle)
+      
+      var strings = loadXml("android" / "app" / "src" / "main" / "res" / "values" / "strings.xml")
 
-    for str in strings.mitems:
-      if str.attr("name") == "app_name":
-        str[0].text = cfg.name
-    withOpen("android" / "app" / "src" / "main" / "res" / "values" / "strings.xml", fmWrite):
-      fileVar.write($strings)
-    # Java files
-    var
-      mainActivity: string
-      native: string
-      settingsGradle: string
+      for str in strings.mitems:
+        if str.attr("name") == "app_name":
+          str[0].text = cfg.name
+      withOpen("android" / "app" / "src" / "main" / "res" / "values" / "strings.xml", fmWrite):
+        fileVar.write($strings)
     
-    if ("android" / "app" / "src" / "main" / "java" / "com" / "hapticx" / "tmpl").dirExists():
+      # Java files
+      var
+        mainActivity: string
+        native: string
+        settingsGradle: string
       withOpen("android" / "app" / "src" / "main" / "java" / "com" / "hapticx" / "tmpl" / "MainActivity.java", fmRead):
         mainActivity = fileVar.readAll()
       mainActivity = mainActivity.replace("com.hapticx.tmpl", cfg.androidPackage)
@@ -154,13 +153,13 @@ proc buildCommandAux*(target: string = OS, release: bool = false, opt: string = 
         if not dirExists(directoryTmp):
           createDir(directoryTmp)
     
-    # Replace package
-    withOpen("android" / "app" / "src" / "main" / "java" / cfg.androidPackage.replace(".", $DirSep) / "MainActivity.java", fmWrite):
-      fileVar.write(mainActivity)
-    withOpen("android" / "app" / "src" / "main" / "java" / cfg.androidPackage.replace(".", $DirSep) / "Native.java", fmWrite):
-      fileVar.write(native)
-    withOpen("android" / "settings.gradle", fmWrite):
-      fileVar.write(settingsGradle)
+      # Replace package
+      withOpen("android" / "app" / "src" / "main" / "java" / cfg.androidPackage.replace(".", $DirSep) / "MainActivity.java", fmWrite):
+        fileVar.write(mainActivity)
+      withOpen("android" / "app" / "src" / "main" / "java" / cfg.androidPackage.replace(".", $DirSep) / "Native.java", fmWrite):
+        fileVar.write(native)
+      withOpen("android" / "settings.gradle", fmWrite):
+        fileVar.write(settingsGradle)
 
     # compile .so libraries
     var

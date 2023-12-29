@@ -2,7 +2,7 @@
 
 description = "Macro-oriented web-framework compiles to native written with ♥"
 author = "HapticX"
-version = "0.3.0"
+version = "0.3.1"
 license = "MIT"
 srcDir = "src"
 installExt = @["nim", "gradle", "properties"]
