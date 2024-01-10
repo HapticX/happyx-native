@@ -207,5 +207,5 @@ proc buildCommandAux*(target: string = OS, release: bool = false, opt: string = 
   else:
     styledEcho fgRed, "unsupported target platform for building"
     return QuitFailure
-  styledEcho fgGreen, "builded!"
+  styledEcho fgGreen, "built!"
   QuitSuccess
