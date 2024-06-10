@@ -70,22 +70,22 @@ when isMainModule:
     of "":
       quit(helpMessage())
     of "init":
-      styledEcho fgBlue, "HappyX Native", fgMagenta, " init ", fgWhite, " command creates app project."
+      styledEcho fgBlue, "HappyX Native", fgMagenta, " init ", fgWhite, "~ ", fgGreen, "Create new Happyx Native project."
       styledEcho "\nUsage:"
       styledEcho fgMagenta, "  hpx-native init\n"
       styledEcho "Arguments:"
-      styledEcho fgBlue, align("name", 4), fgWhite, " - project name."
+      styledEcho fgBlue, align("name", 6), fgWhite, " - project name."
     of "build":
-      styledEcho fgBlue, "HappyX Native", fgMagenta, " build ", fgWhite, " command builds app."
+      styledEcho fgBlue, "HappyX Native", fgMagenta, " build ", fgWhite, "~ ", fgGreen, "Build & compile Happyx Native app."
       styledEcho "\nUsage:"
       styledEcho fgMagenta, "  hpx-native build\n"
       styledEcho "Optional arguments:"
-      styledEcho fgBlue, align("target", 14), fgWhite, " - build target. By default target is your OS."
+      styledEcho fgBlue, align("target", 14), fgWhite, " - build target. Defaults to the current OS."
       styledEcho align("", 14), "   Possible targets:"
-      styledEcho align("", 14), "   - windows (win);"
-      styledEcho align("", 14), "   - linux (unix);"
-      styledEcho align("", 14), "   - macosx (mac, macos);"
-      styledEcho align("", 14), "   - android."
+      styledEcho align("", 14), "   - windows (win)"
+      styledEcho align("", 14), "   - linux (unix)"
+      styledEcho align("", 14), "   - macosx (mac, macos)"
+      styledEcho align("", 14), "   - android"
       styledEcho fgBlue, align("no-x86_64", 14), fgWhite, " - disable building for x86_64 arch (android only)"
       styledEcho fgBlue, align("no-x86", 14), fgWhite, " - disable building for x86 arch (android only)"
       styledEcho fgBlue, align("no-armeabi-v7a", 14), fgWhite, " - disable building for armeabi-v7a arch (android only)"
@@ -93,14 +93,14 @@ when isMainModule:
       styledEcho fgBlue, align("release", 14), fgWhite, " - enable release build"
       styledEcho fgBlue, align("opt", 14), fgWhite, " - Nim compilation option"
       styledEcho fgBlue, align("", 14), fgWhite, "   Possible values:"
-      styledEcho fgBlue, align("", 14), fgWhite, "   - size (optimize build size);"
-      styledEcho fgBlue, align("", 14), fgWhite, "   - speed (optimize app speed);"
-      styledEcho fgBlue, align("", 14), fgWhite, "   - none (no optimizations, by default)."
+      styledEcho fgBlue, align("", 14), fgWhite, "   - size (optimize build size)"
+      styledEcho fgBlue, align("", 14), fgWhite, "   - speed (optimize app speed)"
+      styledEcho fgBlue, align("", 14), fgWhite, "   - none (no optimizations, by default)"
     else:
       styledEcho fgRed, "Unknown subcommand: ", fgWhite, subcmdHelp
     quit(QuitSuccess)
   of "":
-    quit(dispatchmainCommand(cmdline = pars[0..^1]))
+    quit(mainCommand(pars[0] in ["-v", "--version"]))
   else:
     styledEcho fgRed, styleBright, "Unknown subcommand: ", fgWhite, subcmd
     styledEcho fgYellow, "Use ", fgMagenta, "hpx_native help ", fgYellow, "to get all commands"
