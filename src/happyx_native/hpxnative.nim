@@ -25,10 +25,11 @@ proc buildCommand(target: string = OS, release: bool = false, opt: string = "siz
                   no_x86_64: bool = false, no_x86: bool = false, no_armeabi_v7a: bool = false,
                   no_arm64_v8a: bool = false, no_gradle: bool = false, no_build_assets: bool = false,
                   chrome: bool = true, yandex: bool = false, edge: bool = false,
+                  webview: bool = false,
                   app: string = "gui"): int =
   buildCommandAux(
     target, release, opt, no_x86_64, no_x86, no_armeabi_v7a, no_arm64_v8a,
-    no_gradle, no_build_assets, chrome, yandex, edge, app
+    no_gradle, no_build_assets, chrome, yandex, edge, webview, app
   )
 
 proc initCommand(name: string, kind: string = "SPA"): int =

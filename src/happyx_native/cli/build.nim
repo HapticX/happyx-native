@@ -21,8 +21,9 @@ proc buildCommandAux*(target: string = OS, release: bool = false, opt: string = 
                       no_x86_64: bool = false, no_x86: bool = false, no_armeabi_v7a: bool = false,
                       no_arm64_v8a: bool = false, no_gradle: bool = false, no_build_assets: bool = false,
                       chrome: bool = true, yandex: bool = false, edge: bool = false,
+                      webview: bool = false,
                       app: string = "gui"): int =
-  if int(chrome) + int(yandex) + int(edge) > 1:
+  if int(chrome) + int(yandex) + int(edge) + int(webview) > 1:
     styledEcho fgRed, "You should choose only one browser!"
     return QuitFailure
   let
@@ -51,6 +52,8 @@ proc buildCommandAux*(target: string = OS, release: bool = false, opt: string = 
         "-d:yandex"
       elif edge:
         "-d:edge"
+      elif webview:
+        "-d:webview"
       else:
         ""
     assets =

@@ -23,8 +23,8 @@ nimble install https://github.com/HapticX/happyx-native
 
 ## Features
 
-- Support for Chrome/Yandex/Edge browsers;
-- Support for Android;
+- Support for Chrome/Yandex/Edge browsers & Webview
+- Support for Android
 
 
 ## Project Initialization
@@ -88,11 +88,10 @@ Possible architectures
 | arm64-v8a    | `--no-arm64-v8a`   |
 
 If you doesn't want to use gradle building then use
-```shel
+```shell
 hpx-native build --target android --no-gradle
 ```
 This command will build only `.so` libraries.
-
 
 ### Building Assets
 
@@ -101,6 +100,13 @@ HappyX Native supports "building" assets - all resources from app directory (by 
 This way you can distribute your application over the network with only one executable file.
 
 > This option can be disabled via `--no-build-assets`
+
+### Webview Notes
+
+When building with `-d:webview`, on Windows, you may notice that the window icon is not set
+for you. This is due to a limitation within Happyx Native, that will be resolved in the
+future. Currently, you may manually link in your desired window icon, like how is done in
+<https://github.com/neroist/webview/tree/main/examples/example_application/windows>.
 
 ## Browsers
 
@@ -112,3 +118,4 @@ If you want choose other browser instead of default - use these flags:
 | Chrome          | `-d:chrome`     |
 | Edge            | `-d:edge`       |
 | Yandex          | `-d:yandex`     |
+| Webview         | `-d:webview`    |
