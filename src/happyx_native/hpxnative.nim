@@ -70,17 +70,17 @@ when isMainModule:
     of "":
       quit(helpMessage())
     of "init":
-      styledEcho fgBlue, "HappyX Native", fgMagenta, " init ", fgWhite, " command creates app project."
+      styledEcho fgBlue, "HappyX Native", fgMagenta, " init ", fgWhite, "~ ", fgGreen, "Create new Happyx Native project."
       styledEcho "\nUsage:"
       styledEcho fgMagenta, "  hpx-native init\n"
       styledEcho "Arguments:"
       styledEcho fgBlue, align("name", 4), fgWhite, " - project name."
     of "build":
-      styledEcho fgBlue, "HappyX Native", fgMagenta, " build ", fgWhite, " command builds app."
+      styledEcho fgBlue, "HappyX Native", fgMagenta, " build ", fgWhite, "~ ", fgGreen, "Build & compile Happyx Native app."
       styledEcho "\nUsage:"
       styledEcho fgMagenta, "  hpx-native build\n"
       styledEcho "Optional arguments:"
-      styledEcho fgBlue, align("target", 14), fgWhite, " - build target. By default target is your OS."
+      styledEcho fgBlue, align("target", 14), fgWhite, " - build target. Defaults to the current OS."
       styledEcho align("", 14), "   Possible targets:"
       styledEcho align("", 14), "   - windows (win)"
       styledEcho align("", 14), "   - linux (unix)"
