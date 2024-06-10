@@ -108,6 +108,10 @@ for you. This is due to a limitation within Happyx Native, that will be resolved
 future. Currently, you may manually link in your desired window icon, like how is done in
 <https://github.com/neroist/webview/tree/main/examples/example_application/windows>.
 
+In addition, Webview does not currently support window positioning
+(see <https://github.com/webview/webview/issues/642>), so the `x` and `y` arguments passed to
+`nativeApp` will be ignored.
+
 ## Browsers
 
 If you want choose other browser instead of default - use these flags:
