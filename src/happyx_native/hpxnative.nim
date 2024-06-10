@@ -82,10 +82,10 @@ when isMainModule:
       styledEcho "Optional arguments:"
       styledEcho fgBlue, align("target", 14), fgWhite, " - build target. By default target is your OS."
       styledEcho align("", 14), "   Possible targets:"
-      styledEcho align("", 14), "   - windows (win);"
-      styledEcho align("", 14), "   - linux (unix);"
-      styledEcho align("", 14), "   - macosx (mac, macos);"
-      styledEcho align("", 14), "   - android."
+      styledEcho align("", 14), "   - windows (win)"
+      styledEcho align("", 14), "   - linux (unix)"
+      styledEcho align("", 14), "   - macosx (mac, macos)"
+      styledEcho align("", 14), "   - android"
       styledEcho fgBlue, align("no-x86_64", 14), fgWhite, " - disable building for x86_64 arch (android only)"
       styledEcho fgBlue, align("no-x86", 14), fgWhite, " - disable building for x86 arch (android only)"
       styledEcho fgBlue, align("no-armeabi-v7a", 14), fgWhite, " - disable building for armeabi-v7a arch (android only)"
@@ -93,9 +93,9 @@ when isMainModule:
       styledEcho fgBlue, align("release", 14), fgWhite, " - enable release build"
       styledEcho fgBlue, align("opt", 14), fgWhite, " - Nim compilation option"
       styledEcho fgBlue, align("", 14), fgWhite, "   Possible values:"
-      styledEcho fgBlue, align("", 14), fgWhite, "   - size (optimize build size);"
-      styledEcho fgBlue, align("", 14), fgWhite, "   - speed (optimize app speed);"
-      styledEcho fgBlue, align("", 14), fgWhite, "   - none (no optimizations, by default)."
+      styledEcho fgBlue, align("", 14), fgWhite, "   - size (optimize build size)"
+      styledEcho fgBlue, align("", 14), fgWhite, "   - speed (optimize app speed)"
+      styledEcho fgBlue, align("", 14), fgWhite, "   - none (no optimizations, by default)"
     else:
       styledEcho fgRed, "Unknown subcommand: ", fgWhite, subcmdHelp
     quit(QuitSuccess)
