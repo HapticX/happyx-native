@@ -68,9 +68,6 @@ macro callback*(body: untyped) =
     var params: seq[NimNode] = @[]
     for param in statement.params:
       params.add(param)
-    dumpTree:
-      {.gcsafe.}:
-        echo 1
     var prc = newProc(
       statement.name,
       params,
@@ -117,8 +114,6 @@ macro callback*(body: untyped) =
       nnkTemplateDef
     )
   )
-  echo result.toStrLit
-
 
 macro callJsAsync*(funcName: string, params: varargs[untyped]) =
   quote do:
