@@ -100,7 +100,7 @@ when isMainModule:
       styledEcho fgRed, "Unknown subcommand: ", fgWhite, subcmdHelp
     quit(QuitSuccess)
   of "":
-    quit(dispatchmainCommand(cmdline = pars[0..^1]))
+    quit(mainCommand(pars[0] in ["-v", "--version"]))
   else:
     styledEcho fgRed, styleBright, "Unknown subcommand: ", fgWhite, subcmd
     styledEcho fgYellow, "Use ", fgMagenta, "hpx_native help ", fgYellow, "to get all commands"
