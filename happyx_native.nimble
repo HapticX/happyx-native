@@ -24,3 +24,5 @@ requires "happyx#head"
 requires "jnim#head"
 # windows executable
 requires "rcedit"
+# Webview, updated bindings
+requires "https://github.com/neroist/webview"
