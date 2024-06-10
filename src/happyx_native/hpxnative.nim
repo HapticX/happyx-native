@@ -74,7 +74,7 @@ when isMainModule:
       styledEcho "\nUsage:"
       styledEcho fgMagenta, "  hpx-native init\n"
       styledEcho "Arguments:"
-      styledEcho fgBlue, align("name", 4), fgWhite, " - project name."
+      styledEcho fgBlue, align("name", 6), fgWhite, " - project name."
     of "build":
       styledEcho fgBlue, "HappyX Native", fgMagenta, " build ", fgWhite, "~ ", fgGreen, "Build & compile Happyx Native app."
       styledEcho "\nUsage:"
