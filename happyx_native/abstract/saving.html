@@ -55,40 +55,43 @@
     <summary><a class="reference reference-toplevel" href="#12" id="62">Procs</a></summary>
     <ul class="simple simple-toc-section">
       <ul class="simple nested-toc-section">loadBool
-  <li><a class="reference" href="#loadBool%2Cstring" title="loadBool(filename`gensym4: string): bool">loadBool(filename`gensym4: string): bool</a></li>
+  <li><a class="reference" href="#loadBool%2Cstring" title="loadBool(filename: string): bool">loadBool(filename: string): bool</a></li>
+
+</ul>
+<ul class="simple nested-toc-section">loadEnum
+  <li><a class="reference" href="#loadEnum%2Cstring" title="loadEnum[T: enum](filename: string): T">loadEnum[T: enum](filename: string): T</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">loadFloat
-  <li><a class="reference" href="#loadFloat%2Cstring" title="loadFloat(filename`gensym3: string): float">loadFloat(filename`gensym3: string): float</a></li>
+  <li><a class="reference" href="#loadFloat%2Cstring" title="loadFloat(filename: string): float">loadFloat(filename: string): float</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">loadHexInt
-  <li><a class="reference" href="#loadHexInt%2Cstring" title="loadHexInt(filename`gensym5: string): int">loadHexInt(filename`gensym5: string): int</a></li>
-<li><a class="reference" href="#loadHexInt%2Cstring_2" title="loadHexInt(filename`gensym6: string): int">loadHexInt(filename`gensym6: string): int</a></li>
+  <li><a class="reference" href="#loadHexInt%2Cstring" title="loadHexInt(filename: string): int">loadHexInt(filename: string): int</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">loadInt
-  <li><a class="reference" href="#loadInt%2Cstring" title="loadInt(filename`gensym2: string): int">loadInt(filename`gensym2: string): int</a></li>
+  <li><a class="reference" href="#loadInt%2Cstring" title="loadInt(filename: string): int">loadInt(filename: string): int</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">loadJson
-  <li><a class="reference" href="#loadJson%2Cstring" title="loadJson(filename`gensym0: string): JsonNode">loadJson(filename`gensym0: string): JsonNode</a></li>
+  <li><a class="reference" href="#loadJson%2Cstring" title="loadJson(filename: string): JsonNode">loadJson(filename: string): JsonNode</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">loadOctInt
-  <li><a class="reference" href="#loadOctInt%2Cstring" title="loadOctInt(filename`gensym7: string): int">loadOctInt(filename`gensym7: string): int</a></li>
+  <li><a class="reference" href="#loadOctInt%2Cstring" title="loadOctInt(filename: string): int">loadOctInt(filename: string): int</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">loadString
-  <li><a class="reference" href="#loadString%2Cstring" title="loadString(filename`gensym1: string): string">loadString(filename`gensym1: string): string</a></li>
+  <li><a class="reference" href="#loadString%2Cstring" title="loadString(filename: string): string">loadString(filename: string): string</a></li>
 
 </ul>
 <ul class="simple nested-toc-section">save
-  <li><a class="reference" href="#save%2Cstring%2CJsonNode" title="save(filename`gensym0: string; data`gensym0: JsonNode)">save(filename`gensym0: string; data`gensym0: JsonNode)</a></li>
-<li><a class="reference" href="#save%2Cstring%2Cstring" title="save(filename`gensym1: string; data`gensym1: string)">save(filename`gensym1: string; data`gensym1: string)</a></li>
-<li><a class="reference" href="#save%2Cstring%2Cint" title="save(filename`gensym2: string; data`gensym2: int)">save(filename`gensym2: string; data`gensym2: int)</a></li>
-<li><a class="reference" href="#save%2Cstring%2Cfloat" title="save(filename`gensym3: string; data`gensym3: float)">save(filename`gensym3: string; data`gensym3: float)</a></li>
-<li><a class="reference" href="#save%2Cstring%2Cbool" title="save(filename`gensym4: string; data`gensym4: bool)">save(filename`gensym4: string; data`gensym4: bool)</a></li>
+  <li><a class="reference" href="#save%2Cstring%2Cbool" title="save(filename: string; data: bool)">save(filename: string; data: bool)</a></li>
+<li><a class="reference" href="#save%2Cstring%2CJsonNode" title="save(filename: string; data: JsonNode)">save(filename: string; data: JsonNode)</a></li>
+<li><a class="reference" href="#save%2Cstring%2CSomeNumber" title="save(filename: string; data: SomeNumber)">save(filename: string; data: SomeNumber)</a></li>
+<li><a class="reference" href="#save%2Cstring%2Cstring" title="save(filename: string; data: string)">save(filename: string; data: string)</a></li>
+<li><a class="reference" href="#save%2Cstring%2CT" title="save[T: enum](filename: string; data: T)">save[T: enum](filename: string; data: T)</a></li>
 
 </ul>
 
@@ -115,13 +118,26 @@
   <dl class="item">
     <div id="loadBool-procs-all">
   <div id="loadBool,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#loadBool%2Cstring"><span class="Identifier">loadBool</span></a><span class="Other">(</span><span class="Identifier">filename`gensym4</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.
-    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#loadBool%2Cstring"><span class="Identifier">loadBool</span></a><span class="Other">(</span><span class="Identifier">filename</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">bool</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span>
+    <span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
+    <p>Loads boolean from filename</p>
+<p>On Android it uses SharedPreferences to data loading </p>
+
     
+  </dd>
+</div>
+
+</div>
+<div id="loadEnum-procs-all">
+  <div id="loadEnum,string">
+  <dt><pre><span class="Keyword">proc</span> <a href="#loadEnum%2Cstring"><span class="Identifier">loadEnum</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <span class="Keyword">enum</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">filename</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">T</span></pre></dt>
+  <dd>
+    
+    <p>Loads integer from filename</p>
+<p>On Android it uses SharedPreferences to data loading </p>
+
     
   </dd>
 </div>
@@ -129,13 +145,15 @@
 </div>
 <div id="loadFloat-procs-all">
   <div id="loadFloat,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#loadFloat%2Cstring"><span class="Identifier">loadFloat</span></a><span class="Other">(</span><span class="Identifier">filename`gensym3</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#loadFloat%2Cstring"><span class="Identifier">loadFloat</span></a><span class="Other">(</span><span class="Identifier">filename</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">float</span> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    
+    <p>Loads float from filename</p>
+<p>On Android it uses SharedPreferences to data loading </p>
+
     
   </dd>
 </div>
@@ -143,24 +161,14 @@
 </div>
 <div id="loadHexInt-procs-all">
   <div id="loadHexInt,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#loadHexInt%2Cstring"><span class="Identifier">loadHexInt</span></a><span class="Other">(</span><span class="Identifier">filename`gensym5</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> {.
-    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#loadHexInt%2Cstring"><span class="Identifier">loadHexInt</span></a><span class="Other">(</span><span class="Identifier">filename</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    
-    
-  </dd>
-</div>
-<div id="loadHexInt,string_2">
-  <dt><pre><span class="Keyword">proc</span> <a href="#loadHexInt%2Cstring_2"><span class="Identifier">loadHexInt</span></a><span class="Other">(</span><span class="Identifier">filename`gensym6</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> {.
-    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
-  <dd>
-    
-    
+    <p>Loads integer from filename</p>
+<p>On Android it uses SharedPreferences to data loading </p>
+
     
   </dd>
 </div>
@@ -168,13 +176,13 @@
 </div>
 <div id="loadInt-procs-all">
   <div id="loadInt,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#loadInt%2Cstring"><span class="Identifier">loadInt</span></a><span class="Other">(</span><span class="Identifier">filename`gensym2</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> {.
-    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">]</span><span class="Other">,</span>
-    <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#loadInt%2Cstring"><span class="Identifier">loadInt</span></a><span class="Other">(</span><span class="Identifier">filename</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span>
+    <span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    
+    <p>Loads integer from filename</p>
+<p>On Android it uses SharedPreferences to data loading </p>
+
     
   </dd>
 </div>
@@ -182,13 +190,15 @@
 </div>
 <div id="loadJson-procs-all">
   <div id="loadJson,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#loadJson%2Cstring"><span class="Identifier">loadJson</span></a><span class="Other">(</span><span class="Identifier">filename`gensym0</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">JsonNode</span> {.
+  <dt><pre><span class="Keyword">proc</span> <a href="#loadJson%2Cstring"><span class="Identifier">loadJson</span></a><span class="Other">(</span><span class="Identifier">filename</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">JsonNode</span> {.
     <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">JsonParsingError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span>
     <span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">,</span> <span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    
+    <p>Loads JSON from filename</p>
+<p>On Android it uses SharedPreferences to data loading </p>
+
     
   </dd>
 </div>
@@ -196,13 +206,14 @@
 </div>
 <div id="loadOctInt-procs-all">
   <div id="loadOctInt,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#loadOctInt%2Cstring"><span class="Identifier">loadOctInt</span></a><span class="Other">(</span><span class="Identifier">filename`gensym7</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> {.
-    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#loadOctInt%2Cstring"><span class="Identifier">loadOctInt</span></a><span class="Other">(</span><span class="Identifier">filename</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    
+    <p>Loads integer from filename</p>
+<p>On Android it uses SharedPreferences to data loading </p>
+
     
   </dd>
 </div>
@@ -210,70 +221,73 @@
 </div>
 <div id="loadString-procs-all">
   <div id="loadString,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#loadString%2Cstring"><span class="Identifier">loadString</span></a><span class="Other">(</span><span class="Identifier">filename`gensym1</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
+  <dt><pre><span class="Keyword">proc</span> <a href="#loadString%2Cstring"><span class="Identifier">loadString</span></a><span class="Other">(</span><span class="Identifier">filename</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">string</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">]</span><span class="Other">,</span>
     <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    
+    <p>Loads JSON from filename</p>
+<p>On Android it uses SharedPreferences to data loading </p>
+
     
   </dd>
 </div>
 
 </div>
 <div id="save-procs-all">
-  <div id="save,string,JsonNode">
-  <dt><pre><span class="Keyword">proc</span> <a href="#save%2Cstring%2CJsonNode"><span class="Identifier">save</span></a><span class="Other">(</span><span class="Identifier">filename`gensym0</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">data`gensym0</span><span class="Other">:</span> <span class="Identifier">JsonNode</span><span class="Other">)</span> {.
-    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span>
-                                       <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">,</span>
-                                       <span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <div id="save,string,bool">
+  <dt><pre><span class="Keyword">proc</span> <a href="#save%2Cstring%2Cbool"><span class="Identifier">save</span></a><span class="Other">(</span><span class="Identifier">filename</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">data</span><span class="Other">:</span> <span class="Identifier">bool</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span>
+    <span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">,</span> <span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
+    <p>Saves boolean in filename.</p>
+<p>On Android it uses SharedPreferences to data saving </p>
+
     
+  </dd>
+</div>
+<div id="save,string,JsonNode">
+  <dt><pre><span class="Keyword">proc</span> <a href="#save%2Cstring%2CJsonNode"><span class="Identifier">save</span></a><span class="Other">(</span><span class="Identifier">filename</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">data</span><span class="Other">:</span> <span class="Identifier">JsonNode</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span>
+    <span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">,</span> <span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dd>
+    
+    <p>Saves JSON in filename.</p>
+<p>On Android it uses SharedPreferences to data saving </p>
+
+    
+  </dd>
+</div>
+<div id="save,string,SomeNumber">
+  <dt><pre><span class="Keyword">proc</span> <a href="#save%2Cstring%2CSomeNumber"><span class="Identifier">save</span></a><span class="Other">(</span><span class="Identifier">filename</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">data</span><span class="Other">:</span> <span class="Identifier">SomeNumber</span><span class="Other">)</span></pre></dt>
+  <dd>
+    
+    <p>Saves number in filename.</p>
+<p>On Android it uses SharedPreferences to data saving </p>
+
     
   </dd>
 </div>
 <div id="save,string,string">
-  <dt><pre><span class="Keyword">proc</span> <a href="#save%2Cstring%2Cstring"><span class="Identifier">save</span></a><span class="Other">(</span><span class="Identifier">filename`gensym1</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">data`gensym1</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.
-    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span>
-                                       <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">,</span>
-                                       <span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+  <dt><pre><span class="Keyword">proc</span> <a href="#save%2Cstring%2Cstring"><span class="Identifier">save</span></a><span class="Other">(</span><span class="Identifier">filename</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">data</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span>
+    <span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">,</span> <span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span>
+    <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
   <dd>
     
-    
+    <p>Saves string in filename.</p>
+<p>On Android it uses SharedPreferences to data saving </p>
+
     
   </dd>
 </div>
-<div id="save,string,int">
-  <dt><pre><span class="Keyword">proc</span> <a href="#save%2Cstring%2Cint"><span class="Identifier">save</span></a><span class="Other">(</span><span class="Identifier">filename`gensym2</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">data`gensym2</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span> {.
-    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span>
-                                       <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">,</span>
-                                       <span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+<div id="save,string,T">
+  <dt><pre><span class="Keyword">proc</span> <a href="#save%2Cstring%2CT"><span class="Identifier">save</span></a><span class="Other">[</span><span class="Identifier">T</span><span class="Other">:</span> <span class="Keyword">enum</span><span class="Other">]</span><span class="Other">(</span><span class="Identifier">filename</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">data</span><span class="Other">:</span> <span class="Identifier">T</span><span class="Other">)</span></pre></dt>
   <dd>
     
-    
-    
-  </dd>
-</div>
-<div id="save,string,float">
-  <dt><pre><span class="Keyword">proc</span> <a href="#save%2Cstring%2Cfloat"><span class="Identifier">save</span></a><span class="Other">(</span><span class="Identifier">filename`gensym3</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">data`gensym3</span><span class="Other">:</span> <span class="Identifier">float</span><span class="Other">)</span> {.
-    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span>
-                                       <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">,</span>
-                                       <span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
-  <dd>
-    
-    
-    
-  </dd>
-</div>
-<div id="save,string,bool">
-  <dt><pre><span class="Keyword">proc</span> <a href="#save%2Cstring%2Cbool"><span class="Identifier">save</span></a><span class="Other">(</span><span class="Identifier">filename`gensym4</span><span class="Other">:</span> <span class="Identifier">string</span><span class="Other">;</span> <span class="Identifier">data`gensym4</span><span class="Other">:</span> <span class="Identifier">bool</span><span class="Other">)</span> {.
-    <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">OSError</span><span class="Other">,</span> <span class="Identifier">IOError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">ReadDirEffect</span><span class="Other">,</span> <span class="Identifier">ReadEnvEffect</span><span class="Other">,</span>
-                                       <span class="Identifier">ReadIOEffect</span><span class="Other">,</span> <span class="Identifier">WriteDirEffect</span><span class="Other">,</span>
-                                       <span class="Identifier">WriteIOEffect</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">forbids</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
-  <dd>
-    
-    
+    <p>Saves Enum in filename.</p>
+<p>On Android it uses SharedPreferences to data saving </p>
+
     
   </dd>
 </div>
@@ -289,7 +303,7 @@
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2024-06-10 08:52:50 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2024-06-30 16:19:53 UTC</small>
       </div>
     </div>
   </div>
