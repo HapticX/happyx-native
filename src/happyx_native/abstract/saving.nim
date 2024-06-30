@@ -66,14 +66,17 @@ proc save*[T: enum](filename: string, data: T) =
   filename.save(data.symbolName)
 
 
-proc loadImpl[T](filename: string): string =
+proc loadImpl[T](filename: string, parseFunc: proc(s: string): T): T =
   ## Loads string from filename
   ## 
   ## On Android it uses SharedPreferences to data loading
   ## 
   when defined(export2android):
     var sharedPreferences = appContext.getSharedPreferences(cfgAndroidPackageId(), MODE_PRIVATE)
-    return $sharedPreferences.getString(filename, "")
+    when T is string:
+      return $sharedPreferences.getString(filename, "")
+    else:
+      return parseFunc($sharedPreferences.getString(filename, ""))
   else:
     if not dirExists(getHomeDir() / "hpxnative"):
       createDir(getHomeDir() / "hpxnative")
@@ -84,7 +87,10 @@ proc loadImpl[T](filename: string): string =
       f = open(userFolder, fmRead)
       data = f.readAll()
     f.close()
-    return data
+    when T is string:
+      return data
+    else:
+      return parseFunc($data)
 
 
 proc loadString*(filename: string): JsonNode =
@@ -92,7 +98,7 @@ proc loadString*(filename: string): JsonNode =
   ## 
   ## On Android it uses SharedPreferences to data loading
   ## 
-  return loadImpl[string](filename)
+  return loadImpl[string](filename, `$`)
 
 
 proc loadJson*(filename: string): JsonNode =
@@ -100,7 +106,7 @@ proc loadJson*(filename: string): JsonNode =
   ## 
   ## On Android it uses SharedPreferences to data loading
   ## 
-  return parseJson(loadImpl[JsonNode](filename))
+  return loadImpl[JsonNode](filename, parseJson)
 
 
 proc loadInt*(filename: string): int =
@@ -108,7 +114,7 @@ proc loadInt*(filename: string): int =
   ## 
   ## On Android it uses SharedPreferences to data loading
   ## 
-  return parseInt(loadImpl[int](filename))
+  return loadImpl[int](filename, parseInt)
 
 
 proc loadFloat*(filename: string): float =
@@ -116,7 +122,7 @@ proc loadFloat*(filename: string): float =
   ## 
   ## On Android it uses SharedPreferences to data loading
   ## 
-  return parseFloat(loadImpl[float](filename))
+  return loadImpl[float](filename, parseFloat)
 
 
 proc loadBool*(filename: string): bool =
@@ -124,7 +130,7 @@ proc loadBool*(filename: string): bool =
   ## 
   ## On Android it uses SharedPreferences to data loading
   ## 
-  return parseBool(loadImpl[bool](filename))
+  return loadImpl[bool](filename, parseBool)
 
 
 proc loadHexInt*(filename: string): int =
@@ -132,7 +138,7 @@ proc loadHexInt*(filename: string): int =
   ## 
   ## On Android it uses SharedPreferences to data loading
   ## 
-  return parseHexInt(loadImpl[int](filename))
+  return loadImpl[int](filename, parseHexInt)
 
 
 proc loadOctInt*(filename: string): int =
@@ -140,7 +146,7 @@ proc loadOctInt*(filename: string): int =
   ## 
   ## On Android it uses SharedPreferences to data loading
   ## 
-  return parseOctInt(loadImpl[int](filename))
+  return loadImpl[int](filename, parseOctInt)
 
 
 proc loadEnum*[T: enum](filename: string): T =
@@ -148,4 +154,4 @@ proc loadEnum*[T: enum](filename: string): T =
   ## 
   ## On Android it uses SharedPreferences to data loading
   ## 
-  return parseEnum[T](loadImpl[T](filename))
+  return loadImpl[T](filename, parseEnum[T])
