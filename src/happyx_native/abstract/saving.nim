@@ -92,7 +92,7 @@ proc loadString*(filename: string): JsonNode =
   ## 
   ## On Android it uses SharedPreferences to data loading
   ## 
-  return load[string](filename)
+  return loadImpl[string](filename)
 
 
 proc loadJson*(filename: string): JsonNode =
@@ -100,7 +100,7 @@ proc loadJson*(filename: string): JsonNode =
   ## 
   ## On Android it uses SharedPreferences to data loading
   ## 
-  return parseJson(load[JsonNode](filename))
+  return parseJson(loadImpl[JsonNode](filename))
 
 
 proc loadInt*(filename: string): int =
@@ -108,7 +108,7 @@ proc loadInt*(filename: string): int =
   ## 
   ## On Android it uses SharedPreferences to data loading
   ## 
-  return parseInt(load[int](filename))
+  return parseInt(loadImpl[int](filename))
 
 
 proc loadFloat*(filename: string): float =
@@ -116,7 +116,7 @@ proc loadFloat*(filename: string): float =
   ## 
   ## On Android it uses SharedPreferences to data loading
   ## 
-  return parseFloat(load[float](filename))
+  return parseFloat(loadImpl[float](filename))
 
 
 proc loadBool*(filename: string): bool =
@@ -124,7 +124,7 @@ proc loadBool*(filename: string): bool =
   ## 
   ## On Android it uses SharedPreferences to data loading
   ## 
-  return parseBool(load[bool](filename))
+  return parseBool(loadImpl[bool](filename))
 
 
 proc loadHexInt*(filename: string): int =
@@ -132,7 +132,7 @@ proc loadHexInt*(filename: string): int =
   ## 
   ## On Android it uses SharedPreferences to data loading
   ## 
-  return parseHexInt(load[int](filename))
+  return parseHexInt(loadImpl[int](filename))
 
 
 proc loadOctInt*(filename: string): int =
@@ -140,7 +140,7 @@ proc loadOctInt*(filename: string): int =
   ## 
   ## On Android it uses SharedPreferences to data loading
   ## 
-  return parseOctInt(load[int](filename))
+  return parseOctInt(loadImpl[int](filename))
 
 
 proc loadEnum*[T: enum](filename: string): T =
@@ -148,4 +148,4 @@ proc loadEnum*[T: enum](filename: string): T =
   ## 
   ## On Android it uses SharedPreferences to data loading
   ## 
-  return parseEnum[T](load[T](filename))
+  return parseEnum[T](loadImpl[T](filename))
