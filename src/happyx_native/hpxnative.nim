@@ -8,7 +8,7 @@ import
   strformat,
   ./core/constants,
   ./cli/[
-    utils, build, init, help
+    utils, build, init, help, configure
   ],
   happyx/core/constants
 
