@@ -10,7 +10,8 @@ import
     jsonutils
   ],
   happyx,
-  ../cli/utils
+  ../cli/utils,
+  webview
 
 when defined(export2android):
   import
@@ -67,9 +68,6 @@ macro callback*(body: untyped) =
     var params: seq[NimNode] = @[]
     for param in statement.params:
       params.add(param)
-    dumpTree:
-      {.gcsafe.}:
-        echo 1
     var prc = newProc(
       statement.name,
       params,
@@ -116,8 +114,6 @@ macro callback*(body: untyped) =
       nnkTemplateDef
     )
   )
-  echo result.toStrLit
-
 
 macro callJsAsync*(funcName: string, params: varargs[untyped]) =
   quote do:
@@ -179,6 +175,20 @@ macro fetchFiles*(directory: static[string]): untyped =
     ))
   result.add(ident"_files")
 
+proc createHpxWebview*(w, h: int, port: int, resizeable: bool) = 
+  let 
+    wv = newWebview()
+    hint =
+      if resizeable: WebviewHintNone
+      else: WebviewHintFixed
+
+  wv.setSize(w, h, hint)
+  wv.setTitle(cfgName())
+  # no positioning?
+  wv.navigate(cstring("http://127.0.0.1:" & $port))
+
+  wv.run()
+  wv.destroy()
 
 template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
                         x: int = 512, y: int = 128, w: int = 720, h: int = 320,
@@ -240,6 +250,8 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
         spawn openEdge(port, arguments)
       elif defined(chrome):
         spawn openChrome(port, arguments)
+      elif defined(webview):        
+        spawn createHpxWebview(w, h, port, resizeable)
       else:
         spawn openDefault(port, arguments)
     else:
