@@ -7,10 +7,20 @@ import
     macros, os, sequtils, strformat,
     osproc, json, threadpool, browsers,
     uri, tables, terminal, parsecfg,
-    jsonutils, sugar
+    jsonutils, sugar, tables
   ],
-  happyx,
+  happyx/core/constants,
+  happyx/ssr/server,
+  happyx/routing/routing,
   ../cli/utils
+
+
+when enableApiDoc:
+  import happyx/tmpl_engine/engine
+  export engine
+
+
+include happyx/ssr/utils
 
 
 when defined(webview):
@@ -29,7 +39,10 @@ when defined(buildAssets):
   export macros, mimetypes
 
 export
-  happyx,
+  server,
+  routing,
+  tables,
+  sugar,
   osproc,
   json,
   jsonutils,
