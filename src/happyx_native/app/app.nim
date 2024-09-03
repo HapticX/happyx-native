@@ -7,7 +7,7 @@ import
     macros, os, sequtils, strformat,
     osproc, json, threadpool, browsers,
     uri, tables, terminal, parsecfg,
-    jsonutils, sugar, tables, cgi
+    jsonutils, sugar, tables, cgi, uri
   ],
   happyx/core/constants,
   happyx/ssr/server,
@@ -57,7 +57,8 @@ export
   sequtils,
   terminal,
   browsers,
-  utils
+  utils,
+  uri
 
 
 var websocketClient*: WebSocket
