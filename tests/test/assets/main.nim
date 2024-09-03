@@ -20,8 +20,10 @@ appRoutes "app":
           "increase"
           @click:
             # Call HappyX Native callback named helloWorld without arguments
+            echo 1
             hpxNative.callNim("helloWorld")
             x->inc()
+            echo x
     tStyle: """
       body {
         padding: 0;

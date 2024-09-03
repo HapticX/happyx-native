@@ -7,10 +7,13 @@ import
     macros, os, sequtils, strformat,
     osproc, json, threadpool, browsers,
     uri, tables, terminal, parsecfg,
-    jsonutils
+    jsonutils, sugar
   ],
   happyx,
-  ../cli/utils,
+  ../cli/utils
+
+
+when defined(webview):
   webview
 
 when defined(export2android):
@@ -175,20 +178,21 @@ macro fetchFiles*(directory: static[string]): untyped =
     ))
   result.add(ident"_files")
 
-proc createHpxWebview*(w, h: int, port: int, resizeable: bool) = 
-  let 
-    wv = newWebview()
-    hint =
-      if resizeable: WebviewHintNone
-      else: WebviewHintFixed
+when defined(webview):
+  proc createHpxWebview*(w, h: int, port: int, resizeable: bool) = 
+    let 
+      wv = newWebview()
+      hint =
+        if resizeable: WebviewHintNone
+        else: WebviewHintFixed
 
-  wv.setSize(w, h, hint)
-  wv.setTitle(cfgName())
-  # no positioning?
-  wv.navigate(cstring("http://127.0.0.1:" & $port))
+    wv.setSize(w, h, hint)
+    wv.setTitle(cfgName())
+    # no positioning?
+    wv.navigate(cstring("http://127.0.0.1:" & $port))
 
-  wv.run()
-  wv.destroy()
+    wv.run()
+    wv.destroy()
 
 template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
                         x: int = 512, y: int = 128, w: int = 720, h: int = 320,
@@ -320,8 +324,6 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
             window[func].apply(null, arr);
           },
           callNim: function (func, ...args) {
-            console.log(typeof(func), func);
-            console.log(typeof([...args]), [...args]);
             if (!connected) {
               function check(func, ...args) {
                 if (ws.readyState === 1) {
@@ -332,10 +334,6 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
               }
               var myInterval = setInterval(check, 15, func, ...args);
             } else {
-              console.log(JSON.stringify({
-                "procedure": func,
-                "params": [...args]
-              }));
               ws.send(JSON.stringify({
                 "procedure": func,
                 "params": [...args]
