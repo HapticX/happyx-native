@@ -18,9 +18,16 @@ import
 when enableApiDoc:
   import happyx/tmpl_engine/engine
   export engine
+else:
+  template getScriptDir*(): string =
+    ## Helper for staticRead.
+    ##
+    ## returns the absolute path to your project, on compile time.
+    instantiationInfo(-1, true).filename.parentDir() 
 
 
-include happyx/ssr/utils
+import happyx/ssr/utils as hpx_ssr_utils
+export hpx_ssr_utils
 
 
 when defined(webview):
