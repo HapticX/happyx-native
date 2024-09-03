@@ -220,13 +220,13 @@ when defined(webview):
 
 proc optimizeJs*(filepath: string) {.compileTime.} =
   discard staticExec(
-    fmt"""uglifyjs "{filepath}" -c --mangle-props regex=/N[ST]I\w+/ -O semicolons -o "{filepath}" """
+    fmt"""uglifyjs "{filepath}" -c toplevel=false -m toplevel=false --mangle-props regex=/N[ST]I\w+/ -O semicolons -o "{filepath}" """
   )
   discard staticExec(
     fmt"""terser "{filepath}" -c -m -o "{filepath}" """
   )
   discard staticExec(
-    fmt"""cmd /c uglifyjs "{filepath}" -c --mangle-props regex=/N[ST]I\w+/ -O semicolons -o "{filepath}" """
+    fmt"""cmd /c uglifyjs "{filepath}" -c toplevel=false -m toplevel=false --mangle-props regex=/N[ST]I\w+/ -O semicolons -o "{filepath}" """
   )
   discard staticExec(
     fmt"""cmd /c terser "{filepath}" -c -m -o "{filepath}" """
@@ -260,7 +260,8 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
         echo staticExec(
           "nim js -d:danger --opt:size --warnings:off --checks:off --assertions:off --stackTrace:off --lineTrace:off " & getScriptDir() / appDirectory / "main.nim"
         )
-        optimizeJs(getProjectPath() / appDirectory / "main.js")
+        when not defined(disableMinify):
+          optimizeJs(getProjectPath() / appDirectory / "main.js")
   else:
     when defined(buildAssets):
       static:
@@ -271,7 +272,8 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
           echo staticExec(
             "nim js -d:danger --opt:size --warnings:off --checks:off --assertions:off --stackTrace:off --lineTrace:off " & getScriptDir() / appDirectory / "main.nim"
           )
-          optimizeJs(getProjectPath() / appDirectory / "main.js")
+          when not defined(disableMinify):
+            optimizeJs(getProjectPath() / appDirectory / "main.js")
     else:
       # Compile main
       if cfgKind() == "HPX":
