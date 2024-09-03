@@ -7,7 +7,7 @@ import
     macros, os, sequtils, strformat,
     osproc, json, threadpool, browsers,
     uri, tables, terminal, parsecfg,
-    jsonutils, sugar, tables
+    jsonutils, sugar, tables, cgi
   ],
   happyx/core/constants,
   happyx/ssr/server,
@@ -32,11 +32,11 @@ when defined(export2android):
     ../android/core,
     ../android/autils
   export
-    macros, mimetypes, autils
+    macros, mimetypes, autils, cgi
 
 when defined(buildAssets):
   import mimetypes
-  export macros, mimetypes
+  export macros, mimetypes, cgi
 
 export
   server,
