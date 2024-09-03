@@ -75,6 +75,8 @@ template loadImpl[T](filename: string, parseFunc: untyped): untyped =
     when T is string:
       return $sharedPreferences.getString(filename, "")
     else:
+      if ($sharedPreferences.getString(filename, "")).len == 0:
+        return T.default
       return `parseFunc`($sharedPreferences.getString(filename, ""))
   else:
     if not dirExists(getHomeDir() / "hpxnative"):
@@ -89,6 +91,8 @@ template loadImpl[T](filename: string, parseFunc: untyped): untyped =
     when T is string:
       return data
     else:
+      if $data.len == 0:
+        return T.default
       return `parseFunc`($data)
 
 

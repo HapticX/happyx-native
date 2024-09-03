@@ -146,7 +146,7 @@ jClass android.content.SharedPreferences$Editor as SharedPreferencesEditor* of O
   proc putInt*(key: string, value: jint): SharedPreferencesEditor
   proc putLong*(key: string, value: jlong): SharedPreferencesEditor
   proc putString*(key: string, value: string): SharedPreferencesEditor
-  proc putStringSet*(key: string, value: Set[string]): SharedPreferencesEditor
+  # proc putStringSet*(key: string, value: Set[string]): SharedPreferencesEditor
   proc remove*(key: string): SharedPreferencesEditor
 
 
@@ -159,7 +159,7 @@ jClass android.content.SharedPreferences of Object:
   proc getInt*(key: string, defValue: jint): jint
   proc getLong*(key: string, defValue: jlong): jlong
   proc getString*(key: string, defValue: string): string
-  proc getStringSet*(key: string, defValue: Set[string]): Set[string]
+  # proc getStringSet*(key: string, defValue: Set[string]): Set[string]
 
 
 jClass android.graphics.Rect* of Object:

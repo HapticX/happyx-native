@@ -360,6 +360,7 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
           );
           hpxNative.callJs(v[0], v[1]);
         }
+        ws.onopen = () => {connected = true};
         var hpxNative = {
           callJs: function (func, arr) {
             window[func].apply(null, arr);
