@@ -220,13 +220,13 @@ when defined(webview):
 
 proc optimizeJs*(filepath: string) {.compileTime.} =
   discard staticExec(
-    fmt"""uglifyjs "{filepath}" -c -m toplevel --mangle-props regex=/N[ST]I\w+/ -O semicolons -o "{filepath}" """
+    fmt"""uglifyjs "{filepath}" -c --mangle-props regex=/N[ST]I\w+/ -O semicolons -o "{filepath}" """
   )
   discard staticExec(
     fmt"""terser "{filepath}" -c -m -o "{filepath}" """
   )
   discard staticExec(
-    fmt"""cmd /c uglifyjs "{filepath}" -c -m toplevel --mangle-props regex=/N[ST]I\w+/ -O semicolons -o "{filepath}" """
+    fmt"""cmd /c uglifyjs "{filepath}" -c --mangle-props regex=/N[ST]I\w+/ -O semicolons -o "{filepath}" """
   )
   discard staticExec(
     fmt"""cmd /c terser "{filepath}" -c -m -o "{filepath}" """
@@ -338,12 +338,12 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
       data = data.replace(
         "</head>", (
           when defined(export2android):
-            """<script>var ws = new WebSocket("ws://127.0.0.1:""" & $port & """/ws");"""
+            """<script>var wsHpxNim = new WebSocket("ws://127.0.0.1:""" & $port & """/ws");"""
           else:
             """<script>
             window.moveTo(""" & $x & """,""" & $y & """);
             window.resizeTo(""" & $w & """, """ & $h & """);
-            var ws = new WebSocket("ws://127.0.0.1:""" & $port & """/ws");""" & (
+            var wsHpxNim = new WebSocket("ws://127.0.0.1:""" & $port & """/ws");""" & (
               when not resizeable:
                 """
                 window.addEventListener('resize', () => {
@@ -354,13 +354,13 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
             )
         ) & """
         var connected = false;
-        ws.onmessage = (data) => {
+        wsHpxNim.onmessage = (data) => {
           let v = Object.values(
             data.data !== undefined ? JSON.parse(data.data) : x = JSON.parse(data)
           );
           hpxNative.callJs(v[0], v[1]);
         }
-        ws.onopen = () => {connected = true};
+        wsHpxNim.onopen = () => {connected = true};
         var hpxNative = {
           callJs: function (func, arr) {
             window[func].apply(null, arr);
@@ -368,7 +368,7 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
           callNim: function (func, ...args) {
             if (!connected) {
               function check(func, ...args) {
-                if (ws.readyState === 1) {
+                if (wsHpxNim.readyState === 1) {
                   connected = true;
                   hpxNative.callNim(func, ...args);
                   clearInterval(myInterval);
@@ -376,7 +376,7 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
               }
               var myInterval = setInterval(check, 15, func, ...args);
             } else {
-              ws.send(JSON.stringify({
+              wsHpxNim.send(JSON.stringify({
                 "procedure": func,
                 "params": [...args]
               }));

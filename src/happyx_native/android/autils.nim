@@ -349,6 +349,24 @@ jClass android.app.AlertDialog$Builder as AlertDialogBuilder* of Dialog:
   proc show*: AlertDialog
 
 
+jClass android.content.Window* of Object:
+  proc new*
+  proc setStatusBarColor*(var1: jint)
+
+
+jClass android.content.ContextWrapper* of Context:
+  proc new*
+
+
+jClass android.content.ContextThemeWrapper* of ContextWrapper:
+  proc new*
+
+
+jClass android.content.Activity* of ContextThemeWrapper:
+  proc new*
+  proc getWindow*(): Window
+
+
 var
   runOnUiThreadEvents {.compileTime.}: seq[NimNode] = @[]
   argumentNames {.compileTime.} = newTable[int, seq[NimNode]]()
