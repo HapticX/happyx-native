@@ -190,6 +190,8 @@ macro fetchFiles*(directory: static[string]): untyped =
     )
   )
   for file in files:
+    if file.endsWith(".nim"):
+      continue
     result.add(newCall(
       "[]=",
       ident"_files",
