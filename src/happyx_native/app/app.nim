@@ -216,6 +216,22 @@ when defined(webview):
     wv.run()
     wv.destroy()
 
+
+proc optimizeJs*(filepath: string) {.compileTime.} =
+  discard staticExec(
+    fmt"""uglifyjs "{filepath}" -c -m toplevel --mangle-props regex=/N[ST]I\w+/ -O semicolons -o "{filepath}" """
+  )
+  discard staticExec(
+    fmt"""terser "{filepath}" -c -m -o "{filepath}" """
+  )
+  discard staticExec(
+    fmt"""cmd /c uglifyjs "{filepath}" -c -m toplevel --mangle-props regex=/N[ST]I\w+/ -O semicolons -o "{filepath}" """
+  )
+  discard staticExec(
+    fmt"""cmd /c terser "{filepath}" -c -m -o "{filepath}" """
+  )
+
+
 template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
                         x: int = 512, y: int = 128, w: int = 720, h: int = 320,
                         appMode: bool = true, title: string = "",
@@ -241,8 +257,9 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
         compileHpx(getScriptDir() / appDirectory)
       else:
         echo staticExec(
-          "nim js -d:danger --opt:size " & getScriptDir() / appDirectory / "main.nim"
+          "nim js -d:danger --opt:size --warnings:off --checks:off --assertions:off --stackTrace:off --lineTrace:off " & getScriptDir() / appDirectory / "main.nim"
         )
+        optimizeJs(getProjectPath() / appDirectory / "main.js")
   else:
     when defined(buildAssets):
       static:
@@ -251,8 +268,9 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
         # Compile main
         else:
           echo staticExec(
-            "nim js -d:danger --opt:size " & getScriptDir() / appDirectory / "main.nim"
+            "nim js -d:danger --opt:size --warnings:off --checks:off --assertions:off --stackTrace:off --lineTrace:off " & getScriptDir() / appDirectory / "main.nim"
           )
+          optimizeJs(getProjectPath() / appDirectory / "main.js")
     else:
       # Compile main
       if cfgKind() == "HPX":
