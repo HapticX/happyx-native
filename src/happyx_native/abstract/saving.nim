@@ -91,7 +91,7 @@ template loadImpl[T](filename: string, parseFunc: untyped): untyped =
     when T is string:
       return data
     else:
-      if $data.len == 0:
+      if ($data).len == 0:
         return T.default
       return `parseFunc`($data)
 

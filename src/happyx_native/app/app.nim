@@ -65,7 +65,7 @@ var websocketClient*: WebSocket
 
 when defined(export2android):
   var
-    appContext*: Context
+    appContext*: Activity
 
 
 macro callback*(body: untyped) =
@@ -460,11 +460,10 @@ template nativeApp*(appDirectory: string = "/assets", port: int = 5123,
   when defined(export2android):
     nativeMethodsFor cfgAndroidPackageId(), "Native":
       proc start(ctx: jobject) =
-        appContext = cast[Context](newJVMObject(ctx))
+        appContext = cast[Activity](newJVMObject(ctx))
         nativeAppImpl(appDirectory, cfgPort(), x, y, w, h, appMode, title, resizeable, establish)
-      
       proc runOnUi(ctx: jobject) =
-        appContext = cast[Context](newJVMObject(ctx))
+        appContext = cast[Activity](newJVMObject(ctx))
         runOnUiThreadAll()
     declareRunOnUiAll()
   else:

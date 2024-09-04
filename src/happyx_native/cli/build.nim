@@ -186,7 +186,7 @@ proc buildCommandAux*(target: string = OS, release: bool = false, opt: string = 
       let (arch, cpu, linker) = data
       discard execCmd(
         fmt"""nim c {mode} {opt} {assets} -d:export2android -d:noSignalHandler --app:lib """ &
-        fmt"""--os:android --cpu:{cpu} --hint[CC]:on -d:httpxSendServerDate=false -d:httpx """ &
+        fmt"""--os:android --cpu:{cpu} --hint[CC]:on -d:httpxSendServerDate=false --threads:on -d:httpx """ &
         fmt"""--clang.path:"{clangPath}" --clang.exe:"{linker}" --clang.linkerexe:"{linker}" """ &
         fmt"""--passL:"-llog" """ &
         fmt"""-o:android/app/src/main/jniLibs/{arch}/libhpx-native.so app.nim"""

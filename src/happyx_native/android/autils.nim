@@ -352,6 +352,9 @@ jClass android.app.AlertDialog$Builder as AlertDialogBuilder* of Dialog:
 jClass android.content.Window* of Object:
   proc new*
   proc setStatusBarColor*(var1: jint)
+  proc getStatusBarColor*(): jint
+  proc setNavigationBarColor*(var1: jint)
+  proc getNavigationBarColor*(): jint
 
 
 jClass android.content.ContextWrapper* of Context:
@@ -367,83 +370,40 @@ jClass android.content.Activity* of ContextThemeWrapper:
   proc getWindow*(): Window
 
 
+jClass android.graphics.Color as AndroidColor* of Object:
+  proc new*
+  proc parseColor*(clr: string): jint {.`static`.}
+
+
 var
   runOnUiThreadEvents {.compileTime.}: seq[NimNode] = @[]
-  argumentNames {.compileTime.} = newTable[int, seq[NimNode]]()
-
-
-proc fetchAllIdents(node: var NimNode, list: var seq[NimNode], reserved: var seq[NimNode], root: NimNode = nil) =
-  for i in 0..<node.len:
-    var child = node[i]
-    if child.kind in AtomicNodes:
-      if child.kind == nnkIdent and ($child)[0] in ({'a'..'z'} + {'A'..'Z'}):
-        if root.kind notin [nnkVarSection, nnkLetSection, nnkProcDef, nnkConstSection] and child notin list:
-          if child notin reserved:
-            list.add(child)
-        else:
-          reserved.add(child)
-      if child.kind == nnkSym and $child in ["params"]:
-        if root.kind notin [nnkVarSection, nnkLetSection, nnkProcDef, nnkConstSection]:
-          if child notin reserved:
-            if child notin list:
-              list.add(child.copy())
-            node[i] = ident($child & "___")
-        else:
-          reserved.add(child)
-    else:
-      fetchAllIdents(child, list, reserved, node)
 
 
 macro runOnUiThread*(body: untyped) =
-  var
-    statements = body
-    # list: seq[NimNode] = @[]
-    # reserved: seq[NimNode] = @[]
-    index = runOnUiThreadEvents.len
-    # codeBlocksTable = newCall(
-    #   "[]=",
-    #   ident"argumentsCodeBlocks",
-    #   newLit(index),
-    #   newCall("@", newNimNode(nnkBracket))
-    # )
-  # argumentNames[index] = newSeq[NimNode]()
-  # fetchAllIdents(statements, list, reserved)
-  runOnUiThreadEvents.add(statements)
-  result = newStmtList()
-  # for i in list:
-  #   codeBlocksTable[^1][^1].add(newNimNode(nnkCast).add(ident"pointer", newCall("addr", i)))
-  #   argumentNames[index].add(ident($i & "___"))
-  result.add(
-    # codeBlocksTable,
-    newCall("inc", newCall("[]", ident"uniqueCodeBlocks", newLit(runOnUiThreadEvents.len - 1)))
-  )
+  runOnUiThreadEvents.add(body)
+  newCall("inc", newCall("[]", ident"uniqueCodeBlocks", newLit(runOnUiThreadEvents.len - 1)))
 
 
 macro runOnUiThreadAll*() =
   result = newStmtList()
   for i in runOnUiThreadEvents.low..runOnUiThreadEvents.high:
-    # var variables = newNimNode(nnkVarSection)
-    # for j in 0..<argumentNames[i].len:
-    #   variables.add(newIdentDefs(
-    #     argumentNames[i][j],
-    #     newEmptyNode(),
-    #     newNimNode(nnkBracketExpr).add(ident"argumentsCodeBlocks", newLit(j))
-    #   ))
     result.add(newNimNode(nnkWhileStmt).add(
       newCall(">", newNimNode(nnkBracketExpr).add(ident"uniqueCodeBlocks", newLit(i)), newLit(0)),
       newStmtList(
         # variables,
-        runOnUiThreadEvents[i],
+        runOnUiThreadEvents[i].copy(),
         newCall("dec", newNimNode(nnkBracketExpr).add(ident"uniqueCodeBlocks", newLit(i)))
       )
     ))
 
 
 macro declareRunOnUiAll*() =
-  result = newStmtList()
+  result = newAssignment(
+    ident"uniqueCodeBlocks", newCall("@", newNimNode(nnkBracket))
+  )
 
   for i in runOnUiThreadEvents.low..runOnUiThreadEvents.high:
-    result.add(newCall("add", ident"uniqueCodeBlocks", newLit(0)))
+    result[^1][^1].add(newLit(0))
 
 
 type Log* = object
