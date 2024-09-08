@@ -17,14 +17,14 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle s) {
         super.onCreate(s);
         setContentView(R.layout.activity_main);
-
+        getActionBar().hide();
         w = findViewById(R.id.webView);
 
         if (!paused) {
             new Thread(() -> Native.start(this)).start();
 
             Native n = new Native(this);
-            n.uiLoop();
+            new Thread(n::uiLoop).start();
         }
         setupWebView();
     }
@@ -45,10 +45,10 @@ public class MainActivity extends Activity {
         ws.setDomStorageEnabled(true);
         ws.setBuiltInZoomControls(true);
         ws.setDisplayZoomControls(false);
-        ws.setSupportZoom(true);
+        ws.setSupportZoom(false);
         ws.setDefaultTextEncodingName("utf-8");
 
-        w.loadUrl("http://localhost:5123/");
+        w.loadUrl("http://localhost:15123/");
     }
 
     @Override
