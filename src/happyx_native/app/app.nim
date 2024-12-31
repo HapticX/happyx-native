@@ -256,29 +256,32 @@ template nativeAppImpl*(appDirectory: string = "/assets", port: int = 5123,
       # Compile main
       if cfgKind() == "HPX":
         compileHpx(getScriptDir() / appDirectory)
-      else:
+      elif cfgKind() == "SPA":
         echo staticExec(
           "nim js -d:danger --opt:size --warnings:off --checks:off --assertions:off --stackTrace:off --lineTrace:off " & getScriptDir() / appDirectory / "main.nim"
         )
         when not defined(disableMinify):
           optimizeJs(getProjectPath() / appDirectory / "main.js")
+      else:
+        discard
   else:
     when defined(buildAssets):
       static:
         if cfgKind() == "HPX":
           compileHpx(getScriptDir() / appDirectory)
-        # Compile main
-        else:
+        elif cfgKind() == "SPA":
           echo staticExec(
             "nim js -d:danger --opt:size --warnings:off --checks:off --assertions:off --stackTrace:off --lineTrace:off " & getScriptDir() / appDirectory / "main.nim"
           )
           when not defined(disableMinify):
             optimizeJs(getProjectPath() / appDirectory / "main.js")
+        else:
+          discard
     else:
       # Compile main
       if cfgKind() == "HPX":
         compileHpx(getCurrentDir() / appDirectory)
-      else:
+      elif cfgKind() == "SPA":
         var data = execCmdEx(
           "nim js -d:danger --opt:size " & getCurrentDir() / appDirectory / "main.nim"
         )

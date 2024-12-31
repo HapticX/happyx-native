@@ -91,7 +91,7 @@ proc buildCommandAux*(target: string = OS, release: bool = false, opt: string = 
       rcedit(
         none(string),
         "build" / "app.exe",
-        {"icon": "assets" / "favicon.ico", "version": cfg.version}.toTable()
+        {"icon": cfg.appDirectory / "favicon.ico", "version": cfg.version}.toTable()
       )
   of "linux", "unix":
     discard execCmd(fmt"nim c {mode} {opt} {browser} {assets} {app} --os:linux --outDir:build app.nim")
@@ -149,7 +149,7 @@ proc buildCommandAux*(target: string = OS, release: bool = false, opt: string = 
       removeDir("android" / "app" / "src" / "main" / "java")
     
       # Build assets
-      mainActivity = mainActivity.replace("http://localhost:5123/", fmt"http://localhost:{cfg.port}/")
+      mainActivity = mainActivity.replace("http://localhost:15123/", fmt"http://localhost:{cfg.port}/")
       var directoryTmp = "android" / "app" / "src" / "main" / "java"
       for i in cfg.androidPackage.split("."):
         directoryTmp = directoryTmp / i
